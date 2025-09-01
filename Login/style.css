@@ -7,7 +7,7 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed; /* Opcional, mas cria um efeito legal */
+    background-attachment: fixed; 
 
     font-family: 'Poppins', sans-serif;
     display: flex;
@@ -27,7 +27,7 @@ body {
 
 /* Caixa de login (o card branco com borda azul) */
 .login-box {
-    display: flex; /* <-- ESSA LINHA AGORA VAI FUNCIONAR */
+    display: flex; 
     background-color: #fff;
     border-radius: 12px;
     border: 3px solid #007bff;
@@ -42,7 +42,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* Removi a borda duplicada que estava aqui */
 }
 
 .login-header h2 {
@@ -96,7 +95,6 @@ body {
     margin-top: 5px;
 }
 
-/* CORREÇÃO: Mudei o seletor para corresponder à classe corrigida no HTML */
 .manter-conectado {
     display: flex;
     align-items: center;
@@ -195,4 +193,5 @@ body {
     .login-image-area {
         display: none;
     }
+
 }
