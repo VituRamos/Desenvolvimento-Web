@@ -65,9 +65,7 @@ body {
 
 .card-content {
   display: none;
-  padding: 15px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 5px 20px 15px 20px; /* top, right, bottom, left */
 }
 
 .card-content.active {
