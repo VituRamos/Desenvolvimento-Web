@@ -3,7 +3,7 @@
 
 /* Estilos gerais */
 body {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(yellow-background.jpg);
+    background-image: background-image: url(OAK41Y0.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -195,3 +195,4 @@ body {
     }
 
 }
+
