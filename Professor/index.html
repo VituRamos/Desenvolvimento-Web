@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!-- Declaração do tipo de documento HTML5, essencial para que os navegadores interpretem corretamente o código -->
+<html lang="pt-BR">
+
+<head>
+    <!-- Define a codificação de caracteres como UTF-8, garantindo suporte a acentos e caracteres especiais -->
+    <meta charset="UTF-8">
+    
+    <!-- Configura a escala inicial para dispositivos móveis, garantindo um layout responsivo -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Define o título que será exibido na aba do navegador -->
+    <title>SimulAÍ</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css"/>
+
+    <!-- JS -->
+    <script src="script.js"></script>
+
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container">
+    <!-- Cabeçalho -->
+    <div class="header">
+        <span class="material-icons">account_circle</span>
+        <span class="material-icons">more_vert</span>
+    </div>
+
+    <!-- Português -->
+    <div class="card">
+      <div class="card-header" onclick="toggleCard('portugues',this)">
+        Português <span class="material-icons arrow">chevron_right</span>
+      </div>
+      <div id="portugues" class="card-content">
+
+        <div class="grid simulados">
+          <div class="simulado" onclick="toggleCard('s1',this)"><span class="material-icons arrow bolder">chevron_right</span> Simulado 1</div> <!--Simulado 1-->
+          <div id="s1" class="simulado-options">
+            <div class="lista-alunos">
+
+              <div class="card-aluno">
+                <div class="avatar">A</div>
+                <div class="info">
+                  <div class="nome">Nome do Aluno</div>
+                  <div class="id">Identificador do Aluno</div>
+                </div><!--Info-->
+                <div class="pontuacao">
+                  <span>Pontuação</span>
+                  <strong>1/10</strong>
+                </div><!--Pontuação-->
+              </div><!--Card Alunos-->
+
+              <div class="card-aluno">
+                <div class="avatar">A</div>
+                <div class="info">
+                  <div class="nome">Nome do Aluno</div>
+                  <div class="id">Identificador do Aluno</div>
+                </div><!--Info-->
+                <div class="pontuacao">
+                  <span>Pontuação</span>
+                  <strong>1/10</strong>
+                </div><!--Pontuação-->
+              </div><!--Card Alunos-->
+
+            </div><!--Lista Alunos-->
+          </div> <!--Opção Simulado 1 -->
+
+          <div class="simulado" onclick="toggleCard('s2',this)"><span class="material-icons arrow bolder">chevron_right</span> Simulado 2</div> <!--Simulado 2-->
+          <div id="s2" class="simulado-options">
+            <div class="lista-alunos">
+              <div class="card-aluno">
+                <div class="avatar">A</div>
+                <div class="info">
+                  <div class="nome">Nome do Aluno</div>
+                  <div class="id">Identificador do Aluno</div>
+                </div><!--Info-->
+                <div class="pontuacao">
+                  <span>Pontuação</span>
+                  <strong>1/10</strong>
+                </div><!--Pontuação-->
+              </div><!--Card Alunos-->
+            </div><!--Lista Alunos-->
+          </div> <!--Opção Simulado 2 -->
+
+          <div class="simulado" onclick="toggleCard('s3',this)"><span class="material-icons arrow bolder">chevron_right</span> Simulado 3</div> <!--Simulado 3-->
+          <div id="s3" class="simulado-options">
+            <div class="lista-alunos">
+              <div class="card-aluno">
+                <div class="avatar">A</div>
+                <div class="info">
+                  <div class="nome">Nome do Aluno</div>
+                  <div class="id">Identificador do Aluno</div>
+                </div><!--Info-->
+                <div class="pontuacao">
+                  <span>Pontuação</span>
+                  <strong>1/10</strong>
+                </div><!--Pontuação-->
+            </div><!--Card Alunos-->
+          </div><!--Lista Alunos-->
+          </div> <!--Opção Simulado 3 -->
+
+          <button class="btn">Adicionar novo simulado</button>
+        </div> <!--Simulados Grid-->
+
+        <div class="grid alunos">
+          <div class="user-icons">
+            <!-- 4 ícones -->
+            <div class="user-icon"><span class="material-icons user">account_circle</span></div>
+            <div class="user-icon"><span class="material-icons user">account_circle</span></div>
+            <div class="user-icon"><span class="material-icons user">account_circle</span></div>
+            <div class="user-icon"><span class="material-icons user">account_circle</span></div>
+            <div class="user-icon"><span class="material-icons user">account_circle</span></div>
+            <div class="user-icon"><span class="material-icons user">add_circle</span></div>
+          </div><!-- ICONS -->
+        </div> <!--Alunos Grid-->
+
+      </div> <!-- INTERNAL CARD -->
+    </div> <!-- CARD -->
+
+  <button class="btn add-materia">Adicionar nova matéria</button>
+  </div><!-- CONTAINER -->
+
+</body>
+</html>

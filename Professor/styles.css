@@ -1,0 +1,263 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  padding: 20px;
+}
+
+/* Cabeçalho */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.icon {
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* Card disciplina */
+
+.arrow {
+  font-size: 20px;
+  vertical-align: middle;
+  transition: transform 0.3s ease;
+}
+
+.arrow.open {
+  transform: rotate(90deg); /* gira a seta pra baixo */
+}
+
+.card {
+  border: 2px solid #007bff;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.card-header {
+  user-select: none;
+  padding: 20px 20px;
+  font-weight: bold;
+  color: #3C3C3C;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-content {
+  display: none;
+  padding: 5px 20px 15px 20px; /* top, right, bottom, left */
+}
+
+.card-content.active {
+  display: block;
+}
+
+/* Lista simulados */
+.simulado {
+  user-select: none;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+/* Lista opções simulados */
+.simulado-options {
+  display: none;
+  padding: 10px;
+  background: #f9f9f9;
+  border-left: 3px solid #007bff;
+}
+
+.simulado-options.active {
+  display: block;
+}
+
+.simulado-options button {
+  margin-right: 8px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #007bff;
+  color: #fff;
+}
+
+.simulado-options button:hover {
+  background: #0056b3;
+}
+
+/* container de todos os alunos */
+.lista-alunos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+/* card individual */
+.card-aluno {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 10px 14px;
+  gap: 10px;
+}
+
+/* avatar circular */
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ddd;
+  color: #555;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* bloco central */
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.nome {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.id {
+  font-size: 12px;
+  color: #777;
+}
+
+/* pontuação (badge lateral) */
+.pontuacao {
+  background: #222;
+  color: #fff;
+  border-radius: 8px;
+  padding: 6px 10px;
+  text-align: center;
+  min-width: 60px;
+  font-size: 12px;
+}
+
+.pontuacao span {
+  display: block;
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+.pontuacao strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Botão */
+.btn {
+  background: #007bff;
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 25px;
+  transition: all 0.2s ease; /* suaviza hover */
+}
+
+.btn:hover {
+  background: #0056b3;
+}
+
+.btn.add-materia{
+  background: #fff;
+  border: #007bff;
+  border: 2px solid #007bff;
+  transition: all 0.2s ease; /* suaviza hover */
+  color: #3c3c3c;
+  opacity: 70%;
+}
+
+.btn.add-materia:hover{
+  background: #007bff;
+    border: 2px solid #fff;
+  color: #fff;
+  opacity: 100%;
+}
+
+/* Grids */
+.grid{
+  padding: 10px;
+  border-radius: 15px;
+  border: 0.5px solid rgba(115, 115, 115, 0.35);
+}
+
+.grid.alunos{
+  margin-top: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+/* Ícones usuários */
+.user-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 5px;
+}
+
+.user-icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #60559e;
+}
+
+/* Ícones setas */
+.material-icons,
+.material-symbols-outlined {
+  user-select: none;   /* impede seleção de texto */
+  pointer-events: none; /* opcional: bloqueia clique no ícone */
+}
+
+.material-icons.bolder{
+  font-size: 24px;
+  -webkit-text-stroke: 1px black; /* contorno deixa ele mais "grosso" */
+}
+
