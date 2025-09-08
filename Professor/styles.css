@@ -18,17 +18,15 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  padding-bottom: 16px;
+  padding-top: 16px;
 }
 
-.header h2 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.icon {
-  font-size: 28px;
-  cursor: pointer;
+.items-header{
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  box-sizing: border-box;
+  display: grid 
 }
 
 /* Card disciplina */
@@ -106,6 +104,10 @@ body {
   background: #0056b3;
 }
 
+.titulo-simulado {
+  font-weight: 500;
+}
+
 /* container de todos os alunos */
 .lista-alunos {
   display: grid;
@@ -162,7 +164,7 @@ body {
   background: #222;
   color: #fff;
   border-radius: 8px;
-  padding: 6px 10px;
+  padding: 6px 6px;
   text-align: center;
   min-width: 60px;
   font-size: 12px;
@@ -200,22 +202,6 @@ body {
   background: #0056b3;
 }
 
-.btn.add-materia{
-  background: #fff;
-  border: #007bff;
-  border: 2px solid #007bff;
-  transition: all 0.2s ease; /* suaviza hover */
-  color: #3c3c3c;
-  opacity: 70%;
-}
-
-.btn.add-materia:hover{
-  background: #007bff;
-    border: 2px solid #fff;
-  color: #fff;
-  opacity: 100%;
-}
-
 /* Grids */
 .grid{
   padding: 10px;
@@ -246,7 +232,7 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 20px;
-  color: #60559e;
+  color: #333;
 }
 
 /* Ícones setas */
@@ -261,3 +247,12 @@ body {
   -webkit-text-stroke: 1px black; /* contorno deixa ele mais "grosso" */
 }
 
+.fab{
+  position:fixed; right:20px; bottom:20px;
+  width:56px; height:56px; border-radius:50%;
+  border:2px solid #1e66ff; background:#1e66ff; color:#fff;
+  font-size:24px; line-height:1; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 6px 16px rgba(0,0,0,.15); cursor:pointer;
+}
+.fab:active{ transform:translateY(1px); }
+@media (min-width:1024px){ .fab{ right:32px; bottom:32px; } }
