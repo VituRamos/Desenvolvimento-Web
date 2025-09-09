@@ -26,21 +26,20 @@
 
   <div class="container">
     <!-- Cabeçalho -->
-    <div class="header">
-      <div class="items-header">
-        <div class="Usuario">
-          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> 
-            <img src="https://github.com/mdo.png" class="avatar">
-            <ul class="dropdown-menu text-small shadow" style=""> <li><a class="dropdown-item" href="#">New project...</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Sign out</a></li> 
-            </ul>
-          </a>
-        </div>
-      </div>
+  <header class="header">
+    <div class="logo">
+      <img src="SimulAI.png" alt="Logo SimulAÍ">
     </div>
+
+      <div class="user-menu"> <img src="Avatar.png" alt="avatar" class="avatar" onclick="toggleMenu()">
+      <ul class="dropdown" id="dropdownMenu">
+        <li><a href="#">Configurações</a></li>
+        <li><a href="#">Perfil</a></li>
+        <hr>
+        <li><a href="#">Sair</a></li>
+      </ul>
+    </div>
+  </header>
 
     <!-- Português -->
     <div class="card">
