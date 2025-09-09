@@ -20,7 +20,7 @@ body {
   justify-content: space-between;
   align-items: center;
   background: #fff;          /* fundo escuro */
-  padding: 30px 30px;
+  padding: 35px 30px;
   position: fixed;              /* sempre colado no topo */
   top: 0;
   left: 0;
@@ -30,20 +30,25 @@ body {
   border-bottom: 1px solid #cdcdcd;
 }
 
-/* Nome "Professor" */
+/* Logo */
 .logo img {
-  height: 35px;   /* define a altura da logo */
+  height: 30px;   /* define a altura da logo */
   width: auto;    /* mantém a proporção */
 }
 
-/* Avatar */
-.avatar {
-  width: 40px;
-  height: 40px;
+.welcome-user{
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* Avatar Usuario*/
+.avatar.user {
+  width: 34px;
+  height: 32px;
   border-radius: 50%;
   /* border: 2px solid #007bff; */
   cursor: pointer;
-  object-fit: cover;
+  padding-top: 5px;
 }
 
 /* Menu dropdown */
@@ -185,20 +190,6 @@ body {
   gap: 10px;
 }
 
-/* avatar circular */
-.avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #ddd;
-  color: #555;
-  font-weight: bold;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* bloco central */
 .info {
   flex: 1;
@@ -215,6 +206,15 @@ body {
 .id {
   font-size: 12px;
   color: #777;
+}
+
+.avatar.aluno{
+  width: 26px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 /* pontuação (badge lateral) */
@@ -282,20 +282,20 @@ body {
   margin: 5px;
 }
 
-.user-icon {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-  color: #333;
+.adicionar.aluno{
+  border:2px solid #007bff; background:#007bff; color:#fff;
+  width:25px; height:25px; border-radius:50%;
+  font-size:12px; line-height:1; display:flex; align-items:center; justify-content:center;
+  cursor:pointer
+}
+
+.adicionar.aluno:hover{
+  border:2px solid #0056b3; background:#0056b3;
 }
 
 /* Ícones setas */
 .material-icons,
-.material-symbols-outlined {
+.material-symbols-outlined{
   user-select: none;   /* impede seleção de texto */
   pointer-events: none; /* opcional: bloqueia clique no ícone */
 }
@@ -312,5 +312,5 @@ body {
   font-size:24px; line-height:1; display:flex; align-items:center; justify-content:center;
   box-shadow:0 6px 16px rgba(0,0,0,.15); cursor:pointer;
 }
-.fab:active{ transform:translateY(1px); }
+.fab:active{ transform:translateY(2px); }
 @media (min-width:1024px){ .fab{ right:32px; bottom:32px; } }
