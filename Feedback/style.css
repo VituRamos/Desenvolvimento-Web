@@ -1,3 +1,4 @@
+/* Estilos gerais do corpo da página */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #fafafa;
@@ -7,6 +8,7 @@ body {
     justify-content: center;
 }
 
+/* Container principal que envolve todo o conteúdo */
 .container {
     width: 100%;
     padding: 30px 20px;
@@ -14,7 +16,7 @@ body {
     box-sizing: border-box;
 }
 
-/* Cabeçalho */
+/* Estilos do cabeçalho fixo */
 .header {
     width: 100%;
     display: flex;
@@ -31,11 +33,13 @@ body {
     border-bottom: 1px solid #cdcdcd;
 }
 
+/* Estilos da logo no cabeçalho */
 .logo img {
     height: 30px;
     width: auto;
 }
 
+/* Estilos do avatar do usuário no cabeçalho */
 .avatar.user {
     width: 34px;
     height: 32px;
@@ -44,6 +48,7 @@ body {
     padding-top: 5px;
 }
 
+/* Container principal do feedback */
 .feedback-container {
     width: 100%;
     max-width: 800px;
@@ -51,12 +56,14 @@ body {
     padding: 20px;
 }
 
+/* Container de informações do aluno */
 .aluno-info {
     display: flex;
     align-items: center;
     margin-bottom: 30px;
 }
 
+/* Avatar do aluno */
 .aluno-avatar {
     width: 80px;
     height: 80px;
@@ -64,6 +71,7 @@ body {
     margin-right: 20px;
 }
 
+/* Dados do aluno (nome e ID) */
 .aluno-dados h2 {
     margin: 0;
     font-size: 24px;
@@ -76,6 +84,7 @@ body {
     color: #666;
 }
 
+/* Card que contém o feedback */
 .feedback-card {
     background: #fff;
     border: 2px solid #007bff;
@@ -84,6 +93,7 @@ body {
     overflow: hidden;
 }
 
+/* Cabeçalho do card de feedback */
 .feedback-header {
     padding: 20px;
     background-color: #007bff;
@@ -96,14 +106,17 @@ body {
     font-weight: 600;
 }
 
+/* Corpo do card de feedback */
 .feedback-body {
     padding: 20px;
 }
 
+/* Item de feedback (pontos fortes, a melhorar, etc.) */
 .feedback-item {
     margin-bottom: 20px;
 }
 
+/* Remove a margem inferior do último item de feedback */
 .feedback-item:last-child {
     margin-bottom: 0;
 }
@@ -122,10 +135,12 @@ body {
     color: #555;
 }
 
+/* Container dos botões de ação */
 .actions {
     text-align: center;
 }
 
+/* Estilos gerais dos botões */
 .btn {
     background: #007bff;
     color: #fff;
@@ -139,6 +154,7 @@ body {
     transition: all 0.2s ease;
 }
 
+/* Efeito hover para os botões */
 .btn:hover {
     background: #0056b3;
 }

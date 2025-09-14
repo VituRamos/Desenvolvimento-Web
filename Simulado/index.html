@@ -12,25 +12,32 @@
 <body>
 
     <div class="container">
-        <!-- Cabeçalho -->
+        <!-- Cabeçalho da página -->
         <header class="header">
+            <!-- Logo do site -->
             <div class="logo">
                 <img src="SimulAI.png" alt="Logo SimulAÍ">
             </div>
+            <!-- Menu do usuário -->
             <div class="user-menu">
                 <img src="Avatar.png" alt="avatar" class="avatar user">
             </div>
         </header>
 
+        <!-- Container principal do simulado -->
         <div class="simulado-container">
+            <!-- Cabeçalho do simulado -->
             <div class="simulado-header">
                 <h2>Simulado de Português</h2>
             </div>
 
+            <!-- Container do quiz -->
             <div class="quiz-container">
+                <!-- Questão 1 -->
                 <div class="question" id="question1">
                     <h3>Questão 1</h3>
                     <p>Qual a figura de linguagem presente na frase: "O sol beijava o topo da montanha"?</p>
+                    <!-- Opções de resposta -->
                     <div class="options">
                         <div class="option" data-option="a">a) Metáfora</div>
                         <div class="option" data-option="b">b) Personificação</div>
@@ -40,9 +47,11 @@
                     </div>
                 </div>
 
+                <!-- Questão 2 (inicialmente oculta) -->
                 <div class="question" id="question2" style="display: none;">
                     <h3>Questão 2</h3>
                     <p>Qual o autor de "Dom Casmurro"?</p>
+                    <!-- Opções de resposta -->
                     <div class="options">
                         <div class="option" data-option="a">a) José de Alencar</div>
                         <div class="option" data-option="b">b) Machado de Assis</div>
@@ -52,23 +61,26 @@
                     </div>
                 </div>
 
-                <!-- Adicione mais questões aqui -->
 
             </div>
 
+            <!-- Ações do usuário (botões) -->
             <div class="actions">
                 <button class="btn" id="next-btn">Próximo</button>
             </div>
 
+            <!-- Container do resultado (inicialmente oculto) -->
             <div class="resultado-container" style="display: none;">
                 <h3>Resultado do Simulado</h3>
                 <p>Você acertou <span id="acertos"></span> de <span id="total"></span> questões.</p>
+                <!-- Gabarito das questões -->
                 <div id="gabarito"></div>
                 <button class="btn" id="restart-btn">Refazer Simulado</button>
             </div>
         </div>
     </div>
 
+    <!-- Importação do script JavaScript -->
     <script src="script.js"></script>
 </body>
 

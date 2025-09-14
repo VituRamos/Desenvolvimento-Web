@@ -1,3 +1,4 @@
+/* Estilos gerais do corpo da página */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #fafafa;
@@ -7,6 +8,7 @@ body {
     justify-content: center;
 }
 
+/* Container principal que envolve todo o conteúdo */
 .container {
     width: 100%;
     padding: 30px 20px;
@@ -14,7 +16,7 @@ body {
     box-sizing: border-box;
 }
 
-/* Cabeçalho */
+/* Estilos do cabeçalho fixo */
 .header {
     width: 100%;
     display: flex;
@@ -31,11 +33,13 @@ body {
     border-bottom: 1px solid #cdcdcd;
 }
 
+/* Estilos da logo no cabeçalho */
 .logo img {
     height: 30px;
     width: auto;
 }
 
+/* Estilos do avatar do usuário no cabeçalho */
 .avatar.user {
     width: 34px;
     height: 32px;
@@ -44,6 +48,7 @@ body {
     padding-top: 5px;
 }
 
+/* Container principal do simulado */
 .simulado-container {
     width: 100%;
     max-width: 800px;
@@ -51,6 +56,7 @@ body {
     padding: 20px;
 }
 
+/* Cabeçalho do simulado (título) */
 .simulado-header {
     text-align: center;
     margin-bottom: 30px;
@@ -62,6 +68,7 @@ body {
     font-weight: 600;
 }
 
+/* Container do quiz (questões e opções) */
 .quiz-container {
     background: #fff;
     border: 2px solid #007bff;
@@ -70,10 +77,12 @@ body {
     margin-bottom: 20px;
 }
 
+/* Estilos de cada questão */
 .question {
     margin-bottom: 20px;
 }
 
+/* Remove a margem inferior da última questão */
 .question:last-child {
     margin-bottom: 0;
 }
@@ -90,12 +99,14 @@ body {
     line-height: 1.5;
 }
 
+/* Container das opções de resposta */
 .options {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
+/* Estilos de cada opção de resposta */
 .option {
     padding: 15px;
     border: 1px solid #ccc;
@@ -104,20 +115,24 @@ body {
     transition: all 0.2s ease;
 }
 
+/* Efeito hover para as opções */
 .option:hover {
     background-color: #f0f0f0;
 }
 
+/* Estilo da opção selecionada */
 .option.selected {
     background-color: #007bff;
     color: #fff;
     border-color: #007bff;
 }
 
+/* Container dos botões de ação */
 .actions {
     text-align: center;
 }
 
+/* Estilos gerais dos botões */
 .btn {
     background: #007bff;
     color: #fff;
@@ -131,10 +146,12 @@ body {
     transition: all 0.2s ease;
 }
 
+/* Efeito hover para os botões */
 .btn:hover {
     background: #0056b3;
 }
 
+/* Container do resultado do simulado */
 .resultado-container {
     background: #fff;
     border: 2px solid #007bff;
@@ -150,15 +167,18 @@ body {
     font-weight: 600;
 }
 
+/* Estilos do gabarito */
 #gabarito p {
     margin: 10px 0;
     font-size: 16px;
 }
 
+/* Estilo para resposta correta no gabarito */
 #gabarito .correct {
     color: green;
 }
 
+/* Estilo para resposta incorreta no gabarito */
 #gabarito .incorrect {
     color: red;
 }
