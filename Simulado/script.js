@@ -32,23 +32,60 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Função para lidar com a seleção de uma opção de resposta
+    // Explicações para cada questão
+    const explicacoes = {
+        0: { // Questão 1
+            correta: "b",
+            textos: {
+                a: "Não era bem isso. Metáfora compara elementos, mas aqui há ação humana atribuída ao sol.",
+                b: "Resposta correta. O sol está realizando uma ação humana, ou seja, personificação.",
+                c: "Não era bem isso. Hipérbole é exagero intencional, o que não ocorre aqui.",
+                d: "Não era bem isso. Eufemismo suaviza expressões, o que não se aplica aqui.",
+                e: "Não era bem isso. Ironia expressa o contrário do que se diz."
+            }
+        },
+        1: { // Questão 2
+            correta: "b",
+            textos: {
+                a: "Não era bem isso. José de Alencar foi outro escritor importante, mas não o autor de Dom Casmurro.",
+                b: "Resposta correta. Machado de Assis é o autor de Dom Casmurro.",
+                c: "Não era bem isso. Drummond foi um grande poeta, mas não escreveu Dom Casmurro.",
+                d: "Não era bem isso. Graciliano Ramos escreveu Vidas Secas.",
+                e: "Não era bem isso. Cecília Meireles foi poetisa, mas não autora de Dom Casmurro."
+            }
+        }
+    };
+
+    //Função para lidar com a seleção de uma opção de resposta
     function selectOption(e) {
-        // Elemento da opção selecionada
-        const selectedOption = e.target;
-        // Índice da questão atual
-        const questionIndex = currentQuestion;
-        // A resposta selecionada ('a', 'b', 'c', etc.)
-        const answer = selectedOption.dataset.option;
+    const selectedOption = e.target;
+    const questionIndex = currentQuestion;
+    const answer = selectedOption.dataset.option;
 
-        // Armazena a resposta do usuário
-        userAnswers[questionIndex] = answer;
+    //Armazena a resposta do usuário
+    userAnswers[questionIndex] = answer;
 
-        // Remove a classe 'selected' de todas as opções da questão atual
-        const options = questions[questionIndex].querySelectorAll('.option');
-        options.forEach(option => option.classList.remove('selected'));
-        // Adiciona a classe 'selected' à opção clicada
-        selectedOption.classList.add('selected');
+    const options = questions[questionIndex].querySelectorAll('.option');
+    options.forEach(option => option.style.pointerEvents = "none"); // trava os cliques
+
+        options.forEach(option => {
+            const letra = option.dataset.option;
+            const explanation = document.createElement("div");
+            explanation.classList.add("explanation");
+
+            if (letra === explicacoes[questionIndex].correta) {
+                option.classList.add("correct");
+                explanation.innerHTML = `<span class="material-icons">check</span> ${explicacoes[questionIndex].textos[letra]}`;
+                explanation.classList.add("correct");
+            } else if (letra === answer) {
+                option.classList.add("incorrect");
+                explanation.innerHTML = `<span class="material-icons">close</span> ${explicacoes[questionIndex].textos[letra]}`;
+                explanation.classList.add("incorrect");
+            }
+
+            // só adiciona explicação se existir
+            if (explanation.textContent) option.appendChild(explanation);
+        });
     }
 
     // Função para exibir os resultados do simulado
@@ -110,16 +147,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Adiciona um evento de clique ao botão "Refazer Simulado"
     restartBtn.addEventListener('click', () => {
-        // Reseta as variáveis e a exibição para o estado inicial
         currentQuestion = 0;
         userAnswers.length = 0;
         showQuestion(currentQuestion);
         quizContainer.style.display = 'block';
         nextBtn.style.display = 'block';
         resultadoContainer.style.display = 'none';
-        // Remove a seleção de todas as opções
+
+        // Resetar todas as opções
         const options = document.querySelectorAll('.option');
-        options.forEach(option => option.classList.remove('selected'));
+        options.forEach(option => {
+            option.classList.remove('selected', 'correct', 'incorrect');
+            option.style.pointerEvents = "auto";
+
+            // remover explicações antigas
+            const expl = option.querySelector('.explanation');
+            if (expl) expl.remove();
+        });
     });
 
     // Adiciona um evento de clique para cada opção de cada questão
