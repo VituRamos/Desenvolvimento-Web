@@ -135,5 +135,38 @@
   <button class="fab" type="button" aria-label="Adicionar matéria">+</button>
   </div><!-- CONTAINER -->
 
+  <!-- Popup Modal Matéria-->
+  <div id="popup" class="popup-overlay">
+    <div class="popup-content">
+      <span class="close-btn" onclick="closePopup()">&times;</span>
+      <h2>Adicionar nova matéria</h2>
+      
+      <input type="text" id="nomeMateria" class="popup-input" placeholder="Digite o nome da matéria">
+
+      <div class="popup-actions">
+        <button class="btn-cancel" onclick="closePopup()">Cancelar</button>
+        <button class="btn-confirm" onclick="confirmarMateria()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup Modal Simulado -->
+<div id="popupSimulado" class="popup-overlay">
+  <div class="popup-content">
+    <span class="close-btn" onclick="closePopupSimulado()">&times;</span>
+    <h2>Adicionar novo simulado</h2>
+
+    <input type="text" id="nomeSimulado" class="popup-input" placeholder="Digite o nome do simulado">
+
+    <label for="arquivoSimulado" class="popup-label">Carregar arquivo:</label>
+    <input type="file" id="arquivoSimulado" class="popup-input-file">
+
+    <div class="popup-actions">
+      <button class="btn-cancel" onclick="closePopupSimulado()">Cancelar</button>
+      <button class="btn-confirm" onclick="confirmarSimulado()">Confirmar</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
