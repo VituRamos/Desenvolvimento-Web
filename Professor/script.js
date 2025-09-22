@@ -93,3 +93,16 @@ document.addEventListener("DOMContentLoaded", () => {
     btnSimulado.addEventListener("click", openPopupSimulado);
   }
 });
+
+// Fechar popup de matéria
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+  document.getElementById("nomeMateria").value = ""; // limpa o input
+}
+
+// Fechar popup de simulado
+function closePopupSimulado() {
+  document.getElementById("popupSimulado").style.display = "none";
+  document.getElementById("nomeSimulado").value = ""; // limpa input texto
+  document.getElementById("arquivoSimulado").value = ""; // limpa input file
+}
