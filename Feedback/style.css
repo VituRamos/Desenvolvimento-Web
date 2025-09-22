@@ -65,7 +65,7 @@ body {
 
 /* Avatar do aluno */
 .aluno-avatar {
-    width: 80px;
+    width: 84px;
     height: 80px;
     border-radius: 50%;
     margin-right: 20px;
@@ -158,3 +158,43 @@ body {
 .btn:hover {
     background: #0056b3;
 }
+
+.score-summary {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 20px 10px 20px 10px;
+}
+
+.score-box {
+  background: #e6f0ff;
+  padding: 5px 5px 15px 20px;
+  border-radius: 12px;
+  flex: 1;
+  margin: 8px 8px 0px 8px;
+  text-align: left;
+  min-width: 150px;
+}
+
+.score-box h3 {
+  margin: 0;
+  font-size: 25px;
+  color: #444;
+  margin-top: 15px;
+}
+
+/* Ajuste para o bloco Resultados */
+.score-box p strong {
+  font-size: 14px;
+  color: #333;
+  text-align: right;
+}
+
+.score-box p {
+  font-size: 15px;
+  font-weight: normal;
+  color: #444;
+  line-height: 1.4;
+  margin: 2px 0 0 0;
+}
+
