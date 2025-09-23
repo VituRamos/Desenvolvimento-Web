@@ -6,16 +6,16 @@ Vite é mais rápido e moderno.<br>
 
 npm create vite@latest<br>
 
-Siga as instruções do terminal:
-Project name: my-app (ou o nome que preferir)
-Select a framework: React
-Select a variant: JavaScript ou JavaScript + SWC (a opção com SWC é mais rápida).
+Siga as instruções do terminal:<br>
+Project name: my-app (ou o nome que preferir)<br>
+Select a framework: React<br>
+Select a variant: JavaScript ou JavaScript + SWC (a opção com SWC é mais rápida).<br>
 
-<strong>2. Em seguida, navegue para o diretório do seu projeto:<strong>
-cd my-app
+<strong>2. Em seguida, navegue para o diretório do seu projeto:<strong><br>
+cd my-app<br>
 
-<strong>3. Adicione os Arquivos<strong>
-Agora, adicione os arquivos que você tem no seu projeto.
+<strong>3. Adicione os Arquivos<strong><br>
+Agora, adicione os arquivos que você tem no seu projeto.<br>
 
-Crie uma pasta src se ela não existir.
-Dentro da pasta src, coloque os arquivos
+Crie uma pasta src se ela não existir.<br>
+Dentro da pasta src, coloque os arquivos<br>
