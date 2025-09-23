@@ -1,72 +1,24 @@
 import { useEffect, useState } from "react";
-import Header from "./components/Header";
-import CardMateria from "./components/CardMateria";
-import PopupMateria from "./components/PopupMateria";
-import PopupSimulado from "./components/PopupSimulado";
-import dados from "./data/dados.json";
-import "./index.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import DashboardAluno from "./components/DashboardAluno";
+import DashboardProfessor from "./components/DashboardProfessor";
 
-export default function App() {
-  const [materias, setMaterias] = useState([]);
-  const [popupMateriaAberto, setPopupMateriaAberto] = useState(false);
-  const [popupSimuladoAberto, setPopupSimuladoAberto] = useState(false);
-
-  useEffect(() => {
-    setMaterias(dados.materias);
-  }, []);
-
-  const adicionarMateria = (nome) => {
-    const nova = {
-      id: materias.length + 1,
-      nome,
-      simulados: []
-    };
-    setMaterias([...materias, nova]);
-  };
-
-  const adicionarSimulado = (idMateria, nome, arquivo) => {
-    setMaterias((prev) =>
-      prev.map((m) =>
-        m.id === idMateria
-          ? {
-              ...m,
-              simulados: [
-                ...m.simulados,
-                { id: m.simulados.length + 1, nome, arquivo, alunos: [] }
-              ]
-            }
-          : m
-      )
-    );
-  };
-
+function App() {
   return (
-    <div className="container">
-      <Header />
-      {materias.map((materia) => (
-        <CardMateria
-          key={materia.id}
-          materia={materia}
-          onAdicionarSimulado={() => setPopupSimuladoAberto(true)}
-        />
-      ))}
+    <Router>
+      <Routes>
+        {/* Rota inicial -> Login */}
+        <Route path="/" element={<Login />} />
 
-      {/* FAB */}
-      <button className="fab" onClick={() => setPopupMateriaAberto(true)}>+</button>
+        {/* Rota para aluno */}
+        <Route path="/aluno" element={<DashboardAluno />} />
 
-      {/* POPUPS */}
-      {popupMateriaAberto && (
-        <PopupMateria
-          onClose={() => setPopupMateriaAberto(false)}
-          onConfirm={adicionarMateria}
-        />
-      )}
-      {popupSimuladoAberto && (
-        <PopupSimulado
-          onClose={() => setPopupSimuladoAberto(false)}
-          onConfirm={(nome, arquivo) => adicionarSimulado(1, nome, arquivo)}
-        />
-      )}
-    </div>
+        {/* Rota para professor */}
+        <Route path="/professor" element={<DashboardProfessor />} />
+      </Routes>
+    </Router>
   );
 }
+
+export default App;

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CardSimulado from "./CardSimulado";
 import AlunosGrid from "./AlunosGrid";
+import { useLocation } from "react-router-dom";
 
   const alunosDaMateria = [
     { id: 1, nome: "João" },
