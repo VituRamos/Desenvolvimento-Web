@@ -1,0 +1,225 @@
+/* Estilos gerais do corpo da página */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #fafafa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Container principal que envolve todo o conteúdo */
+.container {
+    width: 100%;
+    padding: 30px 20px;
+    margin-top: 80px;
+    box-sizing: border-box;
+}
+
+/* Estilos do cabeçalho fixo */
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 35px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    height: 60px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #cdcdcd;
+}
+
+/* Estilos da logo no cabeçalho */
+.logo img {
+    height: 30px;
+    width: auto;
+}
+
+/* Estilos do avatar do usuário no cabeçalho */
+.avatar.user {
+    width: 34px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    padding-top: 5px;
+}
+
+/* Container principal do simulado */
+.simulado-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Cabeçalho do simulado (título) */
+.simulado-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.simulado-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Container do quiz (questões e opções) */
+.quiz-container {
+    background: #fff;
+    border: 2px solid #007bff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Estilos de cada questão */
+.question {
+    margin-bottom: 20px;
+}
+
+/* Remove a margem inferior da última questão */
+.question:last-child {
+    margin-bottom: 0;
+}
+
+.question h3 {
+    margin: 0 0 15px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.question p {
+    margin: 0 0 20px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Container das opções de resposta */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Estilos de cada opção de resposta */
+.option {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Efeito hover para as opções */
+.option:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilo da opção selecionada */
+.option.selected {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* Container dos botões de ação */
+.actions {
+    text-align: center;
+}
+
+/* Estilos gerais dos botões */
+.btn {
+    background: #007bff;
+    color: #fff;
+    text-align: center;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+/* Efeito hover para os botões */
+.btn:hover {
+    background: #0056b3;
+}
+
+#next-btn{
+    display: block;
+}
+
+#restart-btn{
+    margin-top: 12px;
+}
+
+/* Container do resultado do simulado */
+.resultado-container {
+    background: #fff;
+    border: 2px solid #007bff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.resultado-container h3 {
+    margin: 0 0 15px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Estilos do gabarito */
+#gabarito p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Estilo para resposta correta no gabarito */
+#gabarito .correct {
+    color: green;
+}
+
+/* Estilo para resposta incorreta no gabarito */
+#gabarito .incorrect {
+    color: red;
+}
+
+/* Estilo para resposta correta diretamente na resposta */
+.option.correct {
+    border: 2px solid #28a745;
+    background: #e6f4ea;
+    color: #1e7e34;
+    position: relative;
+}
+
+/* Estilo para resposta incorreta diretamente na resposta */
+.option.incorrect {
+    border: 2px solid #dc3545;
+    background: #fbeaea;
+    color: #a71d2a;
+    position: relative;
+}
+
+/* Estilo para explicação*/
+.explanation {
+  display: flex;
+  align-items: center;  /* centraliza ícone e texto na mesma altura */
+  margin-top: 5px;
+}
+
+/* Estilo para icones na explicação */
+.explanation .material-icons {
+    font-size: 18px;
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+.explanation.correct { color: #28a745; font-weight: 600; }
+.explanation.incorrect { color: #dc3545; font-weight: 600; }

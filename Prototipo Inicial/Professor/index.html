@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!-- Declaração do tipo de documento HTML5, essencial para que os navegadores interpretem corretamente o código -->
+<html lang="pt-BR">
+
+<head>
+    <!-- Define a codificação de caracteres como UTF-8, garantindo suporte a acentos e caracteres especiais -->
+    <meta charset="UTF-8">
+    
+    <!-- Configura a escala inicial para dispositivos móveis, garantindo um layout responsivo -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Define o título que será exibido na aba do navegador -->
+    <title>SimulAÍ</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css"/>
+
+    <!-- JS -->
+    <script src="script.js"></script>
+
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container">
+    <!-- Cabeçalho -->
+  <header class="header">
+    <div class="logo">
+      <img src="img/SimulAI.png" alt="Logo SimulAÍ">
+    </div>
+      <!--<div class="welcome-user">Bem vindo, Professor!</div>-->
+      <div class="user-menu"><img src="img/Avatar.png" alt="avatar" class="avatar user" onclick="toggleMenu()">
+      <ul class="dropdown" id="dropdownMenu">
+        <li><a href="#">Configurações</a></li>
+        <li><a href="#">Perfil</a></li>
+        <hr>
+        <li><a href="#">Sair</a></li>
+      </ul>
+    </div>
+  </header>
+
+    <!-- Português -->
+    <div class="card">
+      <div class="card-header" onclick="toggleCard('portugues',this)">
+        Português <span class="material-icons arrow">chevron_right</span>
+      </div>
+      <div id="portugues" class="card-content">
+
+        <div class="grid simulados">
+          <div class="simulado" onclick="toggleCard('s1',this)"><span class="material-icons arrow bolder">chevron_right</span><span class="titulo-simulado">Simulado 1</span></div> <!--Simulado 1-->
+          <div id="s1" class="simulado-options">
+            <div class="lista-alunos">
+
+              <div class="card-aluno">
+                <div class="avatar aluno"><img src="img/Avatar.png" class="avatar aluno"></div>
+                <div class="info">
+                  <div class="nome">Nome do Aluno</div>
+                  <div class="id">Identificador do Aluno</div>
+                </div><!--Info-->
+                <div class="pontuacao">
+                  <span>Pontuação</span>
+                  <strong>1/10</strong>
+                </div><!--Pontuação-->
+              </div><!--Card Alunos-->
+
+            <div class="card-aluno">
+                <div class="avatar aluno"><img src="img/Avatar.png" class="avatar aluno"></div>
+                <div class="info">
+                  <div class="nome">Nome do Aluno</div>
+                  <div class="id">Identificador do Aluno</div>
+                </div><!--Info-->
+                <div class="pontuacao">
+                  <span>Pontuação</span>
+                  <strong>1/10</strong>
+                </div><!--Pontuação-->
+              </div><!--Card Alunos-->
+
+            </div><!--Lista Alunos-->
+          </div> <!--Opção Simulado 1 -->
+
+          <div class="simulado" onclick="toggleCard('s2',this)"><span class="material-icons arrow bolder">chevron_right</span><span class="titulo-simulado">Simulado 2</span></div> <!--Simulado 2-->
+          <div id="s2" class="simulado-options">
+            <div class="lista-alunos">
+              <div class="card-aluno">
+                <div class="avatar aluno"><img src="img/Avatar.png" class="avatar aluno"></div>
+                <div class="info">
+                  <div class="nome">Nome do Aluno</div>
+                  <div class="id">Identificador do Aluno</div>
+                </div><!--Info-->
+                <div class="pontuacao">
+                  <span>Pontuação</span>
+                  <strong>1/10</strong>
+                </div><!--Pontuação-->
+              </div><!--Card Alunos-->
+            </div><!--Lista Alunos-->
+          </div> <!--Opção Simulado 2 -->
+
+          <div class="simulado" onclick="toggleCard('s3',this)"><span class="material-icons arrow bolder">chevron_right</span><span class="titulo-simulado">Simulado 3</span></div> <!--Simulado 3-->
+          <div id="s3" class="simulado-options">
+            <div class="lista-alunos">
+              <div class="card-aluno">
+                <div class="avatar aluno"><img src="img/Avatar.png" class="avatar aluno"></div>
+                <div class="info">
+                  <div class="nome">Nome do Aluno</div>
+                  <div class="id">Identificador do Aluno</div>
+                </div><!--Info-->
+                <div class="pontuacao">
+                  <span>Pontuação</span>
+                  <strong>1/10</strong>
+                </div><!--Pontuação-->
+            </div><!--Card Alunos-->
+          </div><!--Lista Alunos-->
+          </div> <!--Opção Simulado 3 -->
+
+          <button class="btn">Adicionar novo simulado</button>
+        </div> <!--Simulados Grid-->
+
+        <div class="grid alunos">
+          <div class="user-icons">
+            <!-- 4 ícones -->
+            <div class="avatar aluno"><img src="img/Avatar.png" class="avatar aluno"></div>
+            <div class="avatar aluno"><img src="img/Avatar.png" class="avatar aluno"></div>
+            <div class="avatar aluno"><img src="img/Avatar.png" class="avatar aluno"></div>
+            <div class="avatar aluno"><img src="img/Avatar.png" class="avatar aluno"></div>
+            <!--<div class="user-icon"><span class="material-icons user">add_circle</span></div>-->
+            <button class="adicionar aluno" type="button" aria-label="Adicionar matéria">+</button>
+          </div><!-- ICONS -->
+        </div> <!--Alunos Grid-->
+
+      </div> <!-- INTERNAL CARD -->
+    </div> <!-- CARD -->
+
+  <button class="fab" type="button" aria-label="Adicionar matéria">+</button>
+  </div><!-- CONTAINER -->
+
+  <!-- Popup Modal Matéria-->
+  <div id="popup" class="popup-overlay">
+    <div class="popup-content">
+      <span class="close-btn" onclick="closePopup()">&times;</span>
+      <h2>Adicionar nova matéria</h2>
+      
+      <input type="text" id="nomeMateria" class="popup-input" placeholder="Digite o nome da matéria">
+
+      <div class="popup-actions">
+        <button class="btn-cancel" onclick="closePopup()">Cancelar</button>
+        <button class="btn-confirm" onclick="confirmarMateria()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup Modal Simulado -->
+<div id="popupSimulado" class="popup-overlay">
+  <div class="popup-content">
+    <span class="close-btn" onclick="closePopupSimulado()">&times;</span>
+    <h2>Adicionar novo simulado</h2>
+
+    <input type="text" id="nomeSimulado" class="popup-input" placeholder="Digite o nome do simulado">
+
+    <label for="arquivoSimulado" class="popup-label">Carregar arquivo:</label>
+    <input type="file" id="arquivoSimulado" class="popup-input-file">
+
+    <div class="popup-actions">
+      <button class="btn-cancel" onclick="closePopupSimulado()">Cancelar</button>
+      <button class="btn-confirm" onclick="confirmarSimulado()">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
