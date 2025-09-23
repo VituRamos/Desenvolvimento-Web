@@ -1,0 +1,380 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  padding: 30px 20px;
+  margin-top: 80px;
+}
+
+/* Cabeçalho */
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 35px 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  height: 60px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #cdcdcd;
+}
+
+/* Logo */
+.logo img {
+  height: 30px;
+  width: auto;
+}
+
+.welcome-user {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* Avatar Usuario */
+.avatar.user {
+  width: 34px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  padding-top: 5px;
+}
+
+/* Card disciplina */
+.arrow {
+  font-size: 20px;
+  vertical-align: middle;
+  transition: transform 0.3s ease;
+}
+
+.arrow.open {
+  transform: rotate(90deg);
+}
+
+.card {
+  border: 2px solid #007bff;
+  width: 1880px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.card-header {
+  user-select: none;
+  padding: 20px 20px;
+  font-weight: bold;
+  color: #3C3C3C;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-content {
+  display: none;
+  padding: 5px 20px 15px 20px;
+}
+
+.card-content.active {
+  display: block;
+}
+
+/* Lista simulados */
+.simulado {
+  user-select: none;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.simulado-options {
+  display: none;
+  padding: 10px;
+  background: #f9f9f9;
+  border-left: 3px solid #007bff;
+}
+
+.simulado-options.active {
+  display: block;
+}
+
+.simulado-options button {
+  margin-right: 8px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #007bff;
+  color: #fff;
+}
+
+.simulado-options button:hover {
+  background: #0056b3;
+}
+
+.titulo-simulado {
+  font-weight: 500;
+}
+
+/* container de todos os alunos */
+.lista-alunos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+/* card individual */
+.card-aluno {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 10px 14px;
+  gap: 10px;
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.nome {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.id {
+  font-size: 12px;
+  color: #777;
+}
+
+.avatar.aluno {
+  width: 26px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* pontuação (badge lateral) */
+.pontuacao {
+  background: #222;
+  color: #fff;
+  border-radius: 8px;
+  padding: 6px 6px;
+  text-align: center;
+  min-width: 60px;
+  font-size: 12px;
+}
+
+.pontuacao span {
+  display: block;
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+.pontuacao strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Botão */
+.btn {
+  background: #007bff;
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 20px;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: #0056b3;
+}
+
+/* Floating Action Button */
+.fab {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid #1e66ff;
+  background: #1e66ff;
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .15);
+  cursor: pointer;
+}
+.fab:active {
+  transform: translateY(2px);
+}
+@media (min-width: 1024px) {
+  .fab {
+    right: 32px;
+    bottom: 32px;
+  }
+}
+
+/* ====== POPUP ====== */
+.popup-overlay {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.popup-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.popup-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+.popup-input-file {
+  display: block;
+  margin-top: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.popup-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-cancel {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #ccc;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-cancel:hover {
+  background: #aaa;
+}
+
+.btn-confirm {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-confirm:hover {
+  background: #0056b3;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Grids */
+.grid{
+  padding: 10px;
+  border-radius: 15px;
+  border: 0.5px solid rgba(115, 115, 115, 0.35);
+}
+
+.grid.alunos{
+  margin-top: 25px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Ícones usuários */
+.user-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.adicionar.aluno{
+  border:2px solid #007bff; background:#007bff; color:#fff;
+  width:25px; height:25px; border-radius:50%;
+  font-size:12px; line-height:1; display:flex; align-items:center; justify-content:center;
+  cursor:pointer
+}
+
+.adicionar.aluno:hover{
+  border:2px solid #0056b3; background:#0056b3;
+}
