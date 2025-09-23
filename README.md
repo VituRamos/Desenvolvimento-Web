@@ -1,10 +1,10 @@
 <strong>1. Inicialize o Projeto<strong>
-Primeiro, você precisa de um ambiente de projeto React. O jeito mais fácil é usar o Vite ou o Create React App (CRA).
+Primeiro, você precisa de um ambiente de projeto React. O jeito mais fácil é usar o Vite ou o Create React App (CRA).<br>
 
-Usando Vite (recomendado):
-Vite é mais rápido e moderno.
+Usando Vite (recomendado):<br>
+Vite é mais rápido e moderno.<br>
 
-npm create vite@latest
+npm create vite@latest<br>
 
 Siga as instruções do terminal:
 Project name: my-app (ou o nome que preferir)
