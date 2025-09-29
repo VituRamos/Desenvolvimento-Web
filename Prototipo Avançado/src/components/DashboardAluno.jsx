@@ -21,7 +21,7 @@ export default function DashboardAluno() {
   const usuario = location.state?.usuario;
 
   return (
-    <div className="container">
+    <div className="student-dashboard-container">
       <Header />
       {materias.map((materia) => (
         <MateriaCard key={materia.id} materia={materia} />
