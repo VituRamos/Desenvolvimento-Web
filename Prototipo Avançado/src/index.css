@@ -1,32 +1,26 @@
+
 /* ==========================================================================
    ESTILOS GLOBAIS
-   Define estilos base para a aplicação, como fonte, cor de fundo e layout.
    ========================================================================== */
 
 body {
-  /* Define a fonte principal da aplicação. */
   font-family: 'Roboto', sans-serif;
-  /* Cor de fundo suave para a página. */
   background-color: #fafafa;
-  /* Remove margens e preenchimentos padrão do navegador. */
   margin: 0;
   padding: 0;
-  /* Centraliza o conteúdo principal. */
   display: flex;
   justify-content: center;
 }
 
-/* Container principal que envolve o conteúdo das páginas. */
 .container {
   width: 100%;
   padding: 30px 20px;
-  /* Margem no topo para não ficar atrás do cabeçalho fixo. */
   margin-top: 80px;
+  box-sizing: border-box;
 }
 
 /* ==========================================================================
    CABEÇALHO (HEADER)
-   Estilos para a barra de navegação superior.
    ========================================================================== */
 
 .header {
@@ -36,17 +30,15 @@ body {
   align-items: center;
   background: #fff;
   padding: 35px 30px;
-  /* Mantém o cabeçalho fixo no topo da página. */
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100; /* Garante que o cabeçalho fique acima de outros elementos. */
+  z-index: 100;
   height: 60px;
   box-sizing: border-box;
-  border-bottom: 1px solid #cdcdcd; /* Linha sutil para separar do conteúdo. */
+  border-bottom: 1px solid #cdcdcd;
 }
 
-/* Logo da aplicação no cabeçalho. */
 .logo img {
   height: 30px;
   width: auto;
@@ -57,7 +49,6 @@ body {
   font-size: 12px;
 }
 
-/* Avatar do usuário no cabeçalho. */
 .avatar.user {
   width: 34px;
   height: 32px;
@@ -66,35 +57,69 @@ body {
   padding-top: 5px;
 }
 
+.user-menu {
+  position: relative;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+  width: 180px;
+}
+
+.dropdown li {
+  padding: 8px 15px;
+}
+
+.dropdown li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+}
+
+.dropdown li a:hover {
+  background: #f5f5f5;
+}
+
+.dropdown hr {
+  margin: 5px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
 /* ==========================================================================
    COMPONENTES DE CARD (Matérias e Simulados)
-   Estilos para os cards expansíveis.
    ========================================================================== */
 
-/* Seta indicadora de expansão do card. */
 .arrow {
   font-size: 20px;
   vertical-align: middle;
-  transition: transform 0.3s ease; /* Animação suave na rotação. */
+  transition: transform 0.3s ease;
 }
 
 .arrow.open {
-  transform: rotate(90deg); /* Gira a seta quando o card está aberto. */
+  transform: rotate(90deg);
 }
 
-/* Estilo base do card. */
 .card {
   border: 2px solid #007bff;
-  width: 1880px;
   border-radius: 12px;
   margin-bottom: 20px;
   background: #fff;
-  overflow: hidden; /* Garante que o conteúdo não ultrapasse as bordas arredondadas. */
+  overflow: hidden;
 }
 
-/* Cabeçalho do card (clicável para expandir). */
 .card-header {
-  user-select: none; /* Impede a seleção de texto no cabeçalho. */
+  user-select: none;
   padding: 20px 20px;
   font-weight: bold;
   color: #3C3C3C;
@@ -105,21 +130,26 @@ body {
   align-items: center;
 }
 
-/* Conteúdo do card (inicialmente oculto). */
 .card-content {
   display: none;
   padding: 5px 20px 15px 20px;
 }
 
 .card-content.active {
-  display: block; /* Mostra o conteúdo quando o card está ativo. */
+  display: block;
 }
 
-/* Estilos para a lista de simulados dentro de um card. */
-.simulado {
-  user-select: none;
+.simulado-item {
   padding: 12px;
   border-bottom: 1px solid #eee;
+}
+
+.simulado-item:last-child {
+  border-bottom: none;
+}
+
+.simulado {
+  user-select: none;
   cursor: pointer;
 }
 
@@ -127,11 +157,11 @@ body {
   font-weight: 500;
 }
 
-/* Opções que aparecem ao clicar em um simulado. */
 .simulado-options {
   display: none;
-  padding: 10px;
-  background: #f9f9f9;
+  padding: 15px 10px 10px 10px;
+  margin-top: 10px;
+  background: #fff;
   border-left: 3px solid #007bff;
 }
 
@@ -139,33 +169,56 @@ body {
   display: block;
 }
 
-.simulado-options button {
-  margin-right: 8px;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
+.simulado-option-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 5px;
+  padding-left: 10px;
+  gap: 15px;
   cursor: pointer;
-  background: #007bff;
-  color: #fff;
+  background-color: #fff;
+  margin-bottom: 20px;
 }
 
-.simulado-options button:hover {
-  background: #0056b3;
+.simulado-option-item:last-child {
+  margin-bottom: 0;
+}
+
+.simulado-option-item img {
+  width: 20px;
+  height: 22px;
+  margin-top: 6px;
+}
+
+.simulado-option-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.simulado-option-text h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2c2c2c;
+}
+
+.simulado-option-text p {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: #6f6f6f;
+  line-height: 1.3;
 }
 
 /* ==========================================================================
    GRID DE ALUNOS
-   Estilos para a visualização dos alunos em formato de grid.
    ========================================================================== */
 
-/* Container que organiza os cards dos alunos em um grid responsivo. */
 .lista-alunos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 12px;
 }
 
-/* Card individual para cada aluno. */
 .card-aluno {
   display: flex;
   align-items: center;
@@ -203,7 +256,6 @@ body {
   cursor: pointer;
 }
 
-/* Badge de pontuação do aluno. */
 .pontuacao {
   background: #222;
   color: #fff;
@@ -228,10 +280,8 @@ body {
 
 /* ==========================================================================
    BOTÕES
-   Estilos para botões genéricos e o Floating Action Button (FAB).
    ========================================================================== */
 
-/* Estilo base para botões principais. */
 .btn {
   background: #007bff;
   color: #fff;
@@ -251,7 +301,6 @@ body {
   background: #0056b3;
 }
 
-/* Floating Action Button (botão flutuante de ação). */
 .fab {
   position: fixed;
   right: 20px;
@@ -270,9 +319,11 @@ body {
   box-shadow: 0 6px 16px rgba(0, 0, 0, .15);
   cursor: pointer;
 }
+
 .fab:active {
   transform: translateY(2px);
 }
+
 @media (min-width: 1024px) {
   .fab {
     right: 32px;
@@ -282,10 +333,8 @@ body {
 
 /* ==========================================================================
    POPUP (MODAL)
-   Estilos para a janela de popup usada para cadastros e edições.
    ========================================================================== */
 
-/* Overlay escuro que cobre a tela inteira atrás do popup. */
 .popup-overlay {
   display: flex;
   position: fixed;
@@ -299,7 +348,6 @@ body {
   align-items: center;
 }
 
-/* Conteúdo principal do popup. */
 .popup-content {
   background: #fff;
   padding: 20px;
@@ -308,7 +356,7 @@ body {
   max-width: 400px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   position: relative;
-  animation: fadeIn 0.3s ease; /* Animação de surgimento. */
+  animation: fadeIn 0.3s ease;
 }
 
 .close-btn {
@@ -378,7 +426,6 @@ body {
   background: #0056b3;
 }
 
-/* Animação de surgimento para o popup. */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -394,13 +441,13 @@ body {
    GRIDS E ÍCONES ADICIONAIS
    ========================================================================== */
 
-.grid{
+.grid {
   padding: 10px;
   border-radius: 15px;
   border: 0.5px solid rgba(115, 115, 115, 0.35);
 }
 
-.grid.alunos{
+.grid.alunos {
   margin-top: 25px;
   display: flex;
   flex-wrap: wrap;
@@ -412,23 +459,27 @@ body {
   gap: 8px;
 }
 
-.adicionar.aluno{
+.adicionar.aluno {
   border:2px solid #007bff; background:#007bff; color:#fff;
   width:25px; height:25px; border-radius:50%;
   font-size:12px; line-height:1; display:flex; align-items:center; justify-content:center;
   cursor:pointer
 }
 
-.adicionar.aluno:hover{
+.adicionar.aluno:hover {
   border:2px solid #0056b3; background:#0056b3;
 }
 
+.material-icons.bolder{
+  font-size: 24px;
+  -webkit-text-stroke: 1px black;
+}
+
+
 /* ==========================================================================
    TELA DE LOGIN
-   Estilos específicos para a página de login.
    ========================================================================== */
 
-/* Container principal da tela de login. */
 .login-container {
     width: 100%;
     max-width: 900px;
@@ -436,7 +487,6 @@ body {
     box-sizing: border-box;
 }
 
-/* Caixa de login (o card branco com borda azul). */
 .login-box {
     display: flex;
     background-color: #fff;
@@ -446,7 +496,6 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Área do formulário de login (lado esquerdo). */
 .login-form-area {
     flex: 1;
     padding: 40px;
@@ -467,7 +516,6 @@ body {
     text-align: center;
 }
 
-/* Estilos do formulário de login. */
 .login-form {
     display: flex;
     flex-direction: column;
@@ -521,17 +569,6 @@ body {
     font-weight: 500;
 }
 
-/* Estilo genérico para botões na tela de login. */
-.btn {
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
 .primary-btn {
     background-color: #007bff;
     color: #fff;
@@ -560,7 +597,6 @@ body {
     background-color: #e2e6ea;
 }
 
-/* Divisor com texto (ex: "Login com Google"). */
 .divider {
     display: flex;
     align-items: center;
@@ -584,7 +620,6 @@ body {
     margin-left: .5em;
 }
 
-/* Área da imagem de ilustração (lado direito do login). */
 .login-image-area {
     flex: 1;
 }
@@ -592,16 +627,14 @@ body {
 .login-image-area img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Garante que a imagem cubra a área sem distorcer. */
+    object-fit: cover;
 }
 
 /* ==========================================================================
    RESPONSIVIDADE
-   Ajustes para telas menores.
    ========================================================================== */
 
 @media (max-width: 768px) {
-    /* Na tela de login, esconde a imagem de ilustração em telas pequenas. */
     .login-box {
         flex-direction: column;
     }
@@ -609,5 +642,4 @@ body {
     .login-image-area {
         display: none;
     }
-
 }
