@@ -110,6 +110,7 @@ body {
 }
 
 .card {
+  width: 1500px;
   border: 2px solid #007bff;
   border-radius: 12px;
   margin-bottom: 20px;
@@ -149,6 +150,7 @@ body {
 
 .simulado {
   user-select: none;
+  padding: 12px;
   cursor: pointer;
 }
 
@@ -628,6 +630,285 @@ body {
     height: 100%;
     object-fit: cover;
 }
+/* ==========================================================================
+   SIMULADO (QUIZ)
+   ========================================================================== */
+
+.simulado-container {
+  width: 100%;
+  max-width: 800px; /* Limita a largura do quiz para melhor leitura */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.simulado-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.simulado-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.quiz-container {
+  background: #fff;
+  border: 2px solid #007bff; /* Borda azul em destaque */
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+.question:last-child {
+  margin-bottom: 0;
+}
+
+.question h3 {
+  margin: 0 0 15px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.question p {
+  margin: 0 0 20px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option:hover {
+  background-color: #f0f0f0;
+}
+
+/* Estado da Opção */
+.option.selected {
+  background-color: #007bff; /* Opção selecionada pelo usuário */
+  color: #fff;
+  border-color: #007bff;
+}
+
+.option.correct {
+  border: 2px solid #28a745; /* Resposta correta (verde) */
+  background: #e6f4ea;
+  color: #1e7e34;
+}
+
+.option.incorrect {
+  border: 2px solid #dc3545; /* Resposta incorreta (vermelho) */
+  background: #fbeaea;
+  color: #a71d2a;
+}
+
+.actions {
+  text-align: center;
+  margin-top: 15px;
+}
+
+#next-btn {
+  display: block;
+}
+
+#restart-btn {
+  margin-top: 12px;
+}
+
+/* Resultado */
+.resultado-container {
+  background: #fff;
+  border: 2px solid #007bff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.resultado-container h3 {
+  margin: 0 0 15px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+#gabarito p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+#gabarito .correct {
+  color: green;
+}
+
+#gabarito .incorrect {
+  color: red;
+}
+
+/* Explicações */
+.explanation {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.explanation .material-icons {
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+.explanation.correct {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.explanation.incorrect {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   BOTÕES (Estilos do Quiz)
+   ========================================================================== */
+
+.btn {
+  background: #007bff;
+  color: #fff;
+  text-align: center;
+  padding: 12px 30px; /* Padding ajustado para botões do quiz */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: #0056b3;
+}
+
+/* ===== FEEDBACK CONTAINER ===== */
+.feedback-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ===== ALUNO INFO ===== */
+.aluno-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.aluno-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.aluno-dados h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.aluno-dados p {
+  margin: 5px 0 0 0;
+  font-size: 16px;
+  color: #666;
+}
+
+/* ===== FEEDBACK CARD ===== */
+.feedback-card {
+  background: #fff;
+  border: 2px solid #007bff;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.feedback-header {
+  padding: 20px;
+  background-color: #007bff;
+  color: #fff;
+}
+
+.feedback-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.feedback-body {
+  padding: 20px;
+}
+
+/* ===== FEEDBACK ITEM ===== */
+.feedback-item {
+  margin-bottom: 20px;
+}
+
+.feedback-item:last-child {
+  margin-bottom: 0;
+}
+
+.feedback-item h4 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.feedback-item p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+}
+
+/* ===== ACTIONS ===== */
+.actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn {
+  background: #007bff;
+  color: #fff;
+  text-align: center;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: #0056b3;
+}
+
 
 /* ==========================================================================
    RESPONSIVIDADE

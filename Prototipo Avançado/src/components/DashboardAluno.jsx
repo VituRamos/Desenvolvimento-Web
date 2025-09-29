@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import MateriaCard from './MateriaCard';
+import "../index.css";
 
 // Mock data for now, this would come from an API or props
 const materias = [

@@ -3,12 +3,16 @@ import { useState } from 'react';
 // Importa as imagens usadas nas opções do simulado.
 import ClipboardTeste from '../assets/ClipboardTeste.png';
 import MedalTeste from '../assets/MedalTeste.png';
+import "../index.css";
+import { useNavigate } from "react-router-dom";
+
 
 // Componente que representa um único item de simulado dentro de um card de matéria.
 // Recebe um objeto 'simulado' como propriedade.
 const SimuladoItem = ({ simulado }) => {
   // Estado para controlar se as opções do simulado estão visíveis.
   const [aberto, setAberto] = useState(false);
+  const navigate = useNavigate(); // 🔥 inicializa o hook
 
   return (
     // Container para o item do simulado.
@@ -26,7 +30,7 @@ const SimuladoItem = ({ simulado }) => {
       {aberto && (
         <div id={simulado.id} className="simulado-options active">
           {/* Opção para realizar o simulado. */}
-          <div className="simulado-option-item">
+          <div className="simulado-option-item" onClick={() => navigate("/Simulado")} style={{ cursor: "pointer" }}>
             <img src={ClipboardTeste} alt="clipboard" />
             <div className="simulado-option-text">
               <h4>Realizar simulado</h4>
@@ -34,7 +38,7 @@ const SimuladoItem = ({ simulado }) => {
             </div>
           </div>
           {/* Opção para ver os resultados. */}
-          <div className="simulado-option-item">
+          <div className="simulado-option-item" onClick={() => navigate("/Feedback")} style={{ cursor: "pointer" }}>
             <img src={MedalTeste} alt="medal" />
             <div className="simulado-option-text">
               <h4>Resultados do simulado</h4>

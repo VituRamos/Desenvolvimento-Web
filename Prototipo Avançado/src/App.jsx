@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import DashboardAluno from "./components/DashboardAluno";
 import DashboardProfessor from "./components/DashboardProfessor";
+import Simulado from "./components/Simulado";
+import FeedbackPage from "./components/FeedbackPage";
 
 // Componente principal da aplicação, responsável por gerenciar as rotas.
 function App() {
@@ -23,6 +25,12 @@ function App() {
 
         {/* Define a rota "/professor" para renderizar o dashboard do professor. */}
         <Route path="/professor" element={<DashboardProfessor />} />
+
+        {/* Define a rota "/simulado" para renderizar o dashboard do professor. */}
+        <Route path="/simulado" element={<Simulado />} />
+
+        {/* Define a rota "/feedback" para renderizar o dashboard do professor. */}
+        <Route path="/feedback" element={<FeedbackPage />} />
       </Routes>
     </Router>
   );
