@@ -77,68 +77,70 @@ const Login = () => {
 
     // Se não houver usuário logado, renderiza a tela de login.
     return (
-        <main className="login-container">
-            <div className="login-box">
-                <div className="login-form-area">
-                    <div className="login-header">
-                        <h2>BEM VINDO DE VOLTA!</h2>
-                        <p>Por favor, insira seu email e senha.</p>
+        <div className="login-page-wrapper">
+            <main className="login-container">
+                <div className="login-box">
+                    <div className="login-form-area">
+                        <div className="login-header">
+                            <h2>BEM VINDO DE VOLTA!</h2>
+                            <p>Por favor, insira seu email e senha.</p>
+                        </div>
+
+                        {/* Formulário de login */}
+                        <form className="login-form" onSubmit={handleLogin}>
+                            <div className="input-group">
+                                <label htmlFor="email">Email</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Digite seu email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="input-group">
+                                <label htmlFor="password">Senha</label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Digite sua senha"
+                                    value={senha}
+                                    onChange={(e) => setSenha(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <button type="submit" className="btn primary-btn">
+                                Entrar
+                            </button>
+                        </form>
+
+                        {/* Link para abrir o popup de cadastro */}
+                        <div style={{ marginTop: "20px", textAlign: "center" }}>
+                            <a href="#" onClick={openPopup}>
+                                Não tem conta? Cadastre-se aqui.
+                            </a>
+                        </div>
                     </div>
 
-                    {/* Formulário de login */}
-                    <form className="login-form" onSubmit={handleLogin}>
-                        <div className="input-group">
-                            <label htmlFor="email">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="Digite seu email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="input-group">
-                            <label htmlFor="password">Senha</label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Digite sua senha"
-                                value={senha}
-                                onChange={(e) => setSenha(e.target.value)}
-                                required
-                            />
-                        </div>
-
-                        <button type="submit" className="btn primary-btn">
-                            Entrar
-                        </button>
-                    </form>
-
-                    {/* Link para abrir o popup de cadastro */}
-                    <div style={{ marginTop: "20px", textAlign: "center" }}>
-                        <a href="#" onClick={openPopup}>
-                            Não tem conta? Cadastre-se aqui.
-                        </a>
+                    {/* Área da imagem de ilustração */}
+                    <div className="login-image-area">
+                        <img src={LeBudda} alt="LeBudda" />
                     </div>
                 </div>
 
-                {/* Área da imagem de ilustração */}
-                <div className="login-image-area">
-                    <img src={LeBudda} alt="LeBudda" />
-                </div>
-            </div>
-
-            {/* Renderiza o popup de cadastro se isPopupOpen for true */}
-            {isPopupOpen && (
-                <PopupCadastro
-                    onClose={() => setIsPopupOpen(false)} // Passa a função para fechar o popup.
-                    onConfirm={handleCadastro} // Passa a função para confirmar o cadastro.
-                />
-            )}
-        </main>
+                {/* Renderiza o popup de cadastro se isPopupOpen for true */}
+                {isPopupOpen && (
+                    <PopupCadastro
+                        onClose={() => setIsPopupOpen(false)} // Passa a função para fechar o popup.
+                        onConfirm={handleCadastro} // Passa a função para confirmar o cadastro.
+                    />
+                )}
+            </main>
+        </div>
     );
 };
 
