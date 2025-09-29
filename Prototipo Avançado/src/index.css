@@ -1,19 +1,34 @@
+/* ==========================================================================
+   ESTILOS GLOBAIS
+   Define estilos base para a aplicação, como fonte, cor de fundo e layout.
+   ========================================================================== */
+
 body {
+  /* Define a fonte principal da aplicação. */
   font-family: 'Roboto', sans-serif;
+  /* Cor de fundo suave para a página. */
   background-color: #fafafa;
+  /* Remove margens e preenchimentos padrão do navegador. */
   margin: 0;
   padding: 0;
+  /* Centraliza o conteúdo principal. */
   display: flex;
   justify-content: center;
 }
 
+/* Container principal que envolve o conteúdo das páginas. */
 .container {
   width: 100%;
   padding: 30px 20px;
+  /* Margem no topo para não ficar atrás do cabeçalho fixo. */
   margin-top: 80px;
 }
 
-/* Cabeçalho */
+/* ==========================================================================
+   CABEÇALHO (HEADER)
+   Estilos para a barra de navegação superior.
+   ========================================================================== */
+
 .header {
   width: 100%;
   display: flex;
@@ -21,16 +36,17 @@ body {
   align-items: center;
   background: #fff;
   padding: 35px 30px;
+  /* Mantém o cabeçalho fixo no topo da página. */
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 100; /* Garante que o cabeçalho fique acima de outros elementos. */
   height: 60px;
   box-sizing: border-box;
-  border-bottom: 1px solid #cdcdcd;
+  border-bottom: 1px solid #cdcdcd; /* Linha sutil para separar do conteúdo. */
 }
 
-/* Logo */
+/* Logo da aplicação no cabeçalho. */
 .logo img {
   height: 30px;
   width: auto;
@@ -41,7 +57,7 @@ body {
   font-size: 12px;
 }
 
-/* Avatar Usuario */
+/* Avatar do usuário no cabeçalho. */
 .avatar.user {
   width: 34px;
   height: 32px;
@@ -50,28 +66,35 @@ body {
   padding-top: 5px;
 }
 
-/* Card disciplina */
+/* ==========================================================================
+   COMPONENTES DE CARD (Matérias e Simulados)
+   Estilos para os cards expansíveis.
+   ========================================================================== */
+
+/* Seta indicadora de expansão do card. */
 .arrow {
   font-size: 20px;
   vertical-align: middle;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease; /* Animação suave na rotação. */
 }
 
 .arrow.open {
-  transform: rotate(90deg);
+  transform: rotate(90deg); /* Gira a seta quando o card está aberto. */
 }
 
+/* Estilo base do card. */
 .card {
   border: 2px solid #007bff;
   width: 1880px;
   border-radius: 12px;
   margin-bottom: 20px;
   background: #fff;
-  overflow: hidden;
+  overflow: hidden; /* Garante que o conteúdo não ultrapasse as bordas arredondadas. */
 }
 
+/* Cabeçalho do card (clicável para expandir). */
 .card-header {
-  user-select: none;
+  user-select: none; /* Impede a seleção de texto no cabeçalho. */
   padding: 20px 20px;
   font-weight: bold;
   color: #3C3C3C;
@@ -82,16 +105,17 @@ body {
   align-items: center;
 }
 
+/* Conteúdo do card (inicialmente oculto). */
 .card-content {
   display: none;
   padding: 5px 20px 15px 20px;
 }
 
 .card-content.active {
-  display: block;
+  display: block; /* Mostra o conteúdo quando o card está ativo. */
 }
 
-/* Lista simulados */
+/* Estilos para a lista de simulados dentro de um card. */
 .simulado {
   user-select: none;
   padding: 12px;
@@ -99,6 +123,11 @@ body {
   cursor: pointer;
 }
 
+.titulo-simulado {
+  font-weight: 500;
+}
+
+/* Opções que aparecem ao clicar em um simulado. */
 .simulado-options {
   display: none;
   padding: 10px;
@@ -124,18 +153,19 @@ body {
   background: #0056b3;
 }
 
-.titulo-simulado {
-  font-weight: 500;
-}
+/* ==========================================================================
+   GRID DE ALUNOS
+   Estilos para a visualização dos alunos em formato de grid.
+   ========================================================================== */
 
-/* container de todos os alunos */
+/* Container que organiza os cards dos alunos em um grid responsivo. */
 .lista-alunos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 12px;
 }
 
-/* card individual */
+/* Card individual para cada aluno. */
 .card-aluno {
   display: flex;
   align-items: center;
@@ -173,7 +203,7 @@ body {
   cursor: pointer;
 }
 
-/* pontuação (badge lateral) */
+/* Badge de pontuação do aluno. */
 .pontuacao {
   background: #222;
   color: #fff;
@@ -196,7 +226,12 @@ body {
   font-weight: 700;
 }
 
-/* Botão */
+/* ==========================================================================
+   BOTÕES
+   Estilos para botões genéricos e o Floating Action Button (FAB).
+   ========================================================================== */
+
+/* Estilo base para botões principais. */
 .btn {
   background: #007bff;
   color: #fff;
@@ -216,7 +251,7 @@ body {
   background: #0056b3;
 }
 
-/* Floating Action Button */
+/* Floating Action Button (botão flutuante de ação). */
 .fab {
   position: fixed;
   right: 20px;
@@ -245,7 +280,12 @@ body {
   }
 }
 
-/* ====== POPUP ====== */
+/* ==========================================================================
+   POPUP (MODAL)
+   Estilos para a janela de popup usada para cadastros e edições.
+   ========================================================================== */
+
+/* Overlay escuro que cobre a tela inteira atrás do popup. */
 .popup-overlay {
   display: flex;
   position: fixed;
@@ -259,6 +299,7 @@ body {
   align-items: center;
 }
 
+/* Conteúdo principal do popup. */
 .popup-content {
   background: #fff;
   padding: 20px;
@@ -267,7 +308,7 @@ body {
   max-width: 400px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   position: relative;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.3s ease; /* Animação de surgimento. */
 }
 
 .close-btn {
@@ -337,6 +378,7 @@ body {
   background: #0056b3;
 }
 
+/* Animação de surgimento para o popup. */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -348,7 +390,10 @@ body {
   }
 }
 
-/* Grids */
+/* ==========================================================================
+   GRIDS E ÍCONES ADICIONAIS
+   ========================================================================== */
+
 .grid{
   padding: 10px;
   border-radius: 15px;
@@ -361,7 +406,6 @@ body {
   flex-wrap: wrap;
 }
 
-/* Ícones usuários */
 .user-icons {
   display: flex;
   flex-wrap: wrap;
@@ -379,9 +423,12 @@ body {
   border:2px solid #0056b3; background:#0056b3;
 }
 
+/* ==========================================================================
+   TELA DE LOGIN
+   Estilos específicos para a página de login.
+   ========================================================================== */
 
-
-/* Container principal da tela de login */
+/* Container principal da tela de login. */
 .login-container {
     width: 100%;
     max-width: 900px;
@@ -389,9 +436,9 @@ body {
     box-sizing: border-box;
 }
 
-/* Caixa de login (o card branco com borda azul) */
+/* Caixa de login (o card branco com borda azul). */
 .login-box {
-    display: flex; 
+    display: flex;
     background-color: #fff;
     border-radius: 12px;
     border: 3px solid #007bff;
@@ -399,7 +446,7 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Área do formulário de login (lado esquerdo) */
+/* Área do formulário de login (lado esquerdo). */
 .login-form-area {
     flex: 1;
     padding: 40px;
@@ -420,7 +467,7 @@ body {
     text-align: center;
 }
 
-/* Estilos do formulário */
+/* Estilos do formulário de login. */
 .login-form {
     display: flex;
     flex-direction: column;
@@ -474,7 +521,7 @@ body {
     font-weight: 500;
 }
 
-/* Botões */
+/* Estilo genérico para botões na tela de login. */
 .btn {
     padding: 12px;
     border: none;
@@ -513,7 +560,7 @@ body {
     background-color: #e2e6ea;
 }
 
-/* Divisor com texto "Login com Google" */
+/* Divisor com texto (ex: "Login com Google"). */
 .divider {
     display: flex;
     align-items: center;
@@ -537,19 +584,24 @@ body {
     margin-left: .5em;
 }
 
-/* Área da imagem (lado direito) */
+/* Área da imagem de ilustração (lado direito do login). */
 .login-image-area {
     flex: 1;
 }
 
 .login-image-area img {
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem cubra a área sem distorcer. */
 }
 
-/* Responsividade para telas menores */
+/* ==========================================================================
+   RESPONSIVIDADE
+   Ajustes para telas menores.
+   ========================================================================== */
+
 @media (max-width: 768px) {
+    /* Na tela de login, esconde a imagem de ilustração em telas pequenas. */
     .login-box {
         flex-direction: column;
     }
@@ -559,4 +611,3 @@ body {
     }
 
 }
-
