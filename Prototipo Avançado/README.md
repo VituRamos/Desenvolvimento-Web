@@ -31,7 +31,7 @@ Após a instalação das dependências, você pode iniciar o servidor de desenvo
 npm run dev
 ```
 
-Isso iniciará a aplicação em modo de desenvolvimento. Abra seu navegador e acesse [http://localhost:5173](http://localhost:5173) (ou o endereço indicado no seu terminal) para ver a aplicação em execução.
+Isso iniciará a aplicação em modo de desenvolvimento. Abra seu navegador e acesse [http://localhost:5173](http://localhost:5173) para ver a aplicação em execução.
 
 ## Scripts Disponíveis
 
