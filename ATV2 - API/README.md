@@ -16,6 +16,7 @@ Antes de usar o terminal, garanta que você já tenha instalado:
  ```
 
 * Comando de ativação (escolha o do seu sistema):
+
 Windows:
 ```Bash
 .\venv\Scripts\activate
