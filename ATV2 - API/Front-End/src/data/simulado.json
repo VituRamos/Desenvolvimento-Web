@@ -1,0 +1,43 @@
+{
+  "titulo": "Simulado de Português",
+  "questoes": [
+    {
+      "id": 1,
+      "pergunta": "Qual a figura de linguagem presente na frase: \"O sol beijava o topo da montanha\"?",
+      "opcoes": {
+        "a": "Metáfora",
+        "b": "Personificação",
+        "c": "Hipérbole",
+        "d": "Eufemismo",
+        "e": "Ironia"
+      },
+      "correta": "b",
+      "explicacoes": {
+        "a": "Metáfora compara elementos, mas aqui há ação humana atribuída ao sol.",
+        "b": "Resposta correta. O sol está realizando uma ação humana, ou seja, personificação.",
+        "c": "Hipérbole é exagero intencional, o que não ocorre aqui.",
+        "d": "Eufemismo suaviza expressões, o que não se aplica aqui.",
+        "e": "Ironia expressa o contrário do que se diz."
+      }
+    },
+    {
+      "id": 2,
+      "pergunta": "Qual o autor de \"Dom Casmurro\"?",
+      "opcoes": {
+        "a": "José de Alencar",
+        "b": "Machado de Assis",
+        "c": "Carlos Drummond de Andrade",
+        "d": "Graciliano Ramos",
+        "e": "Cecília Meireles"
+      },
+      "correta": "b",
+      "explicacoes": {
+        "a": "José de Alencar foi outro escritor importante, mas não o autor de Dom Casmurro.",
+        "b": "Correto! Machado de Assis é o autor de Dom Casmurro.",
+        "c": "Drummond foi um grande poeta, mas não escreveu Dom Casmurro.",
+        "d": "Graciliano Ramos escreveu Vidas Secas.",
+        "e": "Cecília Meireles foi poetisa, mas não autora de Dom Casmurro."
+      }
+    }
+  ]
+}
