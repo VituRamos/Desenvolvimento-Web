@@ -10,7 +10,7 @@ Antes de usar o terminal, garanta que você já tenha instalado:
 * **Git:** [https://git-scm.com/](https://git-scm.com/)
 
 ### 2. Configurar e Rodar o Back-end (API FastAPI)
-*Crie e Ative o Ambiente Virtual:
+* Crie e Ative o Ambiente Virtual:
  ```Bash
   python -m venv venv
  ```
