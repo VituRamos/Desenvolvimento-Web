@@ -26,12 +26,12 @@ Comando de ativação (escolha o do seu sistema):
  source venv/bin/activate
 ```
 
-# 2.1 Instale as Dependências Python:
+## 2.1 Instale as Dependências Python:
 ```Bash
 pip install -r requirements.txt
 ```
 
-# 2.2 Inicie o Servidor da API:
+## 2.2 Inicie o Servidor da API:
 ```Bash
 uvicorn main:app --reload
 ```
