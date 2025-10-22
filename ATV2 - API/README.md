@@ -10,15 +10,15 @@ Antes de usar o terminal, garanta que você já tenha instalado:
 * **Git:** [https://git-scm.com/](https://git-scm.com/)
 
 ### 2. Configurar e Rodar o Back-end (API FastAPI)
-Crie e Ative o Ambiente Virtual:
-python -m venv venv
+* Crie e Ative o Ambiente Virtual:
+  python -m venv venv
 
-# Comando de ativação (escolha o do seu sistema):
-# Windows:
+* Comando de ativação (escolha o do seu sistema):
+* Windows:
 .\venv\Scripts\activate
 
-# Mac/Linux:
-# source venv/bin/activate
+* Mac/Linux:
+ source venv/bin/activate
 
 # 2.1 Instale as Dependências Python:
 # pip install -r requirements.txt
