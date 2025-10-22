@@ -10,28 +10,28 @@ Antes de usar o terminal, garanta que você já tenha instalado:
 * **Git:** [https://git-scm.com/](https://git-scm.com/)
 
 ### 2. Configurar e Rodar o Back-end (API FastAPI)
-* Crie e Ative o Ambiente Virtual:
+*Crie e Ative o Ambiente Virtual:
  ```Bash
   python -m venv venv
  ```
 
-Comando de ativação (escolha o do seu sistema):
-* Windows:
+* Comando de ativação (escolha o do seu sistema):
+Windows:
 ```Bash
 .\venv\Scripts\activate
 ```
 
-* Mac/Linux:
+Mac/Linux:
 ```Bash
  source venv/bin/activate
 ```
 
-## 2.1 Instale as Dependências Python:
+* Instale as Dependências Python:
 ```Bash
 pip install -r requirements.txt
 ```
 
-## 2.2 Inicie o Servidor da API:
+* Inicie o Servidor da API:
 ```Bash
 uvicorn main:app --reload
 ```
