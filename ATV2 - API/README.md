@@ -11,9 +11,11 @@ Antes de usar o terminal, garanta que você já tenha instalado:
 
 ### 2. Configurar e Rodar o Back-end (API FastAPI)
 * Crie e Ative o Ambiente Virtual:
+ ```Bash
   python -m venv venv
+ ```
 
-* Comando de ativação (escolha o do seu sistema):
+Comando de ativação (escolha o do seu sistema):
 * Windows:
 ```Bash
 .\venv\Scripts\activate
@@ -47,7 +49,7 @@ Instale as Dependências JavaScript:
 npm install
 ```
 
-Inicie o Servidor de Desenvolvimento:
+Inicie o Servidor de Desenvolvimento (dentro da pasta Front-End):
 ```Bash
 npm run dev
 ```
@@ -55,3 +57,18 @@ npm run dev
 
 ### 4. Acessar a Aplicação
 Com os dois terminais rodando (Uvicorn e Vite), abra seu navegador e acesse: http://localhost:5173
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
