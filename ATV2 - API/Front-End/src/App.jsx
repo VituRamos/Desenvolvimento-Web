@@ -1,36 +1,62 @@
-// Importa os hooks 'useEffect' e 'useState' do React, embora não estejam sendo utilizados neste arquivo.
-import { useEffect, useState } from "react";
 // Importa os componentes necessários do 'react-router-dom' para configurar o roteamento da aplicação.
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Importa os componentes das páginas que serão renderizadas pelas rotas.
-import Login from "./components/Login";
-import DashboardAluno from "./components/DashboardAluno";
-import DashboardProfessor from "./components/DashboardProfessor";
-import Simulado from "./components/Simulado";
-import FeedbackPage from "./components/FeedbackPage";
+import Login from "./components/auth/Login";
+import DashboardAluno from "./components/aluno/DashboardAluno";
+import DashboardProfessor from "./components/professor/DashboardProfessor";
+import Simulado from "./components/simulado/Simulado";
+import FeedbackPage from "./components/feedback/FeedbackPage";
+// Importa o componente de proteção de rota que acabamos de criar.
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
-// Componente principal da aplicação, responsável por gerenciar as rotas.
+// Componente principal da aplicação, agora com rotas protegidas.
 function App() {
   return (
-    // 'Router' (como BrowserRouter) é o componente que envolve a aplicação e habilita o roteamento.
     <Router>
-      {/* 'Routes' é o componente que agrupa as definições de rota. */}
       <Routes>
-        {/* Define a rota raiz ("/") para renderizar o componente de Login. */}
+        {/* Rota de Login: pública */}
         <Route path="/" element={<Login />} />
 
-        {/* Define a rota "/aluno" para renderizar o dashboard do aluno. */}
-        <Route path="/aluno" element={<DashboardAluno />} />
+        {/* Rota do Aluno: Protegida. Só permite acesso se o 'userType' no localStorage for 'aluno'. */}
+        <Route
+          path="/aluno"
+          element={
+            <ProtectedRoute tipoRequerido="aluno">
+              <DashboardAluno />
+            </ProtectedRoute>
+          }
+        />
 
-        {/* Define a rota "/professor" para renderizar o dashboard do professor. */}
-        <Route path="/professor" element={<DashboardProfessor />} />
+        {/* Rota do Professor: Protegida. Só permite acesso se o 'userType' no localStorage for 'professor'. */}
+        <Route
+          path="/professor"
+          element={
+            <ProtectedRoute tipoRequerido="professor">
+              <DashboardProfessor />
+            </ProtectedRoute>
+          }
+        />
 
-        {/* Define a rota "/simulado" para renderizar o dashboard do professor. */}
-        <Route path="/simulado/:simuladoId" element={<Simulado />} />
+        {/* Rota do Simulado: Protegida. Permite acesso a qualquer usuário logado (aluno ou professor). */}
+        <Route
+          path="/simulado/:simuladoId"
+          element={
+            <ProtectedRoute requiresAuth={true}>
+              <Simulado />
+            </ProtectedRoute>
+          }
+        />
 
-        {/* Define a rota "/feedback" para renderizar o dashboard do professor. */}
-        <Route path="/feedback/:simuladoId" element={<FeedbackPage />} />
+        {/* Rota de Feedback: Protegida. Permite acesso a qualquer usuário logado (aluno ou professor). */}
+        <Route
+          path="/feedback/:simuladoId"
+          element={
+            <ProtectedRoute requiresAuth={true}>
+              <FeedbackPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );

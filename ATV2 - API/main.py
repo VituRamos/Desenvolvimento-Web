@@ -11,14 +11,10 @@ import json
 import google.generativeai as genai
 from pypdf import PdfReader
 import io
+import config # Importa o arquivo de configuração
 
-GOOGLE_CLIENT_ID = ".apps.googleusercontent.com"
-GOOGLE_CLIENT_SECRET = " "
-GOOGLE_REDIRECT_URI = "http://localhost:5173"
-GOOGLE_API_KEY = " "
-
-# Configura a biblioteca do Gemini
-genai.configure(api_key=GOOGLE_API_KEY)
+# Configura a biblioteca do Gemini usando a chave do config.py
+genai.configure(api_key=config.GOOGLE_API_KEY)
 
 # --- 1. Instância da Aplicação ---
 app = FastAPI()
@@ -110,7 +106,8 @@ def fazer_login(login_data: LoginData):
 @app.post("/auth/google")
 async def auth_google(auth_code: GoogleAuthCode):
     token_url = "https://oauth2.googleapis.com/token"
-    token_data = { "code": auth_code.code, "client_id": GOOGLE_CLIENT_ID, "client_secret": GOOGLE_CLIENT_SECRET, "redirect_uri": GOOGLE_REDIRECT_URI, "grant_type": "authorization_code", }
+    # Usa as chaves do config.py
+    token_data = { "code": auth_code.code, "client_id": config.GOOGLE_CLIENT_ID, "client_secret": config.GOOGLE_CLIENT_SECRET, "redirect_uri": config.GOOGLE_REDIRECT_URI, "grant_type": "authorization_code", }
     async with httpx.AsyncClient() as client:
         token_response = await client.post(token_url, data=token_data)
     if token_response.status_code != 200:
@@ -144,36 +141,19 @@ def create_materia(materia_data: MateriaCreate):
     db_materias.append(nova_materia)
     return nova_materia
 
-# --- Endpoint GET Simulado ---
 @app.get("/simulados/{id_simulado}", response_model=SimuladoCompleto)
 def get_simulado(id_simulado: str):
-    """
-    Busca um simulado completo pelo ID. Usado pelo Simulado.jsx.
-    """
-    ### DEBUG ###
-    print(f"\n--- REQUISIÇÃO GET /simulados/{id_simulado} ---")
-    print(f"ID Solicitado: {id_simulado}")
-    print(f"Conteúdo ATUAL de db_simulados: {list(db_simulados.keys())}") # Mostra as chaves (IDs) que existem
-    ### FIM DEBUG ###
-
     simulado = db_simulados.get(id_simulado)
     if not simulado:
-        print(f"!!! ERRO: ID '{id_simulado}' NÃO ENCONTRADO em db_simulados. !!!") ### DEBUG ###
         raise HTTPException(status_code=404, detail="Simulado não encontrado")
-
-    print(f"Simulado '{simulado.titulo}' encontrado e retornado.") ### DEBUG ###
     return simulado
 
-# --- Endpoint POST Simulado ---
 @app.post("/materias/{id_materia}/simulados", response_model=SimuladoCompleto)
 async def create_simulado_from_gemini(
     id_materia: str,
     nome_simulado: str = Form(...),
-    arquivo: UploadFile = Form(...)
+    arquivo: UploadFile = Form (...)
 ):
-    """
-    Cria um novo simulado usando a API do Gemini, agora com suporte a PDF.
-    """
     materia = next((m for m in db_materias if m.id == id_materia), None)
     if not materia:
         raise HTTPException(status_code=404, detail="Matéria não encontrada")
@@ -181,25 +161,22 @@ async def create_simulado_from_gemini(
     texto_base = ""
     try:
         conteudo_bytes = await arquivo.read()
-        if arquivo.content_type == 'application/pdf' or arquivo.filename.lower().endswith('.pdf'):
-            print(f">>> Processando arquivo PDF: {arquivo.filename} <<<")
+        if arquivo.content_type == "application/pdf" or arquivo.filename.lower().endswith('.pdf'):
             pdf_file = io.BytesIO(conteudo_bytes)
             reader = PdfReader(pdf_file)
             for page in reader.pages:
                 texto_base += page.extract_text() + "\n"
             if not texto_base:
-                 raise HTTPException(status_code=400, detail="Não foi possível extrair texto do PDF. O PDF pode conter apenas imagens.")
+                 raise HTTPException(status_code=400, detail="Não foi possível extrair texto do PDF.")
         else:
-            print(f">>> Processando arquivo de texto: {arquivo.filename} <<<")
             texto_base = conteudo_bytes.decode('utf-8')
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Não foi possível ler ou processar o arquivo: {e}")
+        raise HTTPException(status_code=400, detail=f"Não foi possível ler o arquivo: {e}")
 
-    prompt = f"""
+    prompt = f'''
     Baseado no seguinte texto, gere um simulado de 5 questões de múltipla escolha (a, b, c, d, e).
     Para CADA questão, forneça a pergunta, as 5 opções, a letra da opção correta, e uma breve explicação para cada uma das 5 opções.
-
-    RETORNE A RESPOSTA ESTRITAMENTE NO SEGUINTE FORMATO JSON (NÃO inclua markdown '```json' ou qualquer outro texto fora do JSON):
+    RETORNE A RESPOSTA ESTRITAMENTE NO SEGUINTE FORMATO JSON (NÃO inclua markdown \'\'\'```json\'\'\' ou qualquer outro texto fora do JSON):
     {{
       "questoes": [
         {{
@@ -208,24 +185,18 @@ async def create_simulado_from_gemini(
           "opcoes": {{ "a": "...", "b": "...", "c": "...", "d": "...", "e": "..." }},
           "correta": "a",
           "explicacoes": {{ "a": "...", "b": "...", "c": "...", "d": "...", "e": "..." }}
-        }},
-        {{
-          "id": 2,
-          "pergunta": "...",
-          ... (e assim por diante até 5)
         }}
       ]
     }}
-
     TEXTO BASE:
     ---
     {texto_base}
     ---
-    """
+    '''
 
     try:
         print(">>> CHAMANDO API DO GEMINI (AGUARDE...) <<<")
-        model = genai.GenerativeModel('gemini-2.5-flash') # Usando o modelo estável
+        model = genai.GenerativeModel('gemini-2.5-flash')
         response = await model.generate_content_async(prompt)
 
         texto_resposta = response.text.strip()
@@ -233,7 +204,10 @@ async def create_simulado_from_gemini(
             texto_resposta = texto_resposta[7:]
         if texto_resposta.endswith("```"):
             texto_resposta = texto_resposta[:-3]
-
+        
+        # Correção essencial para limpar a resposta do Gemini
+        texto_resposta = texto_resposta.strip()
+        
         resposta_json = json.loads(texto_resposta)
 
         novo_simulado_id = str(uuid.uuid4())
@@ -242,28 +216,16 @@ async def create_simulado_from_gemini(
             titulo=nome_simulado,
             questoes=resposta_json['questoes']
         )
-        print(">>> RESPOSTA DO GEMINI RECEBIDA E VALIDADA! <<<")
-
-    except ValidationError as e:
-        print("ERRO DE VALIDAÇÃO DO PYDANTIC:", e)
-        raise HTTPException(status_code=500, detail=f"Erro ao validar dados do Gemini: {e}")
-    except json.JSONDecodeError:
-        print("ERRO: Resposta do Gemini não é um JSON válido.")
-        print("RESPOSTA RECEBIDA:", response.text)
-        raise HTTPException(status_code=500, detail="Resposta do Gemini não está em formato JSON.")
+    except (ValidationError, json.JSONDecodeError) as e:
+        print(f"ERRO ao processar resposta do Gemini: {e}")
+        print(f"RESPOSTA RECEBIDA: {response.text}")
+        raise HTTPException(status_code=500, detail="Erro ao processar a resposta da IA.")
     except Exception as e:
         print(f"ERRO AO CHAMAR GEMINI: {e}")
-        raise HTTPException(status_code=500, detail=f"Erro na API do Gemini: {e}")
+        raise HTTPException(status_code=500, detail=f"Erro na comunicação com a API da IA: {e}")
 
     db_simulados[novo_simulado_id] = novo_simulado_completo
     info_simulado = SimuladoInfo(id=novo_simulado_id, nome=nome_simulado)
     materia.simulados.append(info_simulado)
-
-    ### DEBUG ###
-    print(f"\n--- SIMULADO CRIADO (POST /materias/.../simulados) ---")
-    print(f"Novo ID Gerado: {novo_simulado_id}")
-    print(f"Simulado '{nome_simulado}' adicionado ao db_simulados.")
-    print(f"Conteúdo de db_simulados APÓS adicionar: {list(db_simulados.keys())}")
-    ### FIM DEBUG ###
 
     return novo_simulado_completo
