@@ -45,7 +45,7 @@ export default function DashboardAluno() {
     return (
       <div className="student-dashboard-container">
         <Header />
-        <p style={{ textAlign: 'center', color: 'white', fontSize: '1.2rem' }}>Carregando matérias...</p>
+        <p style={{ textAlign: 'center', color: 'black', fontSize: '1.2rem' }}>Carregando matérias...</p>
       </div>
     );
   }

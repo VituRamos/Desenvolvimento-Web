@@ -3,10 +3,11 @@
 // ... (todas as importações: useEffect, useState, Header, etc. Ficam iguais)
 import { useEffect, useState } from "react";
 import Header from "../ui/Header";
-import CardMateria from "../materia/CardMateria";
+import CardMateriaProf from "../materia/CardMateriaProf.jsx";
 import PopupMateria from "../materia/PopupMateria";
 import PopupSimulado from "../simulado/PopupSimulado";
 import { useLocation } from "react-router-dom";
+import CardAluno from "../professor/CardAluno"
 import "../../index.css";
 
 const API_URL = "http://127.0.0.1:8000";
@@ -17,9 +18,40 @@ export default function DashboardProfessor() {
   const [popupMateriaAberto, setPopupMateriaAberto] = useState(false);
   const [popupSimuladoAberto, setPopupSimuladoAberto] = useState(false);
   const [materiaIdSelecionada, setMateriaIdSelecionada] = useState(null);
+  const [resultados, setResultados] = useState({});
+  
 
   const location = useLocation();
   const usuario = location.state?.usuario;
+
+  // Função para buscar resultados do simulado
+  useEffect(() => {
+    const carregarResultados = async () => {
+      try {
+        const novosResultados = {};
+        // Para cada matéria
+        for (const materia of materias) {
+          if (!materia.simulados) continue;
+          // Para cada simulado da matéria
+          for (const simulado of materia.simulados) {
+            const res = await fetch(`${API_URL}/simulados/${simulado.id}/resultados`);
+            if (!res.ok) continue;
+            const data = await res.json();
+            novosResultados[simulado.id] = data;
+            novosResultados[simulado.id] = [
+              { id: 2368080, nome: "João da Silva", pontuacao: 5 },
+              { id: 2368081, nome: "Maria Souza", pontuacao: 8 }
+            ];
+            console.log("🔍 Resultados carregados:", novosResultados); 
+          }
+        }
+        setResultados(novosResultados);
+      } catch (error) {
+        console.error("Erro ao carregar resultados:", error);
+      }
+    };
+    carregarResultados();
+  }, [materias]);
 
   // ... (useEffect e adicionarMateria ficam iguais)
   useEffect(() => {
@@ -127,9 +159,10 @@ export default function DashboardProfessor() {
       <Header />
 
       {materias.map((materia) => (
-        <CardMateria
+        <CardMateriaProf
           key={materia.id}
           materia={materia}
+          resultados={resultados} 
           onAdicionarSimulado={() => handleAbrirPopupSimulado(materia.id)}
         />
       ))}
