@@ -69,7 +69,7 @@ export default function DashboardAluno() {
           <MateriaCard key={materia.id} materia={materia} />
         ))
       ) : (
-        <p style={{ textAlign: 'center', color: 'white', fontSize: '1.2rem' }}>Nenhuma matéria encontrada.</p>
+        <p style={{ textAlign: 'center', color: 'black', fontSize: '1.2rem' }}>Nenhuma matéria encontrada.</p>
       )}
     </div>
   );
