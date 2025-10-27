@@ -933,6 +933,7 @@ body {
 
 .student-dashboard-container {
   width: 100%;
+  padding: 30px 20px;
   margin-top: 80px;
   box-sizing: border-box;
 }
