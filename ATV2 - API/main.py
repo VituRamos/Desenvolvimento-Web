@@ -80,10 +80,25 @@ class Materia(BaseModel):
 class MateriaCreate(BaseModel):
     nome: str
 
+class Resultado(BaseModel):
+    id: str
+    usuario_id: str
+    usuario_nome: str
+    simulado_id: str
+    nota: float
+    respostas: Dict[str, str]  # { "questao_id": "resposta_selecionada" }
+
+class ResultadoCreate(BaseModel):
+    usuario_id: str
+    usuario_nome: str
+    nota: float
+    respostas: Dict[str, str]
+
 # --- 3. "Banco de Dados" Falso ---
 db_usuarios: List[Usuario] = []
 db_materias: List[Materia] = []
 db_simulados: Dict[str, SimuladoCompleto] = {} # Dicionário ID -> Simulado
+db_resultados: List[Resultado] = []
 
 # --- 4. Endpoints de Autenticação ---
 @app.get("/")
@@ -147,6 +162,24 @@ def get_simulado(id_simulado: str):
     if not simulado:
         raise HTTPException(status_code=404, detail="Simulado não encontrado")
     return simulado
+
+# RESULTADOS
+@app.post("/simulados/{simulado_id}/resultados", response_model=Resultado)
+def registrar_resultado(simulado_id: str, resultado: ResultadoCreate):
+    novo_resultado = Resultado(
+        id=str(uuid.uuid4()),
+        usuario_id=resultado.usuario_id,
+        usuario_nome=resultado.usuario_nome,
+        simulado_id=simulado_id,
+        nota=resultado.nota,
+        respostas=resultado.respostas
+    )
+    db_resultados.append(novo_resultado)
+    return novo_resultado
+
+@app.get("/simulados/{simulado_id}/resultados", response_model=List[Resultado])
+def listar_resultados(simulado_id: str):
+    return [r for r in db_resultados if r.simulado_id == simulado_id]
 
 @app.post("/materias/{id_materia}/simulados", response_model=SimuladoCompleto)
 async def create_simulado_from_gemini(
