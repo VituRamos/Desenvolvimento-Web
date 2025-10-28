@@ -3,44 +3,59 @@ import Header from '../ui/Header';
 import MateriaCard from '../materia/MateriaCard';
 import "../../index.css";
 
-/**
- * Componente do Dashboard do Aluno.
- * Exibe as matérias disponíveis com seus respectivos simulados.
- * Os dados são buscados dinamicamente da API.
- */
 export default function DashboardAluno() {
-  // Estado para armazenar a lista de matérias vindas da API.
   const [materias, setMaterias] = useState([]);
-  // Estado para controlar a exibição da mensagem de carregamento.
   const [isLoading, setIsLoading] = useState(true);
-  // Estado para armazenar mensagens de erro, caso a API falhe.
   const [error, setError] = useState(null);
+  const [resultados, setResultados] = useState({});
 
-  // useEffect para buscar os dados da API quando o componente é montado.
+  // 🔄 NOVO: Carregar resultados do aluno
   useEffect(() => {
-    // Função assíncrona para buscar as matérias.
+    const carregarResultadosAluno = async () => {
+      try {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+          const response = await fetch(`http://127.0.0.1:8000/resultados/${userId}`);
+          if (response.ok) {
+            const data = await response.json();
+            
+            // Converter array para objeto por simulado_id
+            const resultadosPorSimulado = {};
+            data.forEach(resultado => {
+              resultadosPorSimulado[resultado.simulado_id] = resultado;
+            });
+            
+            setResultados(resultadosPorSimulado);
+          }
+        }
+      } catch (error) {
+        console.error("Erro ao carregar resultados:", error);
+      }
+    };
+
+    carregarResultadosAluno();
+  }, []);
+
+  // useEffect original para carregar matérias
+  useEffect(() => {
     const fetchMaterias = async () => {
       try {
         const response = await fetch('http://127.0.0.1:8000/materias');
         if (!response.ok) {
-          // Se a resposta da API não for bem-sucedida, lança um erro.
           throw new Error('Não foi possível buscar os dados das matérias.');
         }
         const data = await response.json();
-        setMaterias(data); // Atualiza o estado com os dados da API.
+        setMaterias(data);
       } catch (error) {
-        // Em caso de erro na chamada, atualiza o estado de erro.
         setError(error.message);
       } finally {
-        // Independentemente de sucesso ou falha, para de exibir o carregamento.
         setIsLoading(false);
       }
     };
 
     fetchMaterias();
-  }, []); // O array vazio [] garante que o useEffect só rode uma vez.
+  }, []);
 
-  // Renderiza a mensagem de carregamento enquanto os dados não chegam.
   if (isLoading) {
     return (
       <div className="student-dashboard-container">
@@ -50,7 +65,6 @@ export default function DashboardAluno() {
     );
   }
 
-  // Renderiza uma mensagem de erro se a chamada à API falhar.
   if (error) {
     return (
       <div className="student-dashboard-container">
@@ -63,10 +77,13 @@ export default function DashboardAluno() {
   return (
     <div className="student-dashboard-container">
       <Header />
-      {/* Mapeia as matérias do estado (vindas da API) para renderizar os cards. */}
       {materias.length > 0 ? (
         materias.map((materia) => (
-          <MateriaCard key={materia.id} materia={materia} />
+          <MateriaCard 
+            key={materia.id} 
+            materia={materia} 
+            resultados={resultados} // 🔄 PASSAR RESULTADOS
+          />
         ))
       ) : (
         <p style={{ textAlign: 'center', color: 'black', fontSize: '1.2rem' }}>Nenhuma matéria encontrada.</p>

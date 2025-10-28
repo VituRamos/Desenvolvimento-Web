@@ -1,14 +1,57 @@
 // src/components/Resultado.jsx
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Resultado({ questoes, respostas, onRestart }) {
+export default function Resultado({ questoes, respostas, onRestart, simuladoId }) {
   const navigate = useNavigate();
 
   const acertos = questoes.filter(
     (q) => respostas[q.id]?.escolha === q.correta
   ).length;
+
+  useEffect(() => {
+    const salvarResultado = async () => {
+      try {
+        const userId = localStorage.getItem('userId');
+        const userName = localStorage.getItem('userName');
+        const nota = (acertos / questoes.length) * 10;
+
+        const respostasParaSalvar = Object.entries(respostas).reduce((acc, [id, resp]) => {
+          acc[id] = resp.escolha;
+          return acc;
+        }, {});
+
+        const resultadoData = {
+          usuario_id: userId,
+          usuario_nome: userName,
+          simulado_id: simuladoId,
+          nota: nota,
+          respostas: respostasParaSalvar
+        };
+
+        const response = await fetch(`http://127.0.0.1:8000/simulados/${simuladoId}/resultados`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(resultadoData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Erro ao salvar resultado');
+        }
+
+        const resultadoSalvo = await response.json();
+        console.log('Resultado salvo:', resultadoSalvo);
+
+      } catch (error) {
+        console.error('Erro ao salvar resultado:', error);
+      }
+    };
+
+    salvarResultado();
+  }, [acertos, questoes.length, respostas, simuladoId]);
 
   // *** ATUALIZADO: Lê do localStorage para decidir a rota ***
   const handleVoltarMenu = () => {

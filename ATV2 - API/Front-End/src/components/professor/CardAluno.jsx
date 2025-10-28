@@ -12,13 +12,13 @@ export default function CardAluno({ aluno }) {
       </div>
       {/* Seção com as informações de texto (nome e ID). */}
       <div className="info">
-        <div className="nome">{aluno.nome}</div>
-        <div className="id">{aluno.id}</div>
+        <div className="nome">{aluno.usuario_nome}</div>
+        <div className="id">ID: {aluno.usuario_id}</div>
       </div>
       {/* Seção que exibe a pontuação do aluno. */}
       <div className="pontuacao">
         <span>Pontuação</span>
-        <strong>{aluno.pontuacao}</strong>
+        <strong>{aluno.nota.toFixed(1)}</strong>
       </div>
     </div>
   );

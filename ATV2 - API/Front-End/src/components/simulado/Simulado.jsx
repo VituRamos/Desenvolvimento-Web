@@ -161,8 +161,10 @@ export default function Simulado() {
           questoes={questoes}
           respostas={respostas}
           onRestart={handleRestart}
+          simuladoId={simuladoId}
         />
       )}
-    </main>
+    </main>  
   );
+    
 }

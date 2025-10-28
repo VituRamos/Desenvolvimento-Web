@@ -57,8 +57,14 @@ const Login = () => {
 
             const usuario = await response.json();
             // Salva o tipo no localStorage ANTES de definir o estado para o useEffect poder redirecionar.
+            localStorage.setItem('userId', usuario.id);
             localStorage.setItem('userType', usuario.tipo);
+            localStorage.setItem('userName', usuario.nome);
             setUsuarioLogado(usuario); // Atualiza o estado, o que vai disparar o useEffect.
+
+            // No handleGoogleLoginSuccess (linha ~60), após o login bem-sucedido:
+
+
 
         } catch (error) {
             console.error("Erro no login com Google:", error);
@@ -94,8 +100,10 @@ const Login = () => {
 
             const usuario = await response.json();
             // Salva o tipo no localStorage e atualiza o estado para disparar o redirecionamento.
+            localStorage.setItem('userId', usuario.id);
             localStorage.setItem('userType', usuario.tipo);
-            setUsuarioLogado(usuario);
+            localStorage.setItem('userName', usuario.nome);
+            setUsuarioLogado(usuario); // Atualiza o estado, o que vai disparar o useEffect.
 
         } catch (error) {
             console.error("Erro no login:", error);

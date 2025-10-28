@@ -181,6 +181,18 @@ def registrar_resultado(simulado_id: str, resultado: ResultadoCreate):
 def listar_resultados(simulado_id: str):
     return [r for r in db_resultados if r.simulado_id == simulado_id]
 
+# --- NOVOS ENDPOINTS PARA RESULTADOS ---
+@app.get("/resultados/{usuario_id}", response_model=List[Resultado])
+def get_resultados_usuario(usuario_id: str):
+    """Busca todos os resultados de um usuário específico"""
+    resultados_usuario = [r for r in db_resultados if r.usuario_id == usuario_id]
+    return resultados_usuario
+
+@app.get("/resultados")
+def get_todos_resultados():
+    """Busca todos os resultados (útil para o professor)"""
+    return db_resultados
+
 @app.post("/materias/{id_materia}/simulados", response_model=SimuladoCompleto)
 async def create_simulado_from_gemini(
     id_materia: str,

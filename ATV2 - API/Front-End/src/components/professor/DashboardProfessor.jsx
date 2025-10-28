@@ -28,30 +28,31 @@ export default function DashboardProfessor() {
   useEffect(() => {
     const carregarResultados = async () => {
       try {
-        const novosResultados = {};
-        // Para cada matéria
-        for (const materia of materias) {
-          if (!materia.simulados) continue;
-          // Para cada simulado da matéria
-          for (const simulado of materia.simulados) {
-            const res = await fetch(`${API_URL}/simulados/${simulado.id}/resultados`);
-            if (!res.ok) continue;
-            const data = await res.json();
-            novosResultados[simulado.id] = data;
-            novosResultados[simulado.id] = [
-              { id: 2368080, nome: "João da Silva", pontuacao: 5 },
-              { id: 2368081, nome: "Maria Souza", pontuacao: 8 }
-            ];
-            console.log("🔍 Resultados carregados:", novosResultados); 
-          }
+        const response = await fetch(`${API_URL}/resultados`);
+        if (!response.ok) {
+          throw new Error("Falha ao buscar resultados da API");
         }
-        setResultados(novosResultados);
+        const data = await response.json();
+        
+        // Agrupa os resultados por simulado_id
+        const resultadosAgrupados = data.reduce((acc, resultado) => {
+          const { simulado_id } = resultado;
+          if (!acc[simulado_id]) {
+            acc[simulado_id] = [];
+          }
+          acc[simulado_id].push(resultado);
+          return acc;
+        }, {});
+
+        setResultados(resultadosAgrupados);
+        console.log("🔍 Resultados carregados e agrupados:", resultadosAgrupados); 
+
       } catch (error) {
         console.error("Erro ao carregar resultados:", error);
       }
     };
     carregarResultados();
-  }, [materias]);
+  }, []);
 
   // ... (useEffect e adicionarMateria ficam iguais)
   useEffect(() => {

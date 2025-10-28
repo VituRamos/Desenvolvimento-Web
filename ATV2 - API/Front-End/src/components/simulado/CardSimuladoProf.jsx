@@ -9,7 +9,7 @@ import MedalTeste from '../../assets/MedalTeste.png';
 import CardAluno from "../professor/CardAluno";
 
 // Componente para exibir um item de simulado com opções de ação.
-export default function CardSimulado({ simulado, resultados = []}) {
+export default function CardSimuladoProf({ simulado, resultados = []}) {
   const [aberto, setAberto] = useState(false);
   // Inicializa o hook de navegação
   const navigate = useNavigate();
