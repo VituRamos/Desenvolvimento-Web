@@ -60,6 +60,17 @@ npm run dev
 Com os dois terminais rodando (Uvicorn e Vite), abra seu navegador e acesse: http://localhost:5173
 
 
+## 🖥️ Aplicação e Documentação
+
+Link do Video API
+https://drive.google.com/file/d/1bWrJM3AlmBT7pOHkSz6jBxPMKI5ALkXo/view?usp=sharing
+
+Link do Pdf explicando as mudanças do Prototipo Avançado para o ATV2 - API
+https://drive.google.com/file/d/1ox5J02LHtzPKcq7NgdtOJCeq44HEKpGb/view?usp=sharing
+
+Link do Slide de Apresentação
+https://gamma.app/docs/SimulAI-hkf3b17dwetm2tf?mode=doc
+
 
 
 
