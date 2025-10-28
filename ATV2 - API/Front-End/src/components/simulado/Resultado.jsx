@@ -1,28 +1,38 @@
-// src/components/Resultado.jsx
-
+// --- Bloco de Importação ---
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// --- Componente Resultado ---
+// Renderiza a tela de resultado do simulado, mostrando a pontuação,
+// o gabarito e salvando o resultado na API.
 export default function Resultado({ questoes, respostas, onRestart, simuladoId }) {
+  // --- Hooks e Estados ---
   const navigate = useNavigate();
-  const [salvo, setSalvo] = useState(false);
+  const [salvo, setSalvo] = useState(false); // Estado para controlar se o resultado já foi salvo.
 
+  // --- Lógica de Cálculo ---
+  // Calcula o número de acertos comparando as respostas com o gabarito.
   const acertos = questoes.filter(
     (q) => respostas[q.id]?.escolha === q.correta
   ).length;
 
+  // --- Efeito para Salvar o Resultado ---
+  // Executa quando o componente é montado para salvar o resultado na API.
   useEffect(() => {
     const userType = localStorage.getItem('userType');
+    // Impede o salvamento se o usuário for um professor ou se o resultado já foi salvo.
     if (userType === 'professor' || salvo) {
-      return; // Não salva o resultado se for professor ou se já foi salvo
+      return;
     }
 
     const salvarResultado = async () => {
       try {
+        // Coleta os dados necessários para salvar o resultado.
         const userId = localStorage.getItem('userId');
         const userName = localStorage.getItem('userName');
         const nota = (acertos / questoes.length) * 10;
 
+        // Formata o objeto de respostas para o formato esperado pela API.
         const respostasParaSalvar = Object.entries(respostas).reduce((acc, [id, resp]) => {
           acc[id] = resp.escolha;
           return acc;
@@ -36,11 +46,10 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
           respostas: respostasParaSalvar
         };
 
+        // Envia os dados para a API.
         const response = await fetch(`http://127.0.0.1:8000/simulados/${simuladoId}/resultados`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(resultadoData),
         });
 
@@ -48,9 +57,8 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
           throw new Error('Erro ao salvar resultado');
         }
 
-        const resultadoSalvo = await response.json();
-        console.log('Resultado salvo:', resultadoSalvo);
-        setSalvo(true); // Marca como salvo para evitar duplicação
+        await response.json();
+        setSalvo(true); // Marca como salvo para evitar duplicação.
 
       } catch (error) {
         console.error('Erro ao salvar resultado:', error);
@@ -60,17 +68,18 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
     salvarResultado();
   }, [acertos, questoes.length, respostas, simuladoId, salvo]);
 
-  // *** ATUALIZADO: Lê do localStorage para decidir a rota ***
+  // --- Funções de Navegação ---
+  // Redireciona o usuário para o dashboard correto ao clicar em "Voltar ao Menu".
   const handleVoltarMenu = () => {
-    const userType = localStorage.getItem('userType'); // Pega o tipo salvo no login
+    const userType = localStorage.getItem('userType');
     if (userType === 'professor') {
-      navigate('/professor'); // Vai para o dashboard do professor
+      navigate('/professor');
     } else {
-      navigate('/aluno'); // Vai para o dashboard do aluno (ou como padrão)
+      navigate('/aluno');
     }
   };
-  // *** FIM DA ATUALIZAÇÃO ***
 
+  // --- Renderização do Componente ---
   return (
     <div className="resultado-container">
       <h3>Resultado do Simulado</h3>
@@ -79,9 +88,8 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
         <strong id="total">{questoes.length}</strong> questões.
       </p>
 
-      {/* Gabarito (igual) */}
+      {/* Seção do Gabarito */}
       <div id="gabarito">
-        {/* ... (map das questões igual) ... */}
          {questoes.map((q) => {
           const escolha = respostas[q.id]?.escolha;
           const correta = escolha === q.correta;
@@ -95,16 +103,15 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
         })}
       </div>
 
-      {/* Botão Refazer (igual) */}
+      {/* Botões de Ação */}
       <button id="restart-btn" className="btn" onClick={onRestart}>
         Refazer Simulado
       </button>
 
-      {/* Botão Voltar ao Menu (agora chama a função atualizada) */}
       <button
         id="back-menu-btn"
         className="btn"
-        onClick={handleVoltarMenu} // Chama a nova função
+        onClick={handleVoltarMenu}
         style={{ marginTop: '10px', background: '#6c757d' }}
       >
         Voltar ao Menu

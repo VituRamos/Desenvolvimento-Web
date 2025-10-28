@@ -1,30 +1,27 @@
-// src/components/DashboardProfessor.jsx
-
-// ... (todas as importações: useEffect, useState, Header, etc. Ficam iguais)
+// --- Bloco de Importação ---
 import { useEffect, useState } from "react";
 import Header from "../ui/Header";
 import CardMateriaProf from "../materia/CardMateriaProf.jsx";
 import PopupMateria from "../materia/PopupMateria";
 import PopupSimulado from "../simulado/PopupSimulado";
 import { useLocation } from "react-router-dom";
-import CardAluno from "../professor/CardAluno"
 import "../../index.css";
 
+// --- Constantes ---
 const API_URL = "http://127.0.0.1:8000";
 
+// --- Componente DashboardProfessor ---
+// Componente principal que monta a página do dashboard do professor.
 export default function DashboardProfessor() {
-  // ... (todos os useState: materias, popupMateriaAberto, etc. Ficam iguais)
-  const [materias, setMaterias] = useState([]);
-  const [popupMateriaAberto, setPopupMateriaAberto] = useState(false);
-  const [popupSimuladoAberto, setPopupSimuladoAberto] = useState(false);
-  const [materiaIdSelecionada, setMateriaIdSelecionada] = useState(null);
-  const [resultados, setResultados] = useState({});
+  // --- Estados do Componente ---
+  const [materias, setMaterias] = useState([]); // Armazena a lista de matérias.
+  const [popupMateriaAberto, setPopupMateriaAberto] = useState(false); // Controla a visibilidade do popup de matéria.
+  const [popupSimuladoAberto, setPopupSimuladoAberto] = useState(false); // Controla a visibilidade do popup de simulado.
+  const [materiaIdSelecionada, setMateriaIdSelecionada] = useState(null); // Armazena o ID da matéria para adicionar um simulado.
+  const [resultados, setResultados] = useState({}); // Armazena os resultados de todos os simulados.
   
-
-  const location = useLocation();
-  const usuario = location.state?.usuario;
-
-  // Função para buscar resultados do simulado
+  // --- Efeito para Carregar Resultados ---
+  // Busca todos os resultados de simulados na API.
   useEffect(() => {
     const carregarResultados = async () => {
       try {
@@ -34,7 +31,7 @@ export default function DashboardProfessor() {
         }
         const data = await response.json();
         
-        // Agrupa os resultados por simulado_id
+        // Agrupa os resultados por simulado_id para fácil acesso.
         const resultadosAgrupados = data.reduce((acc, resultado) => {
           const { simulado_id } = resultado;
           if (!acc[simulado_id]) {
@@ -45,8 +42,6 @@ export default function DashboardProfessor() {
         }, {});
 
         setResultados(resultadosAgrupados);
-        console.log("🔍 Resultados carregados e agrupados:", resultadosAgrupados); 
-
       } catch (error) {
         console.error("Erro ao carregar resultados:", error);
       }
@@ -54,7 +49,8 @@ export default function DashboardProfessor() {
     carregarResultados();
   }, []);
 
-  // ... (useEffect e adicionarMateria ficam iguais)
+  // --- Efeito para Carregar Matérias ---
+  // Busca a lista de matérias na API.
   useEffect(() => {
     const carregarMaterias = async () => {
       try {
@@ -72,13 +68,13 @@ export default function DashboardProfessor() {
     carregarMaterias();
   }, []);
 
+  // --- Funções de Manipulação de Dados ---
+  // Adiciona uma nova matéria via API.
   const adicionarMateria = async (nome) => {
     try {
       const response = await fetch(`${API_URL}/materias`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nome: nome }),
       });
 
@@ -87,7 +83,7 @@ export default function DashboardProfessor() {
       }
       
       const novaMateria = await response.json();
-      setMaterias([...materias, novaMateria]);
+      setMaterias([...materias, novaMateria]); // Atualiza o estado com a nova matéria.
       
     } catch (error) {
       console.error(error);
@@ -95,31 +91,15 @@ export default function DashboardProfessor() {
     }
   };
 
-  const handleAbrirPopupSimulado = (idMateria) => {
-    setMateriaIdSelecionada(idMateria);
-    setPopupSimuladoAberto(true);
-  };
-
-  const handleFecharPopupSimulado = () => {
-    setPopupSimuladoAberto(false);
-    setMateriaIdSelecionada(null);
-  };
-  
-  // ====================================================================
-  // 1. ATUALIZADO: LÓGICA DE UPLOAD DO SIMULADO
-  // ====================================================================
+  // Adiciona um novo simulado a uma matéria via API.
   const adicionarSimulado = async (idMateria, nome, arquivo) => {
-    // Para enviar arquivos, precisamos usar 'FormData'
     const formData = new FormData();
     formData.append("nome_simulado", nome);
     formData.append("arquivo", arquivo);
 
     try {
-      // Faz a chamada POST para o endpoint de criar simulado
       const response = await fetch(`${API_URL}/materias/${idMateria}/simulados`, {
         method: "POST",
-        // ATENÇÃO: Não definimos 'Content-Type'. O navegador faz isso
-        // automaticamente quando usamos FormData, o que é essencial.
         body: formData, 
       });
 
@@ -128,14 +108,12 @@ export default function DashboardProfessor() {
         throw new Error(`Falha ao criar simulado: ${erro.detail}`);
       }
       
-      const novoSimulado = await response.json(); // Pega o simulado criado (com questões mock)
-      console.log("Simulado criado com sucesso:", novoSimulado);
+      const novoSimulado = await response.json();
 
-      // Atualiza o estado local para mostrar o novo simulado na tela
+      // Atualiza o estado para refletir o novo simulado na matéria correta.
       setMaterias(prevMaterias =>
         prevMaterias.map(materia => {
           if (materia.id === idMateria) {
-            // Adiciona a informação resumida do novo simulado na matéria correta
             const infoSimulado = { id: novoSimulado.id, nome: novoSimulado.titulo };
             return {
               ...materia,
@@ -146,7 +124,7 @@ export default function DashboardProfessor() {
         })
       );
       
-      handleFecharPopupSimulado(); // Fecha o popup
+      handleFecharPopupSimulado();
       
     } catch (error) {
       console.error(error);
@@ -154,11 +132,25 @@ export default function DashboardProfessor() {
     }
   };
 
-  // ... (o 'return' com o JSX fica exatamente igual)
+  // --- Funções de Controle de UI ---
+  // Abre o popup para adicionar um novo simulado.
+  const handleAbrirPopupSimulado = (idMateria) => {
+    setMateriaIdSelecionada(idMateria);
+    setPopupSimuladoAberto(true);
+  };
+
+  // Fecha o popup de simulado.
+  const handleFecharPopupSimulado = () => {
+    setPopupSimuladoAberto(false);
+    setMateriaIdSelecionada(null);
+  };
+  
+  // --- Renderização Principal ---
   return (
     <div className="container">
       <Header />
 
+      {/* Mapeia as matérias para renderizar os cards. */}
       {materias.map((materia) => (
         <CardMateriaProf
           key={materia.id}
@@ -168,10 +160,12 @@ export default function DashboardProfessor() {
         />
       ))}
 
+      {/* Botão flutuante para adicionar nova matéria. */}
       <button className="fab" onClick={() => setPopupMateriaAberto(true)}>
         +
       </button>
 
+      {/* Renderização condicional dos popups. */}
       {popupMateriaAberto && (
         <PopupMateria
           onClose={() => setPopupMateriaAberto(false)}

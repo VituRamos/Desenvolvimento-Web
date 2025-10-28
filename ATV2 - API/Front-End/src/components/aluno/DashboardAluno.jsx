@@ -1,25 +1,30 @@
+// --- Bloco de Importação ---
 import React, { useState, useEffect } from 'react';
 import Header from '../ui/Header';
 import MateriaCard from '../materia/MateriaCard';
 import "../../index.css";
 
+// --- Componente DashboardAluno ---
+// Componente principal que monta a página do dashboard do aluno.
 export default function DashboardAluno() {
-  const [materias, setMaterias] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [resultados, setResultados] = useState({});
+  // --- Estados do Componente ---
+  const [materias, setMaterias] = useState([]); // Armazena a lista de matérias.
+  const [isLoading, setIsLoading] = useState(true); // Controla a exibição do loader.
+  const [error, setError] = useState(null); // Armazena mensagens de erro.
+  const [resultados, setResultados] = useState({}); // Armazena os resultados dos simulados do aluno.
 
-  // 🔄 NOVO: Carregar resultados do aluno
+  // --- Efeito para Carregar Resultados ---
+  // Busca os resultados do aluno na API assim que o componente é montado.
   useEffect(() => {
     const carregarResultadosAluno = async () => {
       try {
-        const userId = localStorage.getItem('userId');
+        const userId = localStorage.getItem('userId'); // Pega o ID do usuário logado.
         if (userId) {
           const response = await fetch(`http://127.0.0.1:8000/resultados/${userId}`);
           if (response.ok) {
             const data = await response.json();
             
-            // Converter array para objeto por simulado_id
+            // Transforma o array de resultados em um objeto para fácil acesso.
             const resultadosPorSimulado = {};
             data.forEach(resultado => {
               resultadosPorSimulado[resultado.simulado_id] = resultado;
@@ -34,9 +39,10 @@ export default function DashboardAluno() {
     };
 
     carregarResultadosAluno();
-  }, []);
+  }, []); // Array vazio garante que o efeito rode apenas uma vez.
 
-  // useEffect original para carregar matérias
+  // --- Efeito para Carregar Matérias ---
+  // Busca a lista de matérias na API.
   useEffect(() => {
     const fetchMaterias = async () => {
       try {
@@ -49,13 +55,15 @@ export default function DashboardAluno() {
       } catch (error) {
         setError(error.message);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Para de carregar, com ou sem erro.
       }
     };
 
     fetchMaterias();
   }, []);
 
+  // --- Renderização Condicional ---
+  // Exibe uma mensagem de carregamento enquanto os dados são buscados.
   if (isLoading) {
     return (
       <div className="student-dashboard-container">
@@ -65,6 +73,7 @@ export default function DashboardAluno() {
     );
   }
 
+  // Exibe uma mensagem de erro se a busca falhar.
   if (error) {
     return (
       <div className="student-dashboard-container">
@@ -74,18 +83,22 @@ export default function DashboardAluno() {
     );
   }
 
+  // --- Renderização Principal ---
+  // Exibe o cabeçalho e a lista de matérias.
   return (
     <div className="student-dashboard-container">
       <Header />
       {materias.length > 0 ? (
+        // Mapeia cada matéria para um componente MateriaCard.
         materias.map((materia) => (
           <MateriaCard 
             key={materia.id} 
             materia={materia} 
-            resultados={resultados} // 🔄 PASSAR RESULTADOS
+            resultados={resultados} // Passa os resultados para o card da matéria.
           />
         ))
       ) : (
+        // Mensagem exibida se não houver matérias.
         <p style={{ textAlign: 'center', color: 'black', fontSize: '1.2rem' }}>Nenhuma matéria encontrada.</p>
       )}
     </div>

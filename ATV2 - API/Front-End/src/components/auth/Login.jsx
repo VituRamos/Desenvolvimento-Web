@@ -1,52 +1,50 @@
-// src/components/Login.jsx
-
+// --- Bloco de Importação ---
 import GoogleIcon from "../../assets/google-icon.png";
 import LeBudda from "../../assets/LeBudda.png";
-// Adiciona a importação de useEffect e useNavigate
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import PopupCadastro from "./PopupCadastro";
-// Importação para o login com Google
 import { useGoogleLogin } from '@react-oauth/google';
 
-// Componente funcional para a tela de Login.
+// --- Componente Login ---
+// Componente que renderiza a página de login, permitindo autenticação
+// via email/senha ou Google.
 const Login = () => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
-    const [usuarioLogado, setUsuarioLogado] = useState(null);
+    // --- Estados do Componente ---
+    const [isPopupOpen, setIsPopupOpen] = useState(false); // Controla a visibilidade do popup de cadastro.
+    const [email, setEmail] = useState(""); // Armazena o email digitado.
+    const [senha, setSenha] = useState(""); // Armazena a senha digitada.
+    const [usuarioLogado, setUsuarioLogado] = useState(null); // Armazena os dados do usuário após o login.
 
-    // Instancia o hook de navegação para podermos redirecionar o usuário.
-    const navigate = useNavigate();
+    // --- Hooks ---
+    const navigate = useNavigate(); // Hook para navegação entre as páginas.
 
-    // --- EFEITO PARA REDIRECIONAMENTO ---
-    // Este useEffect será executado sempre que o estado 'usuarioLogado' mudar.
+    // --- Efeito para Redirecionamento ---
+    // Executa sempre que o estado 'usuarioLogado' muda.
     useEffect(() => {
-        // Se o usuárioLogado não for nulo (ou seja, o login foi bem-sucedido)
+        // Se o login for bem-sucedido, redireciona o usuário para o dashboard correto.
         if (usuarioLogado) {
-            // Verifica o tipo de usuário e navega para a rota correspondente.
             if (usuarioLogado.tipo === "aluno") {
                 navigate("/aluno");
             } else if (usuarioLogado.tipo === "professor") {
                 navigate("/professor");
             }
         }
-    }, [usuarioLogado, navigate]); // As dependências do hook
+    }, [usuarioLogado, navigate]);
 
+    // --- Funções de Manipulação de Eventos ---
     const openPopup = () => {
         setIsPopupOpen(true);
     };
 
-    // --- LÓGICA DE LOGIN COM GOOGLE ---
+    // --- Lógica de Login com Google ---
     const handleGoogleLoginSuccess = async (tokenResponse) => {
         const code = tokenResponse.code;
         try {
+            // Envia o código de autorização para o backend.
             const response = await fetch('http://127.0.0.1:8000/auth/google', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ code: code }),
             });
 
@@ -55,16 +53,12 @@ const Login = () => {
                 throw new Error(errorData.detail || 'Falha no login com Google');
             }
 
+            // Se o login for bem-sucedido, armazena os dados do usuário.
             const usuario = await response.json();
-            // Salva o tipo no localStorage ANTES de definir o estado para o useEffect poder redirecionar.
             localStorage.setItem('userId', usuario.id);
             localStorage.setItem('userType', usuario.tipo);
             localStorage.setItem('userName', usuario.nome);
-            setUsuarioLogado(usuario); // Atualiza o estado, o que vai disparar o useEffect.
-
-            // No handleGoogleLoginSuccess (linha ~60), após o login bem-sucedido:
-
-
+            setUsuarioLogado(usuario); // Dispara o redirecionamento.
 
         } catch (error) {
             console.error("Erro no login com Google:", error);
@@ -72,8 +66,9 @@ const Login = () => {
         }
     };
 
+    // Configuração do hook de login do Google.
     const googleLogin = useGoogleLogin({
-        flow: 'auth-code',
+        flow: 'auth-code', // Usa o fluxo de código de autorização.
         onSuccess: handleGoogleLoginSuccess,
         onError: (error) => {
             console.error('Login com Google falhou:', error);
@@ -81,15 +76,14 @@ const Login = () => {
         }
     });
 
-    // --- LÓGICA DE LOGIN COM EMAIL/SENHA ---
+    // --- Lógica de Login com Email/Senha ---
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
+            // Envia email e senha para o backend.
             const response = await fetch('http://127.0.0.1:8000/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, senha: senha }),
             });
 
@@ -98,12 +92,12 @@ const Login = () => {
                 throw new Error(errorData.detail || 'Falha no login');
             }
 
+            // Se o login for bem-sucedido, armazena os dados do usuário.
             const usuario = await response.json();
-            // Salva o tipo no localStorage e atualiza o estado para disparar o redirecionamento.
             localStorage.setItem('userId', usuario.id);
             localStorage.setItem('userType', usuario.tipo);
             localStorage.setItem('userName', usuario.nome);
-            setUsuarioLogado(usuario); // Atualiza o estado, o que vai disparar o useEffect.
+            setUsuarioLogado(usuario); // Dispara o redirecionamento.
 
         } catch (error) {
             console.error("Erro no login:", error);
@@ -111,15 +105,14 @@ const Login = () => {
         }
     };
 
-    // --- LÓGICA DE CADASTRO ---
+    // --- Lógica de Cadastro ---
     const handleCadastro = async (usuario, tipo) => {
         const novoUsuario = { ...usuario, tipo: tipo };
         try {
+            // Envia os dados do novo usuário para o backend.
             const response = await fetch('http://127.0.0.1:8000/usuarios', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(novoUsuario),
             });
 
@@ -128,10 +121,9 @@ const Login = () => {
                 throw new Error(errorData.detail || 'Falha ao cadastrar usuário');
             }
 
-            const usuarioCriado = await response.json();
-            console.log("Usuário cadastrado com sucesso:", usuarioCriado);
+            await response.json();
             alert("Cadastro realizado com sucesso! Por favor, faça o login.");
-            setIsPopupOpen(false); // Fecha o popup após o sucesso
+            setIsPopupOpen(false); // Fecha o popup.
 
         } catch (error) {
             console.error("Erro no cadastro:", error);
@@ -139,8 +131,7 @@ const Login = () => {
         }
     };
 
-    // O componente agora SEMPRE renderiza a tela de login.
-    // O redirecionamento é feito pelo useEffect.
+    // --- Renderização do Componente ---
     return (
         <div className="login-page-wrapper">
             <main className="login-container">
@@ -151,6 +142,7 @@ const Login = () => {
                             <p>Por favor, insira seu email e senha.</p>
                         </div>
 
+                        {/* Formulário de login padrão */}
                         <form className="login-form" onSubmit={handleLogin}>
                             <div className="input-group">
                                 <label htmlFor="email">Email</label>
@@ -183,6 +175,7 @@ const Login = () => {
 
                         <div className="divider">ou</div>
 
+                        {/* Botão de login com Google */}
                         <button
                             type="button"
                             className="btn google-btn"
@@ -192,6 +185,7 @@ const Login = () => {
                             Entrar com Google
                         </button>
 
+                        {/* Link para abrir o popup de cadastro */}
                         <div style={{ marginTop: "20px", textAlign: "center" }}>
                             <a href="#" onClick={openPopup}>
                                 Não tem conta? Cadastre-se aqui.
@@ -199,11 +193,13 @@ const Login = () => {
                         </div>
                     </div>
 
+                    {/* Área da imagem lateral */}
                     <div className="login-image-area">
                         <img src={LeBudda} alt="LeBudda" />
                     </div>
                 </div>
 
+                {/* Renderiza o popup de cadastro se isPopupOpen for true */}
                 {isPopupOpen && (
                     <PopupCadastro
                         onClose={() => setIsPopupOpen(false)}
