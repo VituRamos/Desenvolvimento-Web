@@ -64,7 +64,7 @@ Com os dois terminais rodando (Uvicorn e Vite), abra seu navegador e acesse: htt
 
 Link para Video API
 ```Bash
-https://drive.google.com/file/d/1bWrJM3AlmBT7pOHkSz6jBxPMKI5ALkXo/view?usp=sharing
+[https://drive.google.com/file/d/1bWrJM3AlmBT7pOHkSz6jBxPMKI5ALkXo/view?usp=sharing](https://drive.google.com/file/d/1bWrJM3AlmBT7pOHkSz6jBxPMKI5ALkXo/view?usp=sharing)
 ```
 
 Link para PDF explicativo com as mudanças do Prototipo Avançado para o ATV2 - API
