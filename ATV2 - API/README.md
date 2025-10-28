@@ -63,14 +63,19 @@ Com os dois terminais rodando (Uvicorn e Vite), abra seu navegador e acesse: htt
 ## 🖥️ Aplicação e Documentação
 
 Link do Video API
+```Bash
 https://drive.google.com/file/d/1bWrJM3AlmBT7pOHkSz6jBxPMKI5ALkXo/view?usp=sharing
+```
 
+```Bash
 Link do Pdf explicando as mudanças do Prototipo Avançado para o ATV2 - API
 https://drive.google.com/file/d/1ox5J02LHtzPKcq7NgdtOJCeq44HEKpGb/view?usp=sharing
+```
 
+```Bash
 Link do Slide de Apresentação
 https://gamma.app/docs/SimulAI-hkf3b17dwetm2tf?mode=doc
-
+```
 
 
 
