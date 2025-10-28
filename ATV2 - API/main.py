@@ -166,16 +166,26 @@ def get_simulado(id_simulado: str):
 # RESULTADOS
 @app.post("/simulados/{simulado_id}/resultados", response_model=Resultado)
 def registrar_resultado(simulado_id: str, resultado: ResultadoCreate):
-    novo_resultado = Resultado(
-        id=str(uuid.uuid4()),
-        usuario_id=resultado.usuario_id,
-        usuario_nome=resultado.usuario_nome,
-        simulado_id=simulado_id,
-        nota=resultado.nota,
-        respostas=resultado.respostas
-    )
-    db_resultados.append(novo_resultado)
-    return novo_resultado
+    resultado_existente = next((r for r in db_resultados if r.usuario_id == resultado.usuario_id and r.simulado_id == simulado_id), None)
+
+    if resultado_existente:
+        if resultado.nota > resultado_existente.nota:
+            resultado_existente.nota = resultado.nota
+            resultado_existente.respostas = resultado.respostas
+            return resultado_existente
+        else:
+            return resultado_existente
+    else:
+        novo_resultado = Resultado(
+            id=str(uuid.uuid4()),
+            usuario_id=resultado.usuario_id,
+            usuario_nome=resultado.usuario_nome,
+            simulado_id=simulado_id,
+            nota=resultado.nota,
+            respostas=resultado.respostas
+        )
+        db_resultados.append(novo_resultado)
+        return novo_resultado
 
 @app.get("/simulados/{simulado_id}/resultados", response_model=List[Resultado])
 def listar_resultados(simulado_id: str):

@@ -1,16 +1,22 @@
 // src/components/Resultado.jsx
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Resultado({ questoes, respostas, onRestart, simuladoId }) {
   const navigate = useNavigate();
+  const [salvo, setSalvo] = useState(false);
 
   const acertos = questoes.filter(
     (q) => respostas[q.id]?.escolha === q.correta
   ).length;
 
   useEffect(() => {
+    const userType = localStorage.getItem('userType');
+    if (userType === 'professor' || salvo) {
+      return; // Não salva o resultado se for professor ou se já foi salvo
+    }
+
     const salvarResultado = async () => {
       try {
         const userId = localStorage.getItem('userId');
@@ -44,6 +50,7 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
 
         const resultadoSalvo = await response.json();
         console.log('Resultado salvo:', resultadoSalvo);
+        setSalvo(true); // Marca como salvo para evitar duplicação
 
       } catch (error) {
         console.error('Erro ao salvar resultado:', error);
@@ -51,7 +58,7 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
     };
 
     salvarResultado();
-  }, [acertos, questoes.length, respostas, simuladoId]);
+  }, [acertos, questoes.length, respostas, simuladoId, salvo]);
 
   // *** ATUALIZADO: Lê do localStorage para decidir a rota ***
   const handleVoltarMenu = () => {
