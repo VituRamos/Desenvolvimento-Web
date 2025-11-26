@@ -34,9 +34,8 @@ app.add_middleware(
 
 # --- Modelos de Dados (Pydantic) ---
 # Define a estrutura (schema) dos dados que a API irá receber e enviar.
-# Isso garante validação e consistência dos dados.
 class Usuario(BaseModel):
-    id: Optional[str] = None
+    id: str
     nome: str
     email: str
     senha: Optional[str] = None
@@ -64,7 +63,8 @@ class ExplicacoesQuestao(BaseModel):
     e: str
 
 class Questao(BaseModel):
-    id: int
+    id: str # UUID único da questão
+    n_questao: int # Número da questão (1, 2, 3...)
     pergunta: str
     opcoes: OpcoesQuestao
     correta: str
@@ -114,25 +114,24 @@ def startup_event():
     db.create_db_and_tables()
 
 # --- Endpoints de Autenticação ---
-# Contém as rotas (endpoints) para cadastro, login e autenticação com Google.
-
 @app.get("/")
 def read_root():
-    """Endpoint inicial para verificar se a API está no ar."""
     return {"message": "API do SimulAI está no ar!"}
 
 @app.post("/usuarios", response_model=Usuario)
 def cadastrar_usuario(usuario: Usuario, database: Session = Depends(get_db)):
-    """Cria um novo usuário no banco de dados."""
-    db_usuario = db.Usuario(id=str(uuid.uuid4()), nome=usuario.nome, email=usuario.email, senha=usuario.senha, tipo=usuario.tipo)
+    db_usuario_existente = database.query(db.Usuario).filter(db.Usuario.id == usuario.id).first()
+    if db_usuario_existente:
+        raise HTTPException(status_code=400, detail="ID já cadastrado.")
+
+    db_usuario = db.Usuario(id=usuario.id, nome=usuario.nome, email=usuario.email, senha=usuario.senha, tipo=usuario.tipo)
     database.add(db_usuario)
     database.commit()
     database.refresh(db_usuario)
-    return db_usuario
+    return Usuario(id=db_usuario.id, nome=db_usuario.nome, email=db_usuario.email, tipo=db_usuario.tipo)
 
 @app.post("/login")
 def fazer_login(login_data: LoginData, database: Session = Depends(get_db)):
-    """Autentica um usuário com email e senha."""
     usuario = database.query(db.Usuario).filter(db.Usuario.email == login_data.email).first()
     if not usuario or usuario.senha != login_data.senha:
         raise HTTPException(status_code=401, detail="Email ou senha inválidos")
@@ -140,7 +139,6 @@ def fazer_login(login_data: LoginData, database: Session = Depends(get_db)):
 
 @app.post("/auth/google")
 async def auth_google(auth_code: GoogleAuthCode, database: Session = Depends(get_db)):
-    """Autentica um usuário via Google, trocando o código de autorização por um token."""
     token_url = "https://oauth2.googleapis.com/token"
     token_data = { "code": auth_code.code, "client_id": config.GOOGLE_CLIENT_ID, "client_secret": config.GOOGLE_CLIENT_SECRET, "redirect_uri": config.GOOGLE_REDIRECT_URI, "grant_type": "authorization_code", }
     
@@ -154,7 +152,6 @@ async def auth_google(auth_code: GoogleAuthCode, database: Session = Depends(get
     try:
         payload = jwt.decode(id_token, key="", options={"verify_signature": False, "verify_aud": False})
         user_email = payload.get("email")
-        user_name = payload.get("name")
         if not user_email:
             raise HTTPException(status_code=400, detail="Email não encontrado no token do Google")
     except JWTError:
@@ -164,18 +161,11 @@ async def auth_google(auth_code: GoogleAuthCode, database: Session = Depends(get
     if usuario_encontrado:
         return {"id": usuario_encontrado.id, "nome": usuario_encontrado.nome, "email": usuario_encontrado.email, "tipo": usuario_encontrado.tipo}
     else:
-        novo_usuario = db.Usuario(id=str(uuid.uuid4()), nome=user_name, email=user_email, tipo="aluno")
-        database.add(novo_usuario)
-        database.commit()
-        database.refresh(novo_usuario)
-        return {"id": novo_usuario.id, "nome": novo_usuario.nome, "email": novo_usuario.email, "tipo": novo_usuario.tipo}
+        raise HTTPException(status_code=404, detail="Usuário não encontrado. Por favor, realize o cadastro primeiro.")
 
 # --- Endpoints de Matérias e Simulados ---
-# Contém as rotas para listar, criar e buscar matérias e simulados.
-
 @app.get("/materias", response_model=List[Materia])
 def get_materias(database: Session = Depends(get_db)):
-    """Retorna todas as matérias cadastradas."""
     materias_db = database.query(db.Materia).all()
     materias_pydantic = []
     for materia_db in materias_db:
@@ -185,7 +175,6 @@ def get_materias(database: Session = Depends(get_db)):
 
 @app.post("/materias", response_model=Materia)
 def create_materia(materia_data: MateriaCreate, database: Session = Depends(get_db)):
-    """Cria uma nova matéria."""
     nova_materia = db.Materia(id=str(uuid.uuid4()), nome=materia_data.nome)
     database.add(nova_materia)
     database.commit()
@@ -194,7 +183,6 @@ def create_materia(materia_data: MateriaCreate, database: Session = Depends(get_
 
 @app.get("/simulados/{id_simulado}", response_model=SimuladoCompleto)
 def get_simulado(id_simulado: str, database: Session = Depends(get_db)):
-    """Busca um simulado completo pelo seu ID."""
     simulado = database.query(db.Simulado).filter(db.Simulado.id == id_simulado).first()
     if not simulado:
         raise HTTPException(status_code=404, detail="Simulado não encontrado")
@@ -203,24 +191,34 @@ def get_simulado(id_simulado: str, database: Session = Depends(get_db)):
     for q in simulado.questoes:
         questoes.append(Questao(
             id=q.id,
+            n_questao=q.n_questao,
             pergunta=q.pergunta,
             opcoes=json.loads(q.opcoes),
             correta=q.correta,
             explicacoes=json.loads(q.explicacoes)
         ))
 
-    return SimuladoCompleto(
-        id=simulado.id,
-        titulo=simulado.titulo,
-        questoes=questoes
-    )
+    return SimuladoCompleto(id=simulado.id, titulo=simulado.titulo, questoes=questoes)
+
+@app.delete("/simulados/{simulado_id}", status_code=204)
+def delete_simulado(simulado_id: str, database: Session = Depends(get_db)):
+    """Apaga um simulado e todas as suas dependências (resultados e questões)."""
+    simulado = database.query(db.Simulado).filter(db.Simulado.id == simulado_id).first()
+    if not simulado:
+        raise HTTPException(status_code=404, detail="Simulado não encontrado")
+
+    # Apaga dependências
+    database.query(db.Resultado).filter(db.Resultado.simulado_id == simulado_id).delete()
+    database.query(db.Questao).filter(db.Questao.simulado_id == simulado_id).delete()
+    
+    # Apaga o simulado
+    database.delete(simulado)
+    database.commit()
+    return
 
 # --- Endpoints de Resultados ---
-# Contém as rotas para registrar e consultar os resultados dos simulados.
-
 @app.post("/simulados/{simulado_id}/resultados", response_model=Resultado)
 def registrar_resultado(simulado_id: str, resultado: ResultadoCreate, database: Session = Depends(get_db)):
-    """Registra o resultado de um simulado para um usuário, atualizando a nota se a nova for maior."""
     resultado_existente = database.query(db.Resultado).filter(
         db.Resultado.usuario_id == resultado.usuario_id,
         db.Resultado.simulado_id == simulado_id
@@ -228,14 +226,11 @@ def registrar_resultado(simulado_id: str, resultado: ResultadoCreate, database: 
 
     if resultado_existente:
         if resultado.nota > resultado_existente.nota:
-            # Atualiza a nota e as respostas se a nova nota for maior
             resultado_existente.nota = resultado.nota
             resultado_existente.respostas = json.dumps(resultado.respostas)
             database.commit()
             database.refresh(resultado_existente)
-            
-        # Após a possível atualização, o 'resultado_existente' tem a maior nota.
-        # Construímos o objeto de resposta a partir dele.
+        
         return Resultado(
             id=resultado_existente.id,
             usuario_id=resultado_existente.usuario_id,
@@ -245,7 +240,6 @@ def registrar_resultado(simulado_id: str, resultado: ResultadoCreate, database: 
             respostas=json.loads(resultado_existente.respostas)
         )
     else:
-        # Se não existe, cria um novo resultado
         novo_resultado = db.Resultado(
             id=str(uuid.uuid4()),
             usuario_id=resultado.usuario_id,
@@ -257,7 +251,6 @@ def registrar_resultado(simulado_id: str, resultado: ResultadoCreate, database: 
         database.commit()
         database.refresh(novo_resultado)
         
-        # Constrói o objeto de resposta a partir do novo resultado
         return Resultado(
             id=novo_resultado.id,
             usuario_id=novo_resultado.usuario_id,
@@ -269,10 +262,7 @@ def registrar_resultado(simulado_id: str, resultado: ResultadoCreate, database: 
 
 @app.get("/simulados/{simulado_id}/resultados", response_model=List[Resultado])
 def listar_resultados(simulado_id: str, database: Session = Depends(get_db)):
-    """Lista todos os resultados de um simulado específico."""
     resultados = database.query(db.Resultado).filter(db.Resultado.simulado_id == simulado_id).all()
-    # The Pydantic model expects a dictionary for 'respostas', but the database stores it as a JSON string.
-    # We need to load it back into a dictionary before returning.
     return [
         Resultado(
             id=r.id,
@@ -286,7 +276,6 @@ def listar_resultados(simulado_id: str, database: Session = Depends(get_db)):
 
 @app.get("/resultados/{usuario_id}", response_model=List[Resultado])
 def get_resultados_usuario(usuario_id: str, database: Session = Depends(get_db)):
-    """Busca todos os resultados de um usuário específico."""
     resultados = database.query(db.Resultado).filter(db.Resultado.usuario_id == usuario_id).all()
     return [
         Resultado(
@@ -301,7 +290,6 @@ def get_resultados_usuario(usuario_id: str, database: Session = Depends(get_db))
 
 @app.get("/resultados")
 def get_todos_resultados(database: Session = Depends(get_db)):
-    """Busca todos os resultados de todos os simulados (útil para o professor)."""
     resultados = database.query(db.Resultado).all()
     return [
         Resultado(
@@ -313,8 +301,8 @@ def get_todos_resultados(database: Session = Depends(get_db)):
             respostas=json.loads(r.respostas)
         ) for r in resultados
     ]
-# --- Geração de Simulados com IA (Gemini) ---
 
+# --- Geração de Simulados com IA (Gemini) ---
 @app.post("/materias/{id_materia}/simulados", response_model=SimuladoCompleto)
 async def create_simulado_from_gemini(
     id_materia: str,
@@ -322,12 +310,10 @@ async def create_simulado_from_gemini(
     arquivo: UploadFile = Form(...),
     database: Session = Depends(get_db)
 ):
-    """Cria um simulado a partir de um arquivo (PDF ou TXT) usando a API do Gemini."""
     materia = database.query(db.Materia).filter(db.Materia.id == id_materia).first()
     if not materia:
         raise HTTPException(status_code=404, detail="Matéria não encontrada")
 
-    # Lê o conteúdo do arquivo enviado.
     texto_base = ""
     try:
         conteudo_bytes = await arquivo.read()
@@ -343,7 +329,6 @@ async def create_simulado_from_gemini(
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Não foi possível ler o arquivo: {e}")
 
-    # Monta o prompt para a IA com as instruções e o texto base.
     prompt = f'''
     Baseado no seguinte texto, gere um simulado de 5 questões de múltipla escolha (a, b, c, d, e).
     Para CADA questão, forneça a pergunta, as 5 opções, a letra da opção correta, e uma breve explicação para cada uma das 5 opções.
@@ -365,13 +350,11 @@ async def create_simulado_from_gemini(
     ---
     '''
 
-    # Envia o prompt para a API do Gemini e processa a resposta.
     try:
         print(">>> CHAMANDO API DO GEMINI (AGUARDE...) <<<")
-        model = genai.GenerativeModel('gemini-2.5-flash') # Usando um modelo mais recente
+        model = genai.GenerativeModel('gemini-2.5-flash')
         response = await model.generate_content_async(prompt)
 
-        # Limpa e converte a resposta da IA para JSON.
         texto_resposta = response.text.strip()
         if texto_resposta.startswith("```json"):
             texto_resposta = texto_resposta[7:]
@@ -381,7 +364,6 @@ async def create_simulado_from_gemini(
         
         resposta_json = json.loads(texto_resposta)
 
-        # Cria e armazena o novo simulado no banco de dados.
         novo_simulado_id = str(uuid.uuid4())
         novo_simulado = db.Simulado(id=novo_simulado_id, titulo=nome_simulado, materia_id=id_materia)
         database.add(novo_simulado)
@@ -390,7 +372,8 @@ async def create_simulado_from_gemini(
         questoes = []
         for q in resposta_json['questoes']:
             nova_questao = db.Questao(
-                id=q['id'],
+                id=str(uuid.uuid4()), # Gera um ID único para cada questão
+                n_questao=q['id'],   # O número da questão (1, 2, 3...)
                 simulado_id=novo_simulado_id,
                 pergunta=q['pergunta'],
                 opcoes=json.dumps(q['opcoes']),
@@ -398,7 +381,7 @@ async def create_simulado_from_gemini(
                 explicacoes=json.dumps(q['explicacoes'])
             )
             database.add(nova_questao)
-            questoes.append(Questao(**q))
+            questoes.append(Questao(id=nova_questao.id, n_questao=nova_questao.n_questao, pergunta=q['pergunta'], opcoes=q['opcoes'], correta=q['correta'], explicacoes=q['explicacoes']))
 
         database.commit()
 

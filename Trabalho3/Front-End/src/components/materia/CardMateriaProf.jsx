@@ -15,7 +15,7 @@ const alunosDaMateria = [
 ];
 
 // Componente para exibir um card de uma matéria, que pode ser expandido.
-export default function CardMateriaProf({ materia, onAdicionarSimulado, resultados = {}}) {
+export default function CardMateriaProf({ materia, onAdicionarSimulado, resultados = {}, onExcluirSimulado }) {
   // Estado para controlar se o card está aberto (expandido) ou fechado.
   const [aberto, setAberto] = useState(false);
 
@@ -39,7 +39,12 @@ export default function CardMateriaProf({ materia, onAdicionarSimulado, resultad
         <div className="card-content active">
           {/* Mapeia a lista de simulados da matéria e renderiza um CardSimulado para cada um. */}
           {materia.simulados.map((s) => (
-            <CardSimuladoProf key={s.id} simulado={s} resultados={resultados[s.id] || []}/>
+            <CardSimuladoProf 
+              key={s.id} 
+              simulado={s} 
+              resultados={resultados[s.id] || []}
+              onExcluir={() => onExcluirSimulado(s.id)}
+            />
           ))}
           {/* Botão para adicionar um novo simulado, que chama a função passada por props. */}
           <button className="btn" onClick={onAdicionarSimulado}>

@@ -1,11 +1,10 @@
 // Importa o React e o hook useState para gerenciar o estado do formulário.
 import React, { useState } from "react";
-// Importa a função v4 do uuid para gerar IDs únicos.
-import { v4 as uuidv4 } from "uuid";
 
 // Componente para o popup de cadastro de novos usuários.
 export default function PopupCadastro({ onClose, onConfirm }) {
   // Estados para armazenar os dados dos campos do formulário.
+  const [identificador, setIdentificador] = useState("");
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -14,10 +13,10 @@ export default function PopupCadastro({ onClose, onConfirm }) {
   // Função chamada ao clicar no botão de confirmação.
   const handleConfirm = () => {
     // Validação simples para garantir que os campos não estão vazios.
-    if (nome.trim() && email.trim() && senha.trim()) {
+    if (identificador.trim() && nome.trim() && email.trim() && senha.trim()) {
       // Cria um novo objeto de usuário com os dados do formulário.
       const novoUsuario = {
-        id: uuidv4(), // Gera um ID único para o usuário.
+        id: identificador, // Envia o RA ou RP como 'id'
         nome: nome,
         email: email,
         senha: senha, // Em uma aplicação real, a senha deve ser criptografada.
@@ -27,6 +26,7 @@ export default function PopupCadastro({ onClose, onConfirm }) {
       onConfirm(novoUsuario, tipo);
 
       // Limpa os campos do formulário após o cadastro bem-sucedido.
+      setIdentificador("");
       setNome("");
       setEmail("");
       setSenha("");
@@ -38,7 +38,11 @@ export default function PopupCadastro({ onClose, onConfirm }) {
     }
   };
 
+  const identificadorLabel = tipo === 'aluno' ? 'RA' : 'RP'; // Rótulo simplificado
+  const identificadorPlaceholder = tipo === 'aluno' ? 'Digite seu RA' : 'Digite seu RP';
+
   return (
+    
     // O overlay escurece o fundo da página.
     <div className="popup-overlay">
       {/* O conteúdo do popup. */}
@@ -48,6 +52,30 @@ export default function PopupCadastro({ onClose, onConfirm }) {
           &times;
         </span>
         <h2>Cadastrar novo usuário</h2>
+        
+        {/* Campo de seleção para o tipo de usuário. */}
+        <div className="input-group">
+          <label htmlFor="tipo">Tipo de usuário:</label>
+          <select id="tipo" value={tipo} onChange={(e) => setTipo(e.target.value)} className="popup-input"> {/* Adicionado className */}
+            <option value="aluno">Aluno</option>
+            <option value="professor">Professor</option>
+          </select>
+        </div>
+
+        {/* Campo de entrada para o Identificador (RA ou RP). */}
+        <div className="input-group">
+          <label htmlFor="identificador">{identificadorLabel}:</label>
+          <input
+            type="text"
+            id="identificador"
+            value={identificador}
+            onChange={(e) => setIdentificador(e.target.value)}
+            className="popup-input"
+            placeholder={identificadorPlaceholder}
+          />
+        </div>
+
+
 
         {/* Campo de entrada para o nome. */}
         <div className="input-group">
@@ -86,15 +114,6 @@ export default function PopupCadastro({ onClose, onConfirm }) {
             className="popup-input"
             placeholder="Digite sua senha"
           />
-        </div>
-
-        {/* Campo de seleção para o tipo de usuário. */}
-        <div className="input-group">
-          <label htmlFor="tipo">Tipo de usuário:</label>
-          <select id="tipo" value={tipo} onChange={(e) => setTipo(e.target.value)}>
-            <option value="aluno">Aluno</option>
-            <option value="professor">Professor</option>
-          </select>
         </div>
 
         {/* Botões de ação do popup. */}

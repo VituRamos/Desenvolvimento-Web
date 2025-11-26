@@ -40,6 +40,7 @@ class Questao(Base):
     __tablename__ = "questoes"
 
     id = Column(String, primary_key=True, index=True)
+    n_questao = Column(Integer)
     simulado_id = Column(String, ForeignKey("simulados.id"))
     pergunta = Column(String)
     opcoes = Column(Text)  # Store options as a JSON string

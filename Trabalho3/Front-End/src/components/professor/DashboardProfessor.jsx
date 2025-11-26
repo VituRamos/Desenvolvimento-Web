@@ -132,6 +132,38 @@ export default function DashboardProfessor() {
     }
   };
 
+  // Exclui um simulado via API.
+  const handleExcluirSimulado = async (materiaId, simuladoId) => {
+    if (window.confirm("Tem certeza que deseja excluir este simulado? Esta ação não pode ser desfeita.")) {
+      try {
+        const response = await fetch(`${API_URL}/simulados/${simuladoId}`, {
+          method: "DELETE",
+        });
+
+        if (!response.ok) {
+          throw new Error("Falha ao excluir o simulado.");
+        }
+
+        // Atualiza o estado para remover o simulado da UI.
+        setMaterias(prevMaterias =>
+          prevMaterias.map(materia => {
+            if (materia.id === materiaId) {
+              return {
+                ...materia,
+                simulados: materia.simulados.filter(s => s.id !== simuladoId),
+              };
+            }
+            return materia;
+          })
+        );
+
+      } catch (error) {
+        console.error(error);
+        alert("Não foi possível excluir o simulado.");
+      }
+    }
+  };
+
   // --- Funções de Controle de UI ---
   // Abre o popup para adicionar um novo simulado.
   const handleAbrirPopupSimulado = (idMateria) => {
@@ -157,6 +189,7 @@ export default function DashboardProfessor() {
           materia={materia}
           resultados={resultados} 
           onAdicionarSimulado={() => handleAbrirPopupSimulado(materia.id)}
+          onExcluirSimulado={(simuladoId) => handleExcluirSimulado(materia.id, simuladoId)}
         />
       ))}
 

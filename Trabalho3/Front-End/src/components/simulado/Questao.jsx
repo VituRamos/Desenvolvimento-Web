@@ -7,7 +7,7 @@ export default function Questao({ questao, resposta, onResponder, bloqueada }) {
   return (
     // --- Estrutura do Componente ---
     <div className="question">
-      <h3>Questão {questao.id}</h3>
+      <h3>Questão {questao.n_questao}</h3>
       <p>{questao.pergunta}</p>
       
       {/* Container para as opções da questão. */}

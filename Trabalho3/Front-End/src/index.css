@@ -937,3 +937,69 @@ body {
   margin-top: 80px;
   box-sizing: border-box;
 }
+/* ==========================================================================
+   ESTILOS DO ITEM DE SIMULADO (CARD DE NOTA)
+   ========================================================================== */
+
+.simulado {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Espaço entre os elementos */
+  padding: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.titulo-simulado {
+  flex-grow: 1; /* Ocupa o espaço disponível */
+  font-weight: 500;
+}
+
+.simulado-status {
+  flex-shrink: 0; /* Impede que o status da nota encolha */
+}
+
+/* Base do emblema da nota */
+.nota-badge {
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #fff;
+  min-width: 80px; /* Largura mínima para consistência */
+  text-align: center;
+}
+
+/* Cores condicionais */
+.nota-alta {
+  background-color: #28a745; /* Verde para notas >= 7 */
+}
+
+.nota-media {
+  background-color: #ffc107; /* Amarelo para notas >= 5 e < 7 */
+  color: #212529; /* Texto escuro para melhor contraste com amarelo */
+}
+
+.nota-baixa {
+  background-color: #dc3545; /* Vermelho para notas < 5 */
+}
+
+.nao-realizado {
+  font-style: italic;
+  color: #6c757d;
+  font-size: 14px;
+  font-weight: 500;
+}
+.delete-icon {
+  color: #dc3545;
+  cursor: pointer;
+  margin-left: 10px;
+  visibility: hidden; /* Fica invisível por padrão */
+  opacity: 0;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.simulado:hover .delete-icon {
+  visibility: visible; /* Aparece quando o mouse passa sobre o .simulado */
+  opacity: 1;
+}

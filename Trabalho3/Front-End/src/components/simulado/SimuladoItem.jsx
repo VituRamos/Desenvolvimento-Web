@@ -12,6 +12,14 @@ const SimuladoItem = ({ simulado, resultado }) => {
   const [aberto, setAberto] = useState(false); // Controla a visibilidade das opções.
   const navigate = useNavigate(); // Hook para navegação.
 
+  // --- Funções Auxiliares ---
+  // Determina a classe CSS da nota com base no seu valor.
+  const getNotaClass = (nota) => {
+    if (nota >= 7) return 'nota-alta';
+    if (nota >= 5) return 'nota-media';
+    return 'nota-baixa';
+  };
+
   // --- Renderização do Componente ---
   return (
     <div className="simulado-item">
@@ -25,7 +33,9 @@ const SimuladoItem = ({ simulado, resultado }) => {
         {/* Exibe a nota do simulado ou o status "NÃO REALIZADO". */}
         <div className="simulado-status">
           {resultado ? (
-            <span className="nota">NOTA {resultado.nota.toFixed(1)}</span>
+            <span className={`nota-badge ${getNotaClass(resultado.nota)}`}>
+              NOTA {resultado.nota.toFixed(1)}
+            </span>
           ) : (
             <span className="nao-realizado">NÃO REALIZADO</span>
           )}

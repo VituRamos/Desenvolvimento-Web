@@ -9,7 +9,7 @@ import MedalTeste from '../../assets/MedalTeste.png';
 import CardAluno from "../professor/CardAluno";
 
 // Componente para exibir um item de simulado com opções de ação.
-export default function CardSimuladoProf({ simulado, resultados = []}) {
+export default function CardSimuladoProf({ simulado, resultados = [], onExcluir }) {
   const [aberto, setAberto] = useState(false);
   // Inicializa o hook de navegação
   const navigate = useNavigate();
@@ -28,6 +28,11 @@ export default function CardSimuladoProf({ simulado, resultados = []}) {
     navigate(`/feedback/${simulado.id}`);
   };
 
+  const handleExcluir = (e) => {
+    e.stopPropagation(); // Impede que o card expanda/recolha
+    onExcluir();
+  };
+
   return (
     <div className="simulado-item"> {/* Mantém a classe para estilo */}
       {/* A área principal do simulado é clicável e alterna o estado 'aberto'. */}
@@ -38,6 +43,10 @@ export default function CardSimuladoProf({ simulado, resultados = []}) {
         </span>
         {/* Título do simulado */}
         <span className="titulo-simulado">{simulado.nome}</span>
+        {/* Ícone de exclusão */}
+        <span className="material-icons delete-icon" onClick={handleExcluir}>
+          delete
+        </span>
       </div>
       
       {/* Conteúdo com as opções (botões) */}
