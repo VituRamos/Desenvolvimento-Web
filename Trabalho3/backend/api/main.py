@@ -3,12 +3,16 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import google.generativeai as genai
 
-import config
+#import config
 import database as db
 from routers import auth, materias, simulados, resultados
+import os
 
 # Configura a API do Google Gemini com a chave fornecida no arquivo config.py.
-genai.configure(api_key=config.GOOGLE_API_KEY)
+#genai.configure(api_key=config.GOOGLE_API_KEY)
+api_key = os.environ.get("GOOGLE_API_KEY")
+if api_key:
+    genai.configure(api_key=api_key)
 
 # --- Instância da Aplicação FastAPI ---
 app = FastAPI()
