@@ -1,11 +1,26 @@
-
 from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 import json
-import config
+import os  # <--- Adicionado para ler variáveis de ambiente
 
-engine = create_engine(config.DATABASE_URL)
+# --- REMOVIDO: import config ---
+
+# Tenta pegar a URL da variável de ambiente. 
+# Se não existir (ex: rodando local sem env), usa um SQLite local como fallback.
+DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///./test.db")
+
+# CORREÇÃO PARA POSTGRESQL NA VERCEL:
+# O SQLAlchemy exige "postgresql://" mas alguns providers retornam "postgres://"
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+# Cria o engine com a URL correta
+# connect_args={"check_same_thread": False} é necessário apenas para SQLite
+connect_args = {"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
+
+engine = create_engine(DATABASE_URL, connect_args=connect_args)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -57,7 +72,7 @@ class Resultado(Base):
     nota = Column(Float)
     respostas = Column(Text)  # Store answers as a JSON string
     usuario = relationship("Usuario", back_populates="resultados")
-    simulado = relationship("Simulado", back_populates="resultados")
+    simulado = relationship("Simulado", back_populates="simulado")
 
 
 def create_db_and_tables():
