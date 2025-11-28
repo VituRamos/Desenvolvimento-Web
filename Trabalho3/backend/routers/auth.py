@@ -1,15 +1,24 @@
 # backend/routers/auth.py
+
 import httpx
 from jose import jwt, JWTError
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from dependencies import get_db
+import os # <--- NOVO: Importa o módulo OS para variáveis de ambiente
 
 import database as db
 import schemas
-import config
+# REMOVER: import config # <--- REMOVIDO para eliminar o erro
 
 router = APIRouter()
+
+# --- Leitura das Variáveis de Ambiente ---
+# Elas DEVEM ser configuradas no painel da Vercel
+GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
+GOOGLE_REDIRECT_URI = os.environ.get("GOOGLE_REDIRECT_URI")
+
 
 @router.post("/usuarios", response_model=schemas.Usuario, tags=["Autenticação"])
 def cadastrar_usuario(usuario: schemas.Usuario, database: Session = Depends(get_db)):
@@ -32,8 +41,18 @@ def fazer_login(login_data: schemas.LoginData, database: Session = Depends(get_d
 
 @router.post("/auth/google", tags=["Autenticação"])
 async def auth_google(auth_code: schemas.GoogleAuthCode, database: Session = Depends(get_db)):
+    # Verifica se as credenciais do Google foram carregadas
+    if not GOOGLE_CLIENT_ID or not GOOGLE_CLIENT_SECRET or not GOOGLE_REDIRECT_URI:
+        raise HTTPException(status_code=500, detail="Credenciais do Google não configuradas no servidor.")
+
     token_url = "https://oauth2.googleapis.com/token"
-    token_data = { "code": auth_code.code, "client_id": config.GOOGLE_CLIENT_ID, "client_secret": config.GOOGLE_CLIENT_SECRET, "redirect_uri": config.GOOGLE_REDIRECT_URI, "grant_type": "authorization_code", }
+    token_data = {
+        "code": auth_code.code,
+        "client_id": GOOGLE_CLIENT_ID, # <--- Corrigido para a variável de ambiente
+        "client_secret": GOOGLE_CLIENT_SECRET, # <--- Corrigido para a variável de ambiente
+        "redirect_uri": GOOGLE_REDIRECT_URI, # <--- Corrigido para a variável de ambiente
+        "grant_type": "authorization_code",
+    }
     
     async with httpx.AsyncClient() as client:
         token_response = await client.post(token_url, data=token_data)
