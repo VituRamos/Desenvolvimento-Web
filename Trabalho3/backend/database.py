@@ -1,10 +1,11 @@
+# backend/database.py
+
 from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
-import json
-import os  # <--- Adicionado para ler variáveis de ambiente
+import os
 
-# --- REMOVIDO: import config ---
+# --- Configuração do Banco de Dados ---
 
 # Tenta pegar a URL da variável de ambiente. 
 # Se não existir (ex: rodando local sem env), usa um SQLite local como fallback.
@@ -15,7 +16,6 @@ DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///./test.db")
 if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-# Cria o engine com a URL correta
 # connect_args={"check_same_thread": False} é necessário apenas para SQLite
 connect_args = {"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
 
@@ -23,6 +23,8 @@ engine = create_engine(DATABASE_URL, connect_args=connect_args)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
+# --- Definição dos Modelos ---
 
 class Usuario(Base):
     __tablename__ = "usuarios"
@@ -32,6 +34,8 @@ class Usuario(Base):
     email = Column(String, unique=True, index=True)
     senha = Column(String, nullable=True)
     tipo = Column(String)
+    
+    # Relação: Usuário pode ter vários Resultados
     resultados = relationship("Resultado", back_populates="usuario")
 
 class Materia(Base):
@@ -39,6 +43,8 @@ class Materia(Base):
 
     id = Column(String, primary_key=True, index=True)
     nome = Column(String, index=True)
+    
+    # Relação: Matéria pode ter vários Simulados
     simulados = relationship("Simulado", back_populates="materia")
 
 class Simulado(Base):
@@ -47,6 +53,8 @@ class Simulado(Base):
     id = Column(String, primary_key=True, index=True)
     titulo = Column(String, index=True)
     materia_id = Column(String, ForeignKey("materias.id"))
+    
+    # Relações bidirecionais
     materia = relationship("Materia", back_populates="simulados")
     questoes = relationship("Questao", back_populates="simulado")
     resultados = relationship("Resultado", back_populates="simulado")
@@ -61,6 +69,8 @@ class Questao(Base):
     opcoes = Column(Text)  # Store options as a JSON string
     correta = Column(String)
     explicacoes = Column(Text)  # Store explanations as a JSON string
+    
+    # Relação: Questão pertence a um Simulado
     simulado = relationship("Simulado", back_populates="questoes")
 
 class Resultado(Base):
@@ -71,12 +81,27 @@ class Resultado(Base):
     simulado_id = Column(String, ForeignKey("simulados.id"))
     nota = Column(Float)
     respostas = Column(Text)  # Store answers as a JSON string
+    
+    # Relações bidirecionais
     usuario = relationship("Usuario", back_populates="resultados")
-    simulado = relationship("Simulado", back_populates="simulado")
+    # CORREÇÃO CRÍTICA AQUI: O back_populates deve ser "resultados",
+    # que é o nome da relação no modelo Simulado.
+    simulado = relationship("Simulado", back_populates="resultados") 
 
+
+# --- Funções de DB ---
 
 def create_db_and_tables():
+    """Cria o banco de dados e as tabelas, se elas não existirem."""
     Base.metadata.create_all(bind=engine)
+
+def get_db():
+    """Gera uma sessão de DB para ser usada como dependência no FastAPI."""
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 if __name__ == "__main__":
     create_db_and_tables()
