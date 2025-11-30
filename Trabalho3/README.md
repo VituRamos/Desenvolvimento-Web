@@ -6,7 +6,6 @@
 
 
 Este documento serve como guia para utilização da plataforma SimulAI. Aqui você aprenderá como acessar o sistema, criar simulados inteligentes e acompanhar seu desempenho.
-![Uploading SimulAIORIGINAL.png…]()
 
 ---
 
