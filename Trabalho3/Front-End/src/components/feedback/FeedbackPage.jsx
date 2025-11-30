@@ -41,7 +41,7 @@ export default function FeedbackPage() {
         // --- Transforma os dados do simulado em um formato de "Feedback" ---
         const itensDeFeedback = simulado.questoes.map((q) => ({
           // O título de cada item de feedback será a própria pergunta.
-          titulo: `Questão ${q.id}: ${q.pergunta}`,
+          titulo: `Questão ${q.n_questao}: ${q.pergunta}`,
           // O texto será a explicação da alternativa correta.
           texto: `Resposta Correta: ${q.correta.toUpperCase()}. Explicação: ${q.explicacoes[q.correta]}`,
         }));
