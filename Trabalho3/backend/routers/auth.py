@@ -1,3 +1,5 @@
+# backend/routers/auth.py
+
 import httpx
 from jose import jwt, JWTError
 from fastapi import APIRouter, HTTPException, Depends
