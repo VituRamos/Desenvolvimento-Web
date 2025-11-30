@@ -1,7 +1,8 @@
 # MANUAL DO USUÁRIO - SIMULAI
 
 **Bem-vindo ao SimulAI!**
-<img width="1024" height="1024" alt="SimulAIORIGINAL" src="https://github.com/user-attachments/assets/89895fd5-7b92-4fc3-9b71-30eb0c6a0a94" />
+<img width="459" height="124" alt="SimulAI" src="https://github.com/user-attachments/assets/e2225104-072b-4ea8-b2ea-bf2bd628a380" />
+
 
 Este documento serve como guia para utilização da plataforma SimulAI. Aqui você aprenderá como acessar o sistema, criar simulados inteligentes e acompanhar seu desempenho.
 ![Uploading SimulAIORIGINAL.png…]()
