@@ -39,9 +39,9 @@ app.add_middleware(
 # --- FIM DA CONFIGURAÇÃO DO CORS ---
 
 # Suas rotas vêm DEPOIS daqui
-@app.post("/usuarios")
-def criar_usuario(dados: dict):
-    return {"msg": "Criado"}
+#@app.post("/usuarios")
+#def criar_usuario(dados: dict):
+#    return {"msg": "Criado"}
 
 # --- Endpoints ---
 @app.get("/")
