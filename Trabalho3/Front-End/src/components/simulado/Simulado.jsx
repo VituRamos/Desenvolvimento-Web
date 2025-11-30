@@ -14,7 +14,7 @@ import Questao from "./Questao";
 import Resultado from "./Resultado";
 
 // --- Constantes ---
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 // --- Componente Simulado ---
 // Componente principal para a realização de um simulado.
