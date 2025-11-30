@@ -7,7 +7,7 @@ import FeedbackCard from "./FeedbackCard";
 import Actions from "../ui/Actions";
 import "../../index.css";
 
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 /**
  * Página de Feedback (Gabarito Comentado).
