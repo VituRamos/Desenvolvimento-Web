@@ -1,6 +1,7 @@
 # MANUAL DO USUÁRIO - SIMULAI
 
 **Bem-vindo ao SimulAI!**
+
 <img width="459" height="124" alt="SimulAI" src="https://github.com/user-attachments/assets/e2225104-072b-4ea8-b2ea-bf2bd628a380" />
 
 
