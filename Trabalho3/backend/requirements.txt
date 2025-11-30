@@ -47,3 +47,4 @@ urllib3==2.5.0
 uvicorn==0.38.0
 sqlalchemy
 psycopg2-binary
+passlib[bcrypt]
