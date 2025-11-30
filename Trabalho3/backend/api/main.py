@@ -23,7 +23,7 @@ def startup_event():
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"], # Permite acesso do seu front-end React.
+    allow_origins=["http://localhost:5173","https://simulai-frontend.vercel.app"], # Permite acesso do seu front-end React.
     allow_credentials=True,
     allow_methods=["*"], # Permite todos os métodos (GET, POST, etc.).
     allow_headers=["*"], # Permite todos os cabeçalhos.
