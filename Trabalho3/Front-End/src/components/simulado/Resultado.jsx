@@ -2,6 +2,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 // --- Componente Resultado ---
 // Renderiza a tela de resultado do simulado, mostrando a pontuação,
 // o gabarito e salvando o resultado na API.
@@ -44,7 +46,7 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
           respostas: respostasParaSalvar
         };
 
-        const response = await fetch(`http://127.0.0.1:8000/simulados/${simuladoId}/resultados`, {
+        const response = await fetch(`${API_URL}/${simuladoId}/resultados`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(resultadoData),
