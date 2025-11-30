@@ -21,13 +21,27 @@ app = FastAPI()
 def startup_event():
     db.create_db_and_tables()
 
+# --- INICIO DA CONFIGURAÇÃO DO CORS ---
+origins = [
+    "http://localhost:5173",  # Vite local
+    "http://localhost:3000",  # Caso use outra porta local
+    "https://simulai-frontend.vercel.app", # <--- SUA URL DE PRODUÇÃO
+    # ATENÇÃO: NÃO coloque barra "/" no final da URL acima!
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173","https://simulai-frontend.vercel.app"], # Permite acesso do seu front-end React.
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"], # Permite todos os métodos (GET, POST, etc.).
-    allow_headers=["*"], # Permite todos os cabeçalhos.
+    allow_methods=["*"],  # Permite GET, POST, PUT, DELETE, etc.
+    allow_headers=["*"],  # Permite todos os headers (Authorization, etc.)
 )
+# --- FIM DA CONFIGURAÇÃO DO CORS ---
+
+# Suas rotas vêm DEPOIS daqui
+@app.post("/usuarios")
+def criar_usuario(dados: dict):
+    return {"msg": "Criado"}
 
 # --- Endpoints ---
 @app.get("/")
