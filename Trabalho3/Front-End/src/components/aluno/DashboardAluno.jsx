@@ -21,7 +21,7 @@ export default function DashboardAluno() {
       try {
         const userId = localStorage.getItem('userId'); // Pega o ID do usuário logado.
         if (userId) {
-          const response = await fetch(`${API_URL}/${userId}`);
+          const response = await fetch(`${API_URL}/resultados/${userId}`);
           if (response.ok) {
             const data = await response.json();
             
