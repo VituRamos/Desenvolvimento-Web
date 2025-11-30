@@ -25,7 +25,7 @@ O SimulAI é uma plataforma educacional inovadora que utiliza Inteligência Arti
 Ao abrir a plataforma, você encontrará a tela de identificação.
 
 ### Como entrar:
-1.  **Conta Google (Recomendado):** Clique no botão "Entrar com Google" para acesso rápido e seguro usando seu Gmail.
+1.  **Conta Google:** Clique no botão "Entrar com Google" para acesso rápido e seguro usando seu Gmail.
 2.  **E-mail e Senha:** Se já possuir cadastro, digite seus dados e clique em "Entrar".
 3.  **Criar Conta:** Caso seja seu primeiro acesso, clique no link "Não tem conta? Cadastre-se aqui". Você poderá escolher seu perfil:
     * **Aluno:** Para quem deseja realizar simulados.
