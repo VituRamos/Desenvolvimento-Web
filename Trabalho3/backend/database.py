@@ -35,19 +35,16 @@ class Usuario(Base):
     senha = Column(String, nullable=True)
     tipo = Column(String)
     
-    # Relações
+    # Relação: Usuário pode ter vários Resultados
     resultados = relationship("Resultado", back_populates="usuario")
-    materias = relationship("Materia", back_populates="professor")
 
 class Materia(Base):
     __tablename__ = "materias"
 
     id = Column(String, primary_key=True, index=True)
     nome = Column(String, index=True)
-    professor_id = Column(String, ForeignKey("usuarios.id"))
     
-    # Relações
-    professor = relationship("Usuario", back_populates="materias")
+    # Relação: Matéria pode ter vários Simulados
     simulados = relationship("Simulado", back_populates="materia")
 
 class Simulado(Base):
