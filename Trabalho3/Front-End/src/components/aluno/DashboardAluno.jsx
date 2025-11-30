@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../ui/Header';
 import MateriaCard from '../materia/MateriaCard';
 import "../../index.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
 // --- Componente DashboardAluno ---
 // Componente principal que monta a página do dashboard do aluno.
@@ -20,7 +21,7 @@ export default function DashboardAluno() {
       try {
         const userId = localStorage.getItem('userId'); // Pega o ID do usuário logado.
         if (userId) {
-          const response = await fetch(`http://127.0.0.1:8000/resultados/${userId}`);
+          const response = await fetch(`${API_URL}/${userId}`);
           if (response.ok) {
             const data = await response.json();
             
@@ -46,7 +47,7 @@ export default function DashboardAluno() {
   useEffect(() => {
     const fetchMaterias = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/materias');
+        const response = await fetch(`${API_URL}/materias`);
         if (!response.ok) {
           throw new Error('Não foi possível buscar os dados das matérias.');
         }
