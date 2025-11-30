@@ -1,75 +1,101 @@
-## ⚙️ Instalação e Execução (Passo a Passo)
-Siga estes passos no seu terminal para configurar e rodar o projeto localmente:
+# MANUAL DO USUÁRIO - SIMULAI
 
-### 1. Pré-requisitos (Instalação Manual)
-Antes de usar o terminal, garanta que você já tenha instalado:
+**Bem-vindo ao SimulAI!**
+<img width="1024" height="1024" alt="SimulAIORIGINAL" src="https://github.com/user-attachments/assets/89895fd5-7b92-4fc3-9b71-30eb0c6a0a94" />
 
-* **Node.js (v18+) e npm:** [https://nodejs.org/](https://nodejs.org/)
-* **Python (v3.9+):** [https://www.python.org/](https://www.python.org/)
-    * *(Windows)* Certifique-se de marcar "Add Python to PATH" durante a instalação.
-* **Git:** [https://git-scm.com/](https://git-scm.com/)
+Este documento serve como guia para utilização da plataforma SimulAI. Aqui você aprenderá como acessar o sistema, criar simulados inteligentes e acompanhar seu desempenho.
+![Uploading SimulAIORIGINAL.png…]()
 
-### 2. Configurar e Rodar o Back-end (API FastAPI)
-* Crie e Ative o Ambiente Virtual:
- ```Bash
-  python -m venv venv
- ```
+---
 
-* Comando de ativação (escolha o do seu sistema):
+## 1. O que é o SimulAI?
 
-Windows:
-```Bash
-.\venv\Scripts\activate
-```
+O SimulAI é uma plataforma educacional inovadora que utiliza Inteligência Artificial para facilitar o estudo.
+* **Professores** podem enviar seus materiais de aula (arquivos de texto ou PDF) e o sistema cria automaticamente um simulado completo com perguntas e respostas.
+* **Alunos** podem responder a esses simulados e receber sua nota e gabarito instantaneamente.
 
-Mac/Linux:
-```Bash
- source venv/bin/activate
-```
+---
 
-* Instale as Dependências Python:
-```Bash
-pip install -r requirements.txt
-```
+## 2. Acesso ao Sistema
 
-* Inicie o Servidor da API:
-```Bash
-uvicorn main:app --reload
-```
-(Mantenha este terminal aberto. O servidor rodará em http://127.0.0.1:8000)
+Ao abrir a plataforma, você encontrará a tela de identificação.
 
-### 3. Configurar e Rodar o Front-end (React + Vite)
-Abra um NOVO terminal.
-Navegue até a pasta do Front-end (a partir da raiz do projeto):
-```Bash
-cd Front-End
-```
+### Como entrar:
+1.  **Conta Google (Recomendado):** Clique no botão "Entrar com Google" para acesso rápido e seguro usando seu Gmail.
+2.  **E-mail e Senha:** Se já possuir cadastro, digite seus dados e clique em "Entrar".
+3.  **Criar Conta:** Caso seja seu primeiro acesso, clique no link "Não tem conta? Cadastre-se aqui". Você poderá escolher seu perfil:
+    * **Aluno:** Para quem deseja realizar simulados.
+    * **Professor:** Para quem deseja criar conteúdo.
 
-Instale as Dependências JavaScript:
-```Bash
-npm install
-```
+> *[INSERIR PRINT DA TELA DE LOGIN AQUI]*
 
-Inicie o Servidor de Desenvolvimento (dentro da pasta Front-End):
-```Bash
-npm run dev
-```
-(Mantenha este segundo terminal aberto. O servidor rodará em http://localhost:5173)
+---
 
-### 4. Acessar a Aplicação
-Com os dois terminais rodando (Uvicorn e Vite), abra seu navegador e acesse: http://localhost:5173
+## 3. Guia do Professor
 
+Como professor, seu painel principal permite organizar disciplinas e gerar provas automaticamente.
 
+### 3.1. Criando uma Disciplina (Matéria)
+Para organizar seus simulados, primeiro você precisa criar uma matéria.
+1.  No canto inferior direito da tela, localize e clique no botão flutuante azul com o símbolo **"+"**.
+2.  Uma janela se abrirá. Digite o nome da disciplina (ex: "História", "Biologia").
+3.  Clique em **"Confirmar"**. A nova matéria aparecerá imediatamente na sua lista.
 
+> *[INSERIR PRINT DO POPUP DE NOVA MATÉRIA AQUI]*
 
+### 3.2. Gerando um Simulado com IA
+Aqui acontece a mágica do SimulAI. Você não precisa digitar as perguntas uma por uma.
+1.  Na lista de matérias, clique sobre a disciplina desejada para expandi-la.
+2.  Clique no botão **"Adicionar novo simulado"**.
+3.  Preencha o nome do simulado (ex: "Revolução Industrial").
+4.  Clique no botão de upload e selecione um arquivo do seu computador.
+    * **Formatos aceitos:** `.pdf` ou `.txt`.
+    * **Dica:** O arquivo deve conter o texto base da aula.
+5.  Clique em **"Confirmar"**.
+    * *O sistema irá ler o seu arquivo, processar o conteúdo com Inteligência Artificial e gerar 5 questões de múltipla escolha com gabarito comentado.*
 
+> *[INSERIR PRINT DA TELA DE UPLOAD E CRIAÇÃO AQUI]*
 
+---
 
+## 4. Guia do Aluno
 
+Como aluno, seu foco é testar seus conhecimentos.
 
-
+### 4.1. Escolhendo um Simulado
+1.  No seu painel inicial, você verá todas as matérias disponibilizadas pelos professores.
+2.  Clique sobre o nome de uma matéria (ex: "Português") para ver os simulados disponíveis.
+3.  Clique na opção **"Realizar simulado"** para começar.
 
 
 
+### 4.2. Respondendo às Questões
+1.  O sistema apresentará uma questão por vez.
+2.  Leia o enunciado e clique na alternativa que considera correta (A, B, C, D ou E).
+3.  Após selecionar, clique em **"Próximo"** para ir para a pergunta seguinte.
+4.  Na última questão, o botão mudará para **"Finalizar"**.
 
 
+
+### 4.3. Visualizando Resultados
+Assim que finalizar o simulado, você receberá seu feedback instantâneo:
+* **Nota:** Sua pontuação calculada automaticamente.
+* **Gabarito:** Você poderá ver quais questões acertou e errou.
+* **Explicação:** O sistema mostra qual era a resposta correta.
+
+Para sair, clique no botão **"Voltar ao Menu"**.
+
+
+
+---
+
+## 5. Dicas e Solução de Problemas
+
+* **O sistema não gerou o simulado:** Verifique se o seu arquivo PDF contém texto selecionável. Arquivos que são apenas imagens (fotos de páginas) não podem ser lidos pela Inteligência Artificial.
+* **Login com Google não funciona:** Verifique sua conexão com a internet ou tente usar o login por e-mail e senha.
+* **Tela branca ou travamento:** Tente recarregar a página do navegador (tecla F5).
+
+---
+
+**Precisa de ajuda?**
+Entre em contato com o suporte técnico da instituição.
