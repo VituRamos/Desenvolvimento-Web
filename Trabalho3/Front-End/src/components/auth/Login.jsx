@@ -5,63 +5,52 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PopupCadastro from "./PopupCadastro";
 import { useGoogleLogin } from '@react-oauth/google';
+import apiRequest from "../../services/api";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-
 // --- Componente Login ---
-// Componente que renderiza a página de login, permitindo autenticação
-// via email/senha ou Google.
 const Login = () => {
     // --- Estados do Componente ---
-    const [isPopupOpen, setIsPopupOpen] = useState(false); // Controla a visibilidade do popup de cadastro.
-    const [email, setEmail] = useState(""); // Armazena o email digitado.
-    const [senha, setSenha] = useState(""); // Armazena a senha digitada.
-    const [usuarioLogado, setUsuarioLogado] = useState(null); // Armazena os dados do usuário após o login.
-
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    
     // --- Hooks ---
-    const navigate = useNavigate(); // Hook para navegação entre as páginas.
-
-    // --- Efeito para Redirecionamento ---
-    // Executa sempre que o estado 'usuarioLogado' muda.
-    useEffect(() => {
-        // Se o login for bem-sucedido, redireciona o usuário para o dashboard correto.
-        if (usuarioLogado) {
-            if (usuarioLogado.tipo === "aluno") {
-                navigate("/aluno");
-            } else if (usuarioLogado.tipo === "professor") {
-                navigate("/professor");
-            }
-        }
-    }, [usuarioLogado, navigate]);
+    const navigate = useNavigate();
 
     // --- Funções de Manipulação de Eventos ---
-    const openPopup = () => {
-        setIsPopupOpen(true);
+    const openPopup = () => setIsPopupOpen(true);
+
+    const fetchUserAndRedirect = async () => {
+        try {
+            const userData = await apiRequest("/users/me");
+            localStorage.setItem('userId', userData.id);
+            localStorage.setItem('userType', userData.tipo);
+            localStorage.setItem('userName', userData.nome);
+            
+            if (userData.tipo === "aluno") {
+                navigate("/aluno");
+            } else if (userData.tipo === "professor") {
+                navigate("/professor");
+            }
+        } catch (error) {
+            console.error("Erro ao buscar dados do usuário:", error);
+            alert("Não foi possível carregar os dados do usuário. Por favor, tente fazer login novamente.");
+            localStorage.removeItem('authToken'); // Limpa token inválido
+        }
     };
 
     // --- Lógica de Login com Google ---
     const handleGoogleLoginSuccess = async (tokenResponse) => {
-        const code = tokenResponse.code;
         try {
-            // Envia o código de autorização para o backend.
-            const response = await fetch('http://127.0.0.1:8000/auth/google', {
+            const tokenData = await apiRequest('/auth/google', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ code: code }),
+                body: JSON.stringify({ code: tokenResponse.code }),
             });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.detail || 'Falha no login com Google');
-            }
-
-            // Se o login for bem-sucedido, armazena os dados do usuário.
-            const usuario = await response.json();
-            localStorage.setItem('userId', usuario.id);
-            localStorage.setItem('userType', usuario.tipo);
-            localStorage.setItem('userName', usuario.nome);
-            setUsuarioLogado(usuario); // Dispara o redirecionamento.
+            
+            localStorage.setItem('authToken', tokenData.access_token);
+            await fetchUserAndRedirect();
 
         } catch (error) {
             console.error("Erro no login com Google:", error);
@@ -69,9 +58,8 @@ const Login = () => {
         }
     };
 
-    // Configuração do hook de login do Google.
     const googleLogin = useGoogleLogin({
-        flow: 'auth-code', // Usa o fluxo de código de autorização.
+        flow: 'auth-code',
         onSuccess: handleGoogleLoginSuccess,
         onError: (error) => {
             console.error('Login com Google falhou:', error);
@@ -83,11 +71,14 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            // Envia email e senha para o backend.
+            const formData = new URLSearchParams();
+            formData.append('username', email);
+            formData.append('password', senha);
+
             const response = await fetch(`${API_URL}/login`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, senha: senha }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData,
             });
 
             if (!response.ok) {
@@ -95,12 +86,9 @@ const Login = () => {
                 throw new Error(errorData.detail || 'Falha no login');
             }
 
-            // Se o login for bem-sucedido, armazena os dados do usuário.
-            const usuario = await response.json();
-            localStorage.setItem('userId', usuario.id);
-            localStorage.setItem('userType', usuario.tipo);
-            localStorage.setItem('userName', usuario.nome);
-            setUsuarioLogado(usuario); // Dispara o redirecionamento.
+            const tokenData = await response.json();
+            localStorage.setItem('authToken', tokenData.access_token);
+            await fetchUserAndRedirect();
 
         } catch (error) {
             console.error("Erro no login:", error);
@@ -110,23 +98,15 @@ const Login = () => {
 
     // --- Lógica de Cadastro ---
     const handleCadastro = async (usuario, tipo) => {
-        const novoUsuario = { ...usuario, tipo: tipo };
+        const novoUsuario = { ...usuario, tipo };
         try {
-            // Envia os dados do novo usuário para o backend.
-            const response = await fetch(`${API_URL}/usuarios`, {
+            await apiRequest('/usuarios', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(novoUsuario),
             });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.detail || 'Falha ao cadastrar usuário');
-            }
-
-            await response.json();
+            
             alert("Cadastro realizado com sucesso! Por favor, faça o login.");
-            setIsPopupOpen(false); // Fecha o popup.
+            setIsPopupOpen(false);
 
         } catch (error) {
             console.error("Erro no cadastro:", error);
@@ -145,7 +125,6 @@ const Login = () => {
                             <p>Por favor, insira seu email e senha.</p>
                         </div>
 
-                        {/* Formulário de login padrão */}
                         <form className="login-form" onSubmit={handleLogin}>
                             <div className="input-group">
                                 <label htmlFor="email">Email</label>
@@ -178,7 +157,6 @@ const Login = () => {
 
                         <div className="divider">ou</div>
 
-                        {/* Botão de login com Google */}
                         <button
                             type="button"
                             className="btn google-btn"
@@ -188,7 +166,6 @@ const Login = () => {
                             Entrar com Google
                         </button>
 
-                        {/* Link para abrir o popup de cadastro */}
                         <div style={{ marginTop: "20px", textAlign: "center" }}>
                             <a href="#" onClick={openPopup}>
                                 Não tem conta? Cadastre-se aqui.
@@ -196,13 +173,11 @@ const Login = () => {
                         </div>
                     </div>
 
-                    {/* Área da imagem lateral */}
                     <div className="login-image-area">
                         <img src={LeBudda} alt="LeBudda" />
                     </div>
                 </div>
 
-                {/* Renderiza o popup de cadastro se isPopupOpen for true */}
                 {isPopupOpen && (
                     <PopupCadastro
                         onClose={() => setIsPopupOpen(false)}

@@ -4,35 +4,31 @@ import Header from "../ui/Header";
 import CardMateriaProf from "../materia/CardMateriaProf.jsx";
 import PopupMateria from "../materia/PopupMateria";
 import PopupSimulado from "../simulado/PopupSimulado";
-import { useLocation } from "react-router-dom";
+import apiRequest from "../../services/api"; // Importa o serviço da API
 import "../../index.css";
 
-// --- Constantes ---
-const API_URL = import.meta.env.VITE_API_URL;
-
 // --- Componente DashboardProfessor ---
-// Componente principal que monta a página do dashboard do professor.
 export default function DashboardProfessor() {
   // --- Estados do Componente ---
-  const [materias, setMaterias] = useState([]); // Armazena a lista de matérias.
-  const [popupMateriaAberto, setPopupMateriaAberto] = useState(false); // Controla a visibilidade do popup de matéria.
-  const [popupSimuladoAberto, setPopupSimuladoAberto] = useState(false); // Controla a visibilidade do popup de simulado.
-  const [materiaIdSelecionada, setMateriaIdSelecionada] = useState(null); // Armazena o ID da matéria para adicionar um simulado.
-  const [resultados, setResultados] = useState({}); // Armazena os resultados de todos os simulados.
+  const [materias, setMaterias] = useState([]);
+  const [popupMateriaAberto, setPopupMateriaAberto] = useState(false);
+  const [popupSimuladoAberto, setPopupSimuladoAberto] = useState(false);
+  const [materiaIdSelecionada, setMateriaIdSelecionada] = useState(null);
+  const [resultados, setResultados] = useState({});
   
-  // --- Efeito para Carregar Resultados ---
-  // Busca todos os resultados de simulados na API.
+  // --- Efeito para Carregar Dados Iniciais ---
   useEffect(() => {
-    const carregarResultados = async () => {
+    const carregarDados = async () => {
       try {
-        const response = await fetch(`${API_URL}/resultados`);
-        if (!response.ok) {
-          throw new Error("Falha ao buscar resultados da API");
-        }
-        const data = await response.json();
+        // Carrega matérias e resultados em paralelo
+        const [materiasData, resultadosData] = await Promise.all([
+          apiRequest("/materias"),
+          apiRequest("/resultados"),
+        ]);
         
-        // Agrupa os resultados por simulado_id para fácil acesso.
-        const resultadosAgrupados = data.reduce((acc, resultado) => {
+        setMaterias(materiasData);
+
+        const resultadosAgrupados = resultadosData.reduce((acc, resultado) => {
           const { simulado_id } = resultado;
           if (!acc[simulado_id]) {
             acc[simulado_id] = [];
@@ -40,77 +36,41 @@ export default function DashboardProfessor() {
           acc[simulado_id].push(resultado);
           return acc;
         }, {});
-
         setResultados(resultadosAgrupados);
-      } catch (error) {
-        console.error("Erro ao carregar resultados:", error);
-      }
-    };
-    carregarResultados();
-  }, []);
 
-  // --- Efeito para Carregar Matérias ---
-  // Busca a lista de matérias na API.
-  useEffect(() => {
-    const carregarMaterias = async () => {
-      try {
-        const response = await fetch(`${API_URL}/materias`);
-        if (!response.ok) {
-          throw new Error("Falha ao buscar matérias da API");
-        }
-        const data = await response.json();
-        setMaterias(data);
       } catch (error) {
-        console.error(error);
-        alert("Não foi possível carregar as matérias.");
+        console.error("Erro ao carregar dados do dashboard:", error);
+        alert("Não foi possível carregar os dados do dashboard.");
       }
     };
-    carregarMaterias();
+    carregarDados();
   }, []);
 
   // --- Funções de Manipulação de Dados ---
-  // Adiciona uma nova matéria via API.
   const adicionarMateria = async (nome) => {
     try {
-      const response = await fetch(`${API_URL}/materias`, {
+      const novaMateria = await apiRequest("/materias", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nome: nome }),
       });
-
-      if (!response.ok) {
-        throw new Error("Falha ao criar matéria");
-      }
-      
-      const novaMateria = await response.json();
-      setMaterias([...materias, novaMateria]); // Atualiza o estado com a nova matéria.
-      
+      setMaterias([...materias, novaMateria]);
     } catch (error) {
       console.error(error);
       alert("Não foi possível adicionar a matéria.");
     }
   };
 
-  // Adiciona um novo simulado a uma matéria via API.
   const adicionarSimulado = async (idMateria, nome, arquivo) => {
     const formData = new FormData();
     formData.append("nome_simulado", nome);
     formData.append("arquivo", arquivo);
 
     try {
-      const response = await fetch(`${API_URL}/materias/${idMateria}/simulados`, {
+      const novoSimulado = await apiRequest(`/materias/${idMateria}/simulados`, {
         method: "POST",
         body: formData, 
       });
 
-      if (!response.ok) {
-        const erro = await response.json();
-        throw new Error(`Falha ao criar simulado: ${erro.detail}`);
-      }
-      
-      const novoSimulado = await response.json();
-
-      // Atualiza o estado para refletir o novo simulado na matéria correta.
       setMaterias(prevMaterias =>
         prevMaterias.map(materia => {
           if (materia.id === idMateria) {
@@ -132,19 +92,13 @@ export default function DashboardProfessor() {
     }
   };
 
-  // Exclui um simulado via API.
   const handleExcluirSimulado = async (materiaId, simuladoId) => {
     if (window.confirm("Tem certeza que deseja excluir este simulado? Esta ação não pode ser desfeita.")) {
       try {
-        const response = await fetch(`${API_URL}/simulados/${simuladoId}`, {
+        await apiRequest(`/simulados/${simuladoId}`, {
           method: "DELETE",
         });
 
-        if (!response.ok) {
-          throw new Error("Falha ao excluir o simulado.");
-        }
-
-        // Atualiza o estado para remover o simulado da UI.
         setMaterias(prevMaterias =>
           prevMaterias.map(materia => {
             if (materia.id === materiaId) {
@@ -156,7 +110,6 @@ export default function DashboardProfessor() {
             return materia;
           })
         );
-
       } catch (error) {
         console.error(error);
         alert("Não foi possível excluir o simulado.");
@@ -165,13 +118,11 @@ export default function DashboardProfessor() {
   };
 
   // --- Funções de Controle de UI ---
-  // Abre o popup para adicionar um novo simulado.
   const handleAbrirPopupSimulado = (idMateria) => {
     setMateriaIdSelecionada(idMateria);
     setPopupSimuladoAberto(true);
   };
 
-  // Fecha o popup de simulado.
   const handleFecharPopupSimulado = () => {
     setPopupSimuladoAberto(false);
     setMateriaIdSelecionada(null);
@@ -181,8 +132,6 @@ export default function DashboardProfessor() {
   return (
     <div className="container">
       <Header />
-
-      {/* Mapeia as matérias para renderizar os cards. */}
       {materias.map((materia) => (
         <CardMateriaProf
           key={materia.id}
@@ -192,20 +141,15 @@ export default function DashboardProfessor() {
           onExcluirSimulado={(simuladoId) => handleExcluirSimulado(materia.id, simuladoId)}
         />
       ))}
-
-      {/* Botão flutuante para adicionar nova matéria. */}
       <button className="fab" onClick={() => setPopupMateriaAberto(true)}>
         +
       </button>
-
-      {/* Renderização condicional dos popups. */}
       {popupMateriaAberto && (
         <PopupMateria
           onClose={() => setPopupMateriaAberto(false)}
           onConfirm={adicionarMateria}
         />
       )}
-      
       {popupSimuladoAberto && (
         <PopupSimulado
           onClose={handleFecharPopupSimulado}

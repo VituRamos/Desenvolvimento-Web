@@ -1,12 +1,9 @@
 // --- Bloco de Importação ---
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-
-const API_URL = import.meta.env.VITE_API_URL;
+import apiRequest from "../../services/api"; // Importa o serviço da API
 
 // --- Componente Resultado ---
-// Renderiza a tela de resultado do simulado, mostrando a pontuação,
-// o gabarito e salvando o resultado na API.
 export default function Resultado({ questoes, respostas, onRestart, simuladoId }) {
   // --- Hooks e Estados ---
   const navigate = useNavigate();
@@ -14,7 +11,6 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
   const jaSalvou = useRef(false);
 
   // --- Lógica de Cálculo ---
-  // Calcula o número de acertos comparando as respostas com o gabarito.
   const acertos = questoes.filter(
     (q) => respostas[q.id]?.escolha === q.correta
   ).length;
@@ -46,17 +42,11 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
           respostas: respostasParaSalvar
         };
 
-        const response = await fetch(`${API_URL}/simulados/${simuladoId}/resultados`, {
+        const data = await apiRequest(`/simulados/${simuladoId}/resultados`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(resultadoData),
         });
 
-        if (!response.ok) {
-          throw new Error('Erro ao salvar resultado');
-        }
-
-        const data = await response.json();
         setResultadoFinal(data);
 
       } catch (error) {
@@ -90,7 +80,6 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
         <strong id="total">{questoes.length}</strong> questões. (Nota: {notaExibida.toFixed(2)})
       </p>
 
-      {/* Seção do Gabarito */}
       <div id="gabarito">
          {questoes.map((q) => {
           const escolha = respostas[q.id]?.escolha;
@@ -105,7 +94,6 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
         })}
       </div>
 
-      {/* Botões de Ação */}
       <button id="restart-btn" className="btn" onClick={onRestart}>
         Refazer Simulado
       </button>

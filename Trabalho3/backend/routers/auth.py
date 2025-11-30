@@ -99,6 +99,11 @@ async def fazer_login(form_data: OAuth2PasswordRequestForm = Depends(), database
     
     return {"access_token": access_token, "token_type": "bearer"}
 
+# Endpoint para buscar o usuário logado
+@router.get("/users/me", response_model=schemas.Usuario, tags=["Autenticação"])
+async def read_users_me(current_user: schemas.Usuario = Depends(get_current_active_user)):
+    return current_user
+
 # --- Google Auth com JWT ---
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
