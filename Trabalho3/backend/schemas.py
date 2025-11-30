@@ -2,7 +2,15 @@
 from pydantic import BaseModel
 from typing import List, Optional, Dict
 
-# Define a estrutura (schema) dos dados que a API irá receber e enviar.
+# --- Schemas para Autenticação e Tokens ---
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
+
+# --- Schemas de Usuário ---
 class Usuario(BaseModel):
     id: str
     nome: str
@@ -17,6 +25,7 @@ class LoginData(BaseModel):
 class GoogleAuthCode(BaseModel):
     code: str
 
+# --- Schemas de Matérias e Simulados ---
 class OpcoesQuestao(BaseModel):
     a: str
     b: str
@@ -56,6 +65,7 @@ class Materia(BaseModel):
 class MateriaCreate(BaseModel):
     nome: str
 
+# --- Schemas de Resultados ---
 class Resultado(BaseModel):
     id: str
     usuario_id: str
