@@ -46,7 +46,7 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
           respostas: respostasParaSalvar
         };
 
-        const response = await fetch(${API_URL}/simulados/${simuladoId}/resultados), {
+        const response = await fetch(`${API_URL}/simulados/${simuladoId}/resultados`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(resultadoData),
