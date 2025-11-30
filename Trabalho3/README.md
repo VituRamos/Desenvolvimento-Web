@@ -10,13 +10,16 @@ Este documento serve como guia para utilização da plataforma SimulAI. Aqui voc
 
 ---
 
+
 ## 1. O que é o SimulAI?
 
 O SimulAI é uma plataforma educacional inovadora que utiliza Inteligência Artificial para facilitar o estudo.
 * **Professores** podem enviar seus materiais de aula (arquivos de texto ou PDF) e o sistema cria automaticamente um simulado completo com perguntas e respostas.
 * **Alunos** podem responder a esses simulados e receber sua nota e gabarito instantaneamente.
 
+
 ---
+
 
 ## 2. Acesso ao Sistema
 
@@ -29,9 +32,9 @@ Ao abrir a plataforma, você encontrará a tela de identificação.
     * **Aluno:** Para quem deseja realizar simulados.
     * **Professor:** Para quem deseja criar conteúdo.
 
-> *[INSERIR PRINT DA TELA DE LOGIN AQUI]*
 
 ---
+
 
 ## 3. Guia do Professor
 
@@ -43,8 +46,7 @@ Para organizar seus simulados, primeiro você precisa criar uma matéria.
 2.  Uma janela se abrirá. Digite o nome da disciplina (ex: "História", "Biologia").
 3.  Clique em **"Confirmar"**. A nova matéria aparecerá imediatamente na sua lista.
 
-> *[INSERIR PRINT DO POPUP DE NOVA MATÉRIA AQUI]*
-
+ 
 ### 3.2. Gerando um Simulado com IA
 Aqui acontece a mágica do SimulAI. Você não precisa digitar as perguntas uma por uma.
 1.  Na lista de matérias, clique sobre a disciplina desejada para expandi-la.
@@ -56,9 +58,9 @@ Aqui acontece a mágica do SimulAI. Você não precisa digitar as perguntas uma 
 5.  Clique em **"Confirmar"**.
     * *O sistema irá ler o seu arquivo, processar o conteúdo com Inteligência Artificial e gerar 5 questões de múltipla escolha com gabarito comentado.*
 
-> *[INSERIR PRINT DA TELA DE UPLOAD E CRIAÇÃO AQUI]*
 
 ---
+
 
 ## 4. Guia do Aluno
 
@@ -70,13 +72,11 @@ Como aluno, seu foco é testar seus conhecimentos.
 3.  Clique na opção **"Realizar simulado"** para começar.
 
 
-
 ### 4.2. Respondendo às Questões
 1.  O sistema apresentará uma questão por vez.
 2.  Leia o enunciado e clique na alternativa que considera correta (A, B, C, D ou E).
 3.  Após selecionar, clique em **"Próximo"** para ir para a pergunta seguinte.
 4.  Na última questão, o botão mudará para **"Finalizar"**.
-
 
 
 ### 4.3. Visualizando Resultados
@@ -88,14 +88,15 @@ Assim que finalizar o simulado, você receberá seu feedback instantâneo:
 Para sair, clique no botão **"Voltar ao Menu"**.
 
 
-
 ---
+
 
 ## 5. Dicas e Solução de Problemas
 
 * **O sistema não gerou o simulado:** Verifique se o seu arquivo PDF contém texto selecionável. Arquivos que são apenas imagens (fotos de páginas) não podem ser lidos pela Inteligência Artificial.
 * **Login com Google não funciona:** Verifique sua conexão com a internet ou tente usar o login por e-mail e senha.
 * **Tela branca ou travamento:** Tente recarregar a página do navegador (tecla F5).
+
 
 ---
 
