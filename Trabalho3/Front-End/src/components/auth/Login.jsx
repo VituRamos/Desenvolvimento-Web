@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import PopupCadastro from "./PopupCadastro";
 import { useGoogleLogin } from '@react-oauth/google';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 // --- Componente Login ---
 // Componente que renderiza a página de login, permitindo autenticação
 // via email/senha ou Google.
@@ -81,7 +84,7 @@ const Login = () => {
         e.preventDefault();
         try {
             // Envia email e senha para o backend.
-            const response = await fetch('http://127.0.0.1:8000/login', {
+            const response = await fetch(`${API_URL}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, senha: senha }),
@@ -110,7 +113,7 @@ const Login = () => {
         const novoUsuario = { ...usuario, tipo: tipo };
         try {
             // Envia os dados do novo usuário para o backend.
-            const response = await fetch('http://127.0.0.1:8000/usuarios', {
+            const response = await fetch(`${API_URL}/usuarios`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(novoUsuario),
