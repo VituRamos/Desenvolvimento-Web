@@ -71,7 +71,7 @@ def listar_resultados(simulado_id: str, database: Session = Depends(get_db)):
         ) for r in resultados
     ]
 
-@router.get(`/resultados/{usuario_id}`, response_model=List[schemas.Resultado], tags=["Resultados"])
+@router.get("/resultados/{usuario_id}", response_model=List[schemas.Resultado], tags=["Resultados"])
 def get_resultados_usuario(usuario_id: str, database: Session = Depends(get_db)):
     usuario = database.query(db.Usuario).filter(db.Usuario.id == usuario_id).first()
     if not usuario:
