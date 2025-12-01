@@ -45,7 +45,7 @@ const Login = () => {
         const code = tokenResponse.code;
         try {
             // Envia o código de autorização para o backend.
-            const response = await fetch('http://127.0.0.1:8000/auth/google', {
+            const response = await fetch(`${API_URL}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ code: code }),
