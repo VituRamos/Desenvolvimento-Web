@@ -2,7 +2,7 @@
 from pydantic import BaseModel
 from typing import List, Optional, Dict
 
-# Define a estrutura (schema) dos dados que a API irá receber e enviar.
+# Define a estrutura dos dados que a API irá receber e enviar.
 class Usuario(BaseModel):
     id: str
     nome: str
