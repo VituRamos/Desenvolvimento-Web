@@ -9,7 +9,7 @@ import os
 
 # Tenta pegar a URL da variável de ambiente. 
 # Se não existir (ex: rodando local sem env), usa um SQLite local como fallback.
-DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///./test.db")
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 # CORREÇÃO PARA POSTGRESQL NA VERCEL:
 # O SQLAlchemy exige "postgresql://" mas alguns providers retornam "postgres://"
@@ -17,7 +17,7 @@ if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 # connect_args={"check_same_thread": False} é necessário apenas para SQLite
-connect_args = {"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
+#connect_args = {"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
 
 engine = create_engine(DATABASE_URL, connect_args=connect_args)
 
