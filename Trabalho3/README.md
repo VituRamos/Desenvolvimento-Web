@@ -110,7 +110,7 @@ Para sair, clique no botão **"Voltar ao Menu"**.
 ## 6. Video Guia de utilização do Sistema
 
 https://drive.google.com/file/d/1wZiiolEfRzIe_jubmWLKvZ7ox4XAUJl5/view?usp=sharing
-* **Ainda em duvida?:** Acima está um vídeo base do funcionamento do sistema!.
+* **Ainda em duvida?:** Acima está um vídeo base do funcionamento do sistema!
 
 ---
 
