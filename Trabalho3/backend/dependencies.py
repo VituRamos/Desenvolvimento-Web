@@ -1,4 +1,4 @@
-# backend/dependencies.py
+#backend/dependencies.py
 import database as db
 
 def get_db():
