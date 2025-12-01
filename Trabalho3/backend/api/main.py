@@ -8,8 +8,6 @@ import database as db
 from routers import auth, materias, simulados, resultados
 import os
 
-# Configura a API do Google Gemini com a chave fornecida no arquivo config.py.
-#genai.configure(api_key=config.GOOGLE_API_KEY)
 api_key = os.environ.get("GOOGLE_API_KEY")
 if api_key:
     genai.configure(api_key=api_key)
@@ -25,8 +23,8 @@ def startup_event():
 origins = [
     "http://localhost:5173",  # Vite local
     "http://localhost:3000",  # Caso use outra porta local
-    "https://simulai-frontend.vercel.app", # <--- SUA URL DE PRODUÇÃO
-    # ATENÇÃO: NÃO coloque barra "/" no final da URL acima!
+    "https://simulai-frontend.vercel.app",
+    
 ]
 
 app.add_middleware(
@@ -37,11 +35,6 @@ app.add_middleware(
     allow_headers=["*"],  # Permite todos os headers (Authorization, etc.)
 )
 # --- FIM DA CONFIGURAÇÃO DO CORS ---
-
-# Suas rotas vêm DEPOIS daqui
-#@app.post("/usuarios")
-#def criar_usuario(dados: dict):
-#    return {"msg": "Criado"}
 
 # --- Endpoints ---
 @app.get("/")
