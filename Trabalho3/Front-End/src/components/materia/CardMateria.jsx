@@ -8,11 +8,11 @@ import { useLocation } from "react-router-dom";
 
 // DADOS MOCKADOS (PROVISÓRIOS): Lista de alunos para esta matéria.
 // Em uma aplicação real, estes dados viriam do estado da aplicação ou de uma API.
-const alunosDaMateria = [
-  { id: 1, nome: "João" },
-  { id: 2, nome: "Maria" },
-  { id: 3, nome: "Pedro" },
-];
+/*const alunosDaMateria = [
+#  { id: 1, nome: "João" },
+#  { id: 2, nome: "Maria" },
+#  { id: 3, nome: "Pedro" },
+];*/
 
 // Componente para exibir um card de uma matéria, que pode ser expandido.
 export default function CardMateria({ materia, onAdicionarSimulado }) {
