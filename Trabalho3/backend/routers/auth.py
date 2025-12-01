@@ -9,7 +9,7 @@ import os # <--- NOVO: Importa o módulo OS para variáveis de ambiente
 
 import database as db
 import schemas
-# REMOVER: import config # <--- REMOVIDO para eliminar o erro
+
 
 router = APIRouter()
 
