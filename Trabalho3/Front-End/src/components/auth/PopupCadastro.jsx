@@ -19,7 +19,7 @@ export default function PopupCadastro({ onClose, onConfirm }) {
         id: identificador, // Envia o RA ou RP como 'id'
         nome: nome,
         email: email,
-        senha: senha, // Em uma aplicação real, a senha deve ser criptografada.
+        senha: senha, // a senha deve ser criptografada para uma aplicação real.
       };
 
       // Chama a função onConfirm (passada via props) com o novo usuário e seu tipo.
