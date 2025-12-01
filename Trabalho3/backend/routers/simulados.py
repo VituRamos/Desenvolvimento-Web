@@ -120,7 +120,7 @@ async def create_simulado_from_gemini(
         for q in resposta_json['questoes']:
             nova_questao = db.Questao(
                 id=str(uuid.uuid4()), # Gera um ID único para cada questão
-                n_questao=q['id'],   # O número da questão (1, 2, 3...)
+                n_questao=q['id'],   # O número da questão (1, 2, 3, 4...)
                 simulado_id=novo_simulado_id,
                 pergunta=q['pergunta'],
                 opcoes=json.dumps(q['opcoes']),
