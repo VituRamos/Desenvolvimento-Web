@@ -27,6 +27,7 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
       return;
     }
 
+    //Salva resultatos com id do aluno (RA) e seu nome
     const salvarResultado = async () => {
       jaSalvou.current = true;
       try {
@@ -46,6 +47,7 @@ export default function Resultado({ questoes, respostas, onRestart, simuladoId }
           respostas: respostasParaSalvar
         };
 
+        //chamada da api para resultados
         const response = await fetch(`${API_URL}/simulados/${simuladoId}/resultados`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
