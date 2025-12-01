@@ -60,6 +60,7 @@ Aqui acontece a mágica do SimulAI. Você não precisa digitar as perguntas uma 
 5.  Clique em **"Confirmar"**.
     * *O sistema irá ler o seu arquivo, processar o conteúdo com Inteligência Artificial e gerar 5 questões de múltipla escolha com gabarito comentado.*
 
+<img width="1159" height="556" alt="CriaçãoDeMatéria" src="https://github.com/user-attachments/assets/f1817204-ad40-48fc-a7aa-714aea1ed624" />
 
 
 ---
@@ -89,6 +90,8 @@ Assim que finalizar o simulado, você receberá seu feedback instantâneo:
 * **Explicação:** O sistema mostra qual era a resposta correta.
 
 Para sair, clique no botão **"Voltar ao Menu"**.
+
+<img width="778" height="141" alt="PagAluno" src="https://github.com/user-attachments/assets/4fbf2819-3108-4872-ad8e-ec41640e249a" />
 
 
 ---
