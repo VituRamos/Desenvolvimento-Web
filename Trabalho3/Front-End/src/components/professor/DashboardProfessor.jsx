@@ -134,7 +134,7 @@ export default function DashboardProfessor() {
 
   // Exclui um simulado via API.
   const handleExcluirSimulado = async (materiaId, simuladoId) => {
-    if (window.confirm("Tem certeza que deseja excluir este simulado? Esta ação não pode ser desfeita.")) {
+    if (window.confirm("Tem certeza que deseja excluir este simulado? Esta ação não pode ser desfeita.")) {//mensagem de exclusão 
       try {
         const response = await fetch(`${API_URL}/simulados/${simuladoId}`, {
           method: "DELETE",
