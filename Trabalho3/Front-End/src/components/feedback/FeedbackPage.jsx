@@ -11,7 +11,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 /**
  * Página de Feedback (Gabarito Comentado).
- * 
  * Busca os dados de um simulado finalizado e exibe cada questão,
  * a resposta correta e a explicação correspondente como forma de feedback.
  */
