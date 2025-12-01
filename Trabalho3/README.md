@@ -45,6 +45,8 @@ Para organizar seus simulados, primeiro você precisa criar uma matéria.
 2.  Uma janela se abrirá. Digite o nome da disciplina (ex: "História", "Biologia").
 3.  Clique em **"Confirmar"**. A nova matéria aparecerá imediatamente na sua lista.
 
+<img width="1159" height="556" alt="CriaçãoDeMatéria" src="https://github.com/user-attachments/assets/a42775ae-3f0e-4f1d-88a8-a67c0f39709a" />
+
 
  
 ### 3.2. Gerando um Simulado com IA
