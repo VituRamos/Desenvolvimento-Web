@@ -8,7 +8,6 @@ import os
 # --- Configuração do Banco de Dados ---
 
 # Tenta pegar a URL da variável de ambiente. 
-# Se não existir (ex: rodando local sem env), usa um SQLite local como fallback.
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
 # CORREÇÃO PARA POSTGRESQL NA VERCEL:
