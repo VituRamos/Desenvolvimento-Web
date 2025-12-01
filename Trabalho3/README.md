@@ -31,9 +31,9 @@ Ao abrir a plataforma, você encontrará a tela de identificação.
     * **Aluno:** Para quem deseja realizar simulados.
     * **Professor:** Para quem deseja criar conteúdo.
 
+<img width="1080" height="1080" alt="PagDeLogin" src="https://github.com/user-attachments/assets/bc28a366-f631-49de-a479-bcd7f12ae566" />
 
 ---
-
 
 ## 3. Guia do Professor
 
@@ -44,6 +44,7 @@ Para organizar seus simulados, primeiro você precisa criar uma matéria.
 1.  No canto inferior direito da tela, localize e clique no botão flutuante azul com o símbolo **"+"**.
 2.  Uma janela se abrirá. Digite o nome da disciplina (ex: "História", "Biologia").
 3.  Clique em **"Confirmar"**. A nova matéria aparecerá imediatamente na sua lista.
+
 
  
 ### 3.2. Gerando um Simulado com IA
@@ -56,6 +57,7 @@ Aqui acontece a mágica do SimulAI. Você não precisa digitar as perguntas uma 
     * **Dica:** O arquivo deve conter o texto base da aula.
 5.  Clique em **"Confirmar"**.
     * *O sistema irá ler o seu arquivo, processar o conteúdo com Inteligência Artificial e gerar 5 questões de múltipla escolha com gabarito comentado.*
+
 
 
 ---
