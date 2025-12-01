@@ -16,9 +16,6 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-# connect_args={"check_same_thread": False} é necessário apenas para SQLite
-#connect_args = {"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
-
 engine = create_engine(DATABASE_URL, connect_args=connect_args)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -84,8 +81,6 @@ class Resultado(Base):
     
     # Relações bidirecionais
     usuario = relationship("Usuario", back_populates="resultados")
-    # CORREÇÃO CRÍTICA AQUI: O back_populates deve ser "resultados",
-    # que é o nome da relação no modelo Simulado.
     simulado = relationship("Simulado", back_populates="resultados") 
 
 
