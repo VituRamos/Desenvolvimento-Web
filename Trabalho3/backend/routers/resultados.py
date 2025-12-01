@@ -75,7 +75,7 @@ def listar_resultados(simulado_id: str, database: Session = Depends(get_db)):
 def get_resultados_usuario(usuario_id: str, database: Session = Depends(get_db)):
     usuario = database.query(db.Usuario).filter(db.Usuario.id == usuario_id).first()
     if not usuario:
-        return [] # Ou lançar 404 se preferir
+        return [] 
     
     resultados = database.query(db.Resultado).filter(db.Resultado.usuario_id == usuario_id).all()
     return [
