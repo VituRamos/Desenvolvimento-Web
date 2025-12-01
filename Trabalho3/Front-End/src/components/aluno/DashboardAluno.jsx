@@ -85,7 +85,7 @@ export default function DashboardAluno() {
   }
 
   // --- Renderização Principal ---
-  // Exibe o cabeçalho e a lista de matérias.
+  // Exibe o cabeçalho e a lista de matérias
   return (
     <div className="student-dashboard-container">
       <Header />
