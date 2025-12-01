@@ -31,7 +31,7 @@ Ao abrir a plataforma, você encontrará a tela de identificação.
     * **Aluno:** Para quem deseja realizar simulados.
     * **Professor:** Para quem deseja criar conteúdo.
 
-<img width="1080" height="540" alt="PagDeLogin" src="https://github.com/user-attachments/assets/bc28a366-f631-49de-a479-bcd7f12ae566" />
+<img width="540" height="540" alt="PagDeLogin" src="https://github.com/user-attachments/assets/bc28a366-f631-49de-a479-bcd7f12ae566" />
 
 ---
 
