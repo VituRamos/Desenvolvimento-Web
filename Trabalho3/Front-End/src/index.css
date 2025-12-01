@@ -17,7 +17,7 @@ body {
 }
 
 /* ==========================================================================
-   CABEÇALHO (HEADER)
+   CABEÃ‡ALHO (HEADER)
    ========================================================================== */
 
 .header {
@@ -279,7 +279,7 @@ body {
 }
 
 /* ==========================================================================
-   BOTÕES
+   BOTõES
    ========================================================================== */
 
 .btn {
@@ -438,7 +438,7 @@ body {
 }
 
 /* ==========================================================================
-   GRIDS E ÍCONES ADICIONAIS
+   GRIDS E ÃCONES ADICIONAIS
    ========================================================================== */
 
 .grid {
@@ -705,9 +705,9 @@ body {
   background-color: #f0f0f0;
 }
 
-/* Estado da Opção */
+/* Estado da OpÃ§Ã£o */
 .option.selected {
-  background-color: #007bff; /* Opção selecionada pelo usuário */
+  background-color: #007bff; /* OpÃ§Ã£o selecionada pelo usuÃ¡rio */
   color: #fff;
   border-color: #007bff;
 }
@@ -766,7 +766,7 @@ body {
   color: red;
 }
 
-/* Explicações */
+/* ExplicaÃ§Ãµes */
 .explanation {
   display: flex;
   align-items: center;
@@ -790,14 +790,14 @@ body {
 }
 
 /* ==========================================================================
-   BOTÕES (Estilos do Quiz)
+   BOTÃ•ES (Estilos do Quiz)
    ========================================================================== */
 
 .btn {
   background: #007bff;
   color: #fff;
   text-align: center;
-  padding: 12px 30px; /* Padding ajustado para botões do quiz */
+  padding: 12px 30px; /* Padding ajustado para botÃµes do quiz */
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -944,14 +944,14 @@ body {
 .simulado {
   display: flex;
   align-items: center;
-  gap: 15px; /* Espa�o entre os elementos */
+  gap: 15px; /* Espaço entre os elementos */
   padding: 12px;
   cursor: pointer;
   user-select: none;
 }
 
 .titulo-simulado {
-  flex-grow: 1; /* Ocupa o espa�o dispon�vel */
+  flex-grow: 1; /* Ocupa o espaço disponível */
   font-weight: 500;
 }
 
@@ -966,7 +966,7 @@ body {
   font-weight: bold;
   font-size: 14px;
   color: #fff;
-  min-width: 80px; /* Largura m�nima para consist�ncia */
+  min-width: 80px; /* Largura mínima para consistência */
   text-align: center;
 }
 
@@ -994,7 +994,7 @@ body {
   color: #dc3545;
   cursor: pointer;
   margin-left: 10px;
-  visibility: hidden; /* Fica invis�vel por padr�o */
+  visibility: hidden; /* Fica invisível por padrão */
   opacity: 0;
   transition: opacity 0.2s ease, visibility 0.2s ease;
 }
