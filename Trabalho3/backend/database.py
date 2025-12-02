@@ -12,9 +12,10 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 
 # CORREÇÃO PARA POSTGRESQL NA VERCEL:
 # O SQLAlchemy exige "postgresql://" mas alguns providers retornam "postgres://"
+connect_args = {}
 if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
-
+    
 engine = create_engine(DATABASE_URL, connect_args=connect_args)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
