@@ -16,7 +16,7 @@ O SimulAI é uma plataforma educacional inovadora que utiliza Inteligência Arti
 * **Professores** podem enviar seus materiais de aula (arquivos de texto ou PDF) e o sistema cria automaticamente um simulado completo com perguntas e respostas.
 * **Alunos** podem responder a esses simulados e receber sua nota e gabarito instantaneamente.
 
-**Acesse** https://simulai-frontend.vercel.app
+*Acesse* https://simulai-frontend.vercel.app
 ---
 
 
