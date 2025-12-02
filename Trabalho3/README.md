@@ -17,6 +17,7 @@ O SimulAI é uma plataforma educacional inovadora que utiliza Inteligência Arti
 * **Alunos** podem responder a esses simulados e receber sua nota e gabarito instantaneamente.
 
 Acesse: https://simulai-frontend.vercel.app
+
 ---
 
 
